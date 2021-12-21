@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- The package icon for Tenjin was made by https://www.flaticon.com/authors/darius-dan from https://www.flaticon.com -->
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <PackageId>Tenjin</PackageId>
+    <Authors>Gerard Gouws</Authors>
+    <Company>Tenjin Libraries</Company>
+    <Description>Small extensions library for .NET Core 5.0</Description>
+    <PackageIcon>tenjin.png</PackageIcon>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Dr-GG/tenjin</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Dr-GG/tenjin</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryBranch>master</RepositoryBranch>
+    <PackageTags>C# extension methods;C# utility methods</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="tenjin.png" Pack="true" PackagePath="\"/>
+  </ItemGroup>
+
+</Project>
