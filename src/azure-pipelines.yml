@@ -6,6 +6,7 @@ trigger:
       - develop
       - release/*
       - hotfix/*
+      - feature/*
   
 pr:
   branches:
@@ -21,7 +22,7 @@ variables:
   nugetProject: 'src/.net/Tenjin/Tenjin.csproj'
   buildConfiguration: 'Release'
   ngBuildConfiguration: '--prod'
-  coreVersion: "5.x"
+  coreVersion: "6.x"
   major: 1
   minor: 1
   revision: $[counter(variables['major'], 0)]
@@ -41,7 +42,7 @@ jobs:
   steps:
   
   - task: UseDotNet@2
-    displayName: Install .NET Core 5.0 Runtime
+    displayName: Install .NET Core 6.0 Runtime
     inputs:      
       version: '$(coreVersion)'
         
