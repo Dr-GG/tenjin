@@ -3,7 +3,7 @@
   <!-- The package icon for Tenjin was made by https://www.flaticon.com/authors/darius-dan from https://www.flaticon.com -->
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <PackageId>Tenjin</PackageId>
     <Authors>Gerard Gouws</Authors>
@@ -28,7 +28,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="tenjin.png" Pack="true" PackagePath="\"/>
+    <None Include="tenjin.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>
