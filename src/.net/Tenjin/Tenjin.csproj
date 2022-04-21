@@ -8,7 +8,7 @@
     <PackageId>Tenjin</PackageId>
     <Authors>Gerard Gouws</Authors>
     <Company>Tenjin Libraries</Company>
-    <Description>Small extensions library for .NET Core 5.0</Description>
+    <Description>Collection of reuseable extensions and objects for C#</Description>
     <PackageIcon>tenjin.png</PackageIcon>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
