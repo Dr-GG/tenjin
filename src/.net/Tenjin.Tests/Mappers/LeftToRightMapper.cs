@@ -1,5 +1,5 @@
 ﻿using Tenjin.Interfaces.Mappers;
-using Tenjin.Tests.Models;
+using Tenjin.Tests.Models.Mappers;
 
 namespace Tenjin.Tests.Mappers
 {

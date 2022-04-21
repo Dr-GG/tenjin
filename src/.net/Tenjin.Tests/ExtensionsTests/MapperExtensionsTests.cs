@@ -5,7 +5,7 @@ using Tenjin.Extensions;
 using Tenjin.Implementations.Mappers;
 using Tenjin.Interfaces.Mappers;
 using Tenjin.Tests.Mappers;
-using Tenjin.Tests.Models;
+using Tenjin.Tests.Models.Mappers;
 
 namespace Tenjin.Tests.ExtensionsTests
 {
