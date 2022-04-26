@@ -19,6 +19,19 @@ namespace Tenjin.Tests.ExtensionsTests
             Assert.AreEqual(expectedOutput, value.IsNotNullOrEmpty());
         }
 
+        [TestCase(null, true)]
+        [TestCase("", true)]
+        [TestCase(" ", false)]
+        [TestCase("1", false)]
+        [TestCase("12", false)]
+        [TestCase("123", false)]
+        public void IsNullOrEmpty_WhenGivenAnInput_MatchesExpectedOutput(
+            string? value,
+            bool expectedOutput)
+        {
+            Assert.AreEqual(expectedOutput, value.IsNullOrEmpty());
+        }
+
         [TestCase(null, null, true)]
         [TestCase("", "", true)]
         [TestCase("123", "123", true)]
