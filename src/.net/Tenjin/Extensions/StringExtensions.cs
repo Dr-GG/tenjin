@@ -5,6 +5,11 @@ namespace Tenjin.Extensions
 {
     public static class StringExtensions
     {
+        public static bool IsNullOrEmpty([NotNullWhen(false)] this string? value)
+        {
+            return string.IsNullOrEmpty(value);
+        }
+
         public static bool IsNotNullOrEmpty([NotNullWhen(false)] this string? value)
         {
             return !string.IsNullOrEmpty(value);
