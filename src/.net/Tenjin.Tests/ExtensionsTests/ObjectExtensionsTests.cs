@@ -1707,7 +1707,7 @@ namespace Tenjin.Tests.ExtensionsTests
         [TestCase((ushort)100, "C", "en-ZA", "R100,00")]
         [TestCase((ushort)100, "F", "en-US", "100.000")]
         [TestCase((ushort)100, "E", "nl-NL", "1,000000E+002")]
-        [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %")]
+        [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %")]
         public void WriteLine_WhenWritingUInt16WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             ushort value,
             string? format,
@@ -1729,10 +1729,10 @@ namespace Tenjin.Tests.ExtensionsTests
             AssertWriteLineWithFormat(value, format, null, expectedResult);
         }
 
-        [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00")]
+        [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00")]
         [TestCase((uint)1000000, "F", "en-US", "1000000.000")]
         [TestCase((uint)1000000, "E", "nl-NL", "1,000000E+006")]
-        [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %")]
+        [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %")]
         public void WriteLine_WhenWritingUInt32WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             uint value,
             string? format,
@@ -1754,10 +1754,10 @@ namespace Tenjin.Tests.ExtensionsTests
             AssertWriteLineWithFormat(value, format, null, expectedResult);
         }
 
-        [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00")]
+        [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00")]
         [TestCase((ulong)100000000, "F", "en-US", "100000000.000")]
         [TestCase((ulong)100000000, "E", "nl-NL", "1,000000E+008")]
-        [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %")]
+        [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %")]
         public void WriteLine_WhenWritingUInt64WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             ulong value,
             string? format,
@@ -1782,7 +1782,7 @@ namespace Tenjin.Tests.ExtensionsTests
         [TestCase(100, "C", "en-ZA", "R100,00")]
         [TestCase(100, "F", "en-US", "100.000")]
         [TestCase(100, "E", "nl-NL", "1,000000E+002")]
-        [TestCase(100, "P", "fr-FR", "10 000,000 %")]
+        [TestCase(100, "P", "fr-FR", "10 000,000 %")]
         public void WriteLine_WhenWritingInt16WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             short value, 
             string? format, 
@@ -1804,10 +1804,10 @@ namespace Tenjin.Tests.ExtensionsTests
             AssertWriteLineWithFormat(value, format, null, expectedResult);
         }
 
-        [TestCase(1000000, "C", "en-ZA", "R1 000 000,00")]
+        [TestCase(1000000, "C", "en-ZA", "R1 000 000,00")]
         [TestCase(1000000, "F", "en-US", "1000000.000")]
         [TestCase(1000000, "E", "nl-NL", "1,000000E+006")]
-        [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %")]
+        [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %")]
         public void WriteLine_WhenWritingInt32WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             int value,
             string? format,
@@ -1829,10 +1829,10 @@ namespace Tenjin.Tests.ExtensionsTests
             AssertWriteLineWithFormat(value, format, null, expectedResult);
         }
 
-        [TestCase(100000000, "C", "en-ZA", "R100 000 000,00")]
+        [TestCase(100000000, "C", "en-ZA", "R100 000 000,00")]
         [TestCase(100000000, "F", "en-US", "100000000.000")]
         [TestCase(100000000, "E", "nl-NL", "1,000000E+008")]
-        [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %")]
+        [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %")]
         public void WriteLine_WhenWritingInt64WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             long value,
             string? format,
@@ -1844,10 +1844,10 @@ namespace Tenjin.Tests.ExtensionsTests
             AssertWriteLineWithFormat(value, format, formatProvider, expectedResult);
         }
 
-        [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00")]
+        [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00")]
         [TestCase(100000000.334f, "F", "en-US", "100000000.000")]
         [TestCase(100000000.334f, "E", "nl-NL", "1,000000E+008")]
-        [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %")]
+        [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %")]
         public void WriteLine_WhenWritingFloatWithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             float value,
             string? format,
@@ -1859,10 +1859,10 @@ namespace Tenjin.Tests.ExtensionsTests
             AssertWriteLineWithFormat(value, format, formatProvider, expectedResult);
         }
 
-        [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33")]
+        [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33")]
         [TestCase(100000000.334, "F", "en-US", "100000000.334")]
         [TestCase(100000000.334, "E", "nl-NL", "1,000000E+008")]
-        [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %")]
+        [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %")]
         public void WriteLine_WhenWritingDoubleWithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             double value,
             string? format,
@@ -1888,7 +1888,7 @@ namespace Tenjin.Tests.ExtensionsTests
         [TestCase((ushort)100, "C", "en-ZA", "R100,00", 0)]
         [TestCase((ushort)100, "F", "en-US", "100.000", 1)]
         [TestCase((ushort)100, "E", "nl-NL", "1,000000E+002", 2)]
-        [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %", 3)]
+        [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %", 3)]
         public void WriteLine_WhenWritingUInt16WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
             ushort value,
             string? format,
@@ -1913,10 +1913,10 @@ namespace Tenjin.Tests.ExtensionsTests
             AssertWriteLineWithFormatWithLineAppends(value, numberOfLineAppends, format, null, expectedResult);
         }
 
-        [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00", 0)]
+        [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00", 0)]
         [TestCase((uint)1000000, "F", "en-US", "1000000.000", 1)]
         [TestCase((uint)1000000, "E", "nl-NL", "1,000000E+006", 2)]
-        [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %", 3)]
+        [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %", 3)]
         public void WriteLine_WhenWritingUInt32WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
             uint value,
             string? format,
@@ -1941,10 +1941,10 @@ namespace Tenjin.Tests.ExtensionsTests
             AssertWriteLineWithFormatWithLineAppends(value, numberOfLineAppends, format, null, expectedResult);
         }
 
-        [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00", 0)]
+        [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00", 0)]
         [TestCase((ulong)100000000, "F", "en-US", "100000000.000", 1)]
         [TestCase((ulong)100000000, "E", "nl-NL", "1,000000E+008", 2)]
-        [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %", 3)]
+        [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %", 3)]
         public void WriteLine_WhenWritingUInt64WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
             ulong value,
             string? format,
@@ -1972,7 +1972,7 @@ namespace Tenjin.Tests.ExtensionsTests
         [TestCase(100, "C", "en-ZA", "R100,00", 0)]
         [TestCase(100, "F", "en-US", "100.000", 1)]
         [TestCase(100, "E", "nl-NL", "1,000000E+002", 2)]
-        [TestCase(100, "P", "fr-FR", "10 000,000 %", 3)]
+        [TestCase(100, "P", "fr-FR", "10 000,000 %", 3)]
         public void WriteLine_WhenWritingInt16WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
             short value,
             string? format,
@@ -1997,10 +1997,10 @@ namespace Tenjin.Tests.ExtensionsTests
             AssertWriteLineWithFormatWithLineAppends(value, numberOfLineAppends, format, null, expectedResult);
         }
 
-        [TestCase(1000000, "C", "en-ZA", "R1 000 000,00", 0)]
+        [TestCase(1000000, "C", "en-ZA", "R1 000 000,00", 0)]
         [TestCase(1000000, "F", "en-US", "1000000.000", 1)]
         [TestCase(1000000, "E", "nl-NL", "1,000000E+006", 2)]
-        [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %", 3)]
+        [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %", 3)]
         public void WriteLine_WhenWritingInt32WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
             int value,
             string? format,
@@ -2025,10 +2025,10 @@ namespace Tenjin.Tests.ExtensionsTests
             AssertWriteLineWithFormatWithLineAppends(value, numberOfLineAppends, format, null, expectedResult);
         }
 
-        [TestCase(100000000, "C", "en-ZA", "R100 000 000,00", 0)]
+        [TestCase(100000000, "C", "en-ZA", "R100 000 000,00", 0)]
         [TestCase(100000000, "F", "en-US", "100000000.000", 1)]
         [TestCase(100000000, "E", "nl-NL", "1,000000E+008", 2)]
-        [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %", 3)]
+        [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %", 3)]
         public void WriteLine_WhenWritingInt64WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
             long value,
             string? format,
@@ -2042,10 +2042,10 @@ namespace Tenjin.Tests.ExtensionsTests
                 value, numberOfLineAppends, format, formatProvider, expectedResult);
         }
 
-        [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00", 0)]
+        [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00", 0)]
         [TestCase(100000000.334f, "F", "en-US", "100000000.000", 1)]
         [TestCase(100000000.334f, "E", "nl-NL", "1,000000E+008", 2)]
-        [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %", 3)]
+        [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %", 3)]
         public void WriteLine_WhenWritingFloatWithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
             float value,
             string? format,
@@ -2059,10 +2059,10 @@ namespace Tenjin.Tests.ExtensionsTests
                 value, numberOfLineAppends, format, formatProvider, expectedResult);
         }
 
-        [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33", 0)]
+        [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33", 0)]
         [TestCase(100000000.334, "F", "en-US", "100000000.334", 1)]
         [TestCase(100000000.334, "E", "nl-NL", "1,000000E+008", 2)]
-        [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %", 3)]
+        [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %", 3)]
         public void WriteLine_WhenWritingDoubleWithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
             double value,
             string? format,
@@ -2096,19 +2096,19 @@ namespace Tenjin.Tests.ExtensionsTests
         [TestCase((ushort)100, "C", "en-ZA", "R100,00", null)]
         [TestCase((ushort)100, "F", "en-US", "100.000", null)]
         [TestCase((ushort)100, "E", "nl-NL", "1,000000E+002", null)]
-        [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %", null)]
+        [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %", null)]
         [TestCase((ushort)100, "C", "en-ZA", "R100,00", "-")]
         [TestCase((ushort)100, "F", "en-US", "100.000", "-")]
         [TestCase((ushort)100, "E", "nl-NL", "1,000000E+002", "-")]
-        [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %", "-")]
+        [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %", "-")]
         [TestCase((ushort)100, "C", "en-ZA", "R100,00", "++")]
         [TestCase((ushort)100, "F", "en-US", "100.000", "++")]
         [TestCase((ushort)100, "E", "nl-NL", "1,000000E+002", "++")]
-        [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %", "++")]
+        [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %", "++")]
         [TestCase((ushort)100, "C", "en-ZA", "R100,00", "___")]
         [TestCase((ushort)100, "F", "en-US", "100.000", "___")]
         [TestCase((ushort)100, "E", "nl-NL", "1,000000E+002", "___")]
-        [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %", "___")]
+        [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %", "___")]
         public void WriteHeading_WhenWritingUInt16WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             ushort value,
             string? format,
@@ -2138,22 +2138,22 @@ namespace Tenjin.Tests.ExtensionsTests
             AssertWriteHeadingWithFormat(value, format, null, expectedResult);
         }
 
-        [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00", null)]
+        [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00", null)]
         [TestCase((uint)1000000, "F", "en-US", "1000000.000", null)]
         [TestCase((uint)1000000, "E", "nl-NL", "1,000000E+006", null)]
-        [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %", null)]
-        [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00", "-")]
+        [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %", null)]
+        [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00", "-")]
         [TestCase((uint)1000000, "F", "en-US", "1000000.000", "-")]
         [TestCase((uint)1000000, "E", "nl-NL", "1,000000E+006", "-")]
-        [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %", "-")]
-        [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00", "++")]
+        [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %", "-")]
+        [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00", "++")]
         [TestCase((uint)1000000, "F", "en-US", "1000000.000", "++")]
         [TestCase((uint)1000000, "E", "nl-NL", "1,000000E+006", "++")]
-        [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %", "++")]
-        [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00", "___")]
+        [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %", "++")]
+        [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00", "___")]
         [TestCase((uint)1000000, "F", "en-US", "1000000.000", "___")]
         [TestCase((uint)1000000, "E", "nl-NL", "1,000000E+006", "___")]
-        [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %", "___")]
+        [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %", "___")]
         public void WriteHeading_WhenWritingUInt32WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             uint value,
             string? format,
@@ -2183,22 +2183,22 @@ namespace Tenjin.Tests.ExtensionsTests
             AssertWriteHeadingWithFormat(value, format, null, expectedResult);
         }
 
-        [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00", null)]
+        [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00", null)]
         [TestCase((ulong)100000000, "F", "en-US", "100000000.000", null)]
         [TestCase((ulong)100000000, "E", "nl-NL", "1,000000E+008", null)]
-        [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %", null)]
-        [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00", "-")]
+        [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %", null)]
+        [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00", "-")]
         [TestCase((ulong)100000000, "F", "en-US", "100000000.000", "-")]
         [TestCase((ulong)100000000, "E", "nl-NL", "1,000000E+008", "-")]
-        [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %", "-")]
-        [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00", "++")]
+        [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %", "-")]
+        [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00", "++")]
         [TestCase((ulong)100000000, "F", "en-US", "100000000.000", "++")]
         [TestCase((ulong)100000000, "E", "nl-NL", "1,000000E+008", "++")]
-        [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %", "++")]
-        [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00", "___")]
+        [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %", "++")]
+        [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00", "___")]
         [TestCase((ulong)100000000, "F", "en-US", "100000000.000", "___")]
         [TestCase((ulong)100000000, "E", "nl-NL", "1,000000E+008", "___")]
-        [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %", "___")]
+        [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %", "___")]
         public void WriteHeading_WhenWritingUInt64WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             ulong value,
             string? format,
@@ -2231,19 +2231,19 @@ namespace Tenjin.Tests.ExtensionsTests
         [TestCase(100, "C", "en-ZA", "R100,00", null)]
         [TestCase(100, "F", "en-US", "100.000", null)]
         [TestCase(100, "E", "nl-NL", "1,000000E+002", null)]
-        [TestCase(100, "P", "fr-FR", "10 000,000 %", null)]
+        [TestCase(100, "P", "fr-FR", "10 000,000 %", null)]
         [TestCase(100, "C", "en-ZA", "R100,00", "-")]
         [TestCase(100, "F", "en-US", "100.000", "-")]
         [TestCase(100, "E", "nl-NL", "1,000000E+002", "-")]
-        [TestCase(100, "P", "fr-FR", "10 000,000 %", "-")]
+        [TestCase(100, "P", "fr-FR", "10 000,000 %", "-")]
         [TestCase(100, "C", "en-ZA", "R100,00", "++")]
         [TestCase(100, "F", "en-US", "100.000", "++")]
         [TestCase(100, "E", "nl-NL", "1,000000E+002", "++")]
-        [TestCase(100, "P", "fr-FR", "10 000,000 %", "++")]
+        [TestCase(100, "P", "fr-FR", "10 000,000 %", "++")]
         [TestCase(100, "C", "en-ZA", "R100,00", "___")]
         [TestCase(100, "F", "en-US", "100.000", "___")]
         [TestCase(100, "E", "nl-NL", "1,000000E+002", "___")]
-        [TestCase(100, "P", "fr-FR", "10 000,000 %", "___")]
+        [TestCase(100, "P", "fr-FR", "10 000,000 %", "___")]
         public void WriteHeading_WhenWritingInt16WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             short value,
             string? format,
@@ -2273,22 +2273,22 @@ namespace Tenjin.Tests.ExtensionsTests
             AssertWriteHeadingWithFormat(value, format, null, expectedResult, headingUnderline);
         }
 
-        [TestCase(1000000, "C", "en-ZA", "R1 000 000,00", null)]
+        [TestCase(1000000, "C", "en-ZA", "R1 000 000,00", null)]
         [TestCase(1000000, "F", "en-US", "1000000.000", null)]
         [TestCase(1000000, "E", "nl-NL", "1,000000E+006", null)]
-        [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %", null)]
-        [TestCase(1000000, "C", "en-ZA", "R1 000 000,00", "-")]
+        [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %", null)]
+        [TestCase(1000000, "C", "en-ZA", "R1 000 000,00", "-")]
         [TestCase(1000000, "F", "en-US", "1000000.000", "-")]
         [TestCase(1000000, "E", "nl-NL", "1,000000E+006", "-")]
-        [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %", "-")]
-        [TestCase(1000000, "C", "en-ZA", "R1 000 000,00", "++")]
+        [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %", "-")]
+        [TestCase(1000000, "C", "en-ZA", "R1 000 000,00", "++")]
         [TestCase(1000000, "F", "en-US", "1000000.000", "++")]
         [TestCase(1000000, "E", "nl-NL", "1,000000E+006", "++")]
-        [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %", "++")]
-        [TestCase(1000000, "C", "en-ZA", "R1 000 000,00", "___")]
+        [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %", "++")]
+        [TestCase(1000000, "C", "en-ZA", "R1 000 000,00", "___")]
         [TestCase(1000000, "F", "en-US", "1000000.000", "___")]
         [TestCase(1000000, "E", "nl-NL", "1,000000E+006", "___")]
-        [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %", "___")]
+        [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %", "___")]
         public void WriteHeading_WhenWritingInt32WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             int value,
             string? format,
@@ -2318,22 +2318,22 @@ namespace Tenjin.Tests.ExtensionsTests
             AssertWriteHeadingWithFormat(value, format, null, expectedResult, headingUnderline);
         }
 
-        [TestCase(100000000, "C", "en-ZA", "R100 000 000,00", null)]
+        [TestCase(100000000, "C", "en-ZA", "R100 000 000,00", null)]
         [TestCase(100000000, "F", "en-US", "100000000.000", null)]
         [TestCase(100000000, "E", "nl-NL", "1,000000E+008", null)]
-        [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %", null)]
-        [TestCase(100000000, "C", "en-ZA", "R100 000 000,00", "-")]
+        [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %", null)]
+        [TestCase(100000000, "C", "en-ZA", "R100 000 000,00", "-")]
         [TestCase(100000000, "F", "en-US", "100000000.000", "-")]
         [TestCase(100000000, "E", "nl-NL", "1,000000E+008", "-")]
-        [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %", "-")]
-        [TestCase(100000000, "C", "en-ZA", "R100 000 000,00", "++")]
+        [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %", "-")]
+        [TestCase(100000000, "C", "en-ZA", "R100 000 000,00", "++")]
         [TestCase(100000000, "F", "en-US", "100000000.000", "++")]
         [TestCase(100000000, "E", "nl-NL", "1,000000E+008", "++")]
-        [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %", "++")]
-        [TestCase(100000000, "C", "en-ZA", "R100 000 000,00", "___")]
+        [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %", "++")]
+        [TestCase(100000000, "C", "en-ZA", "R100 000 000,00", "___")]
         [TestCase(100000000, "F", "en-US", "100000000.000", "___")]
         [TestCase(100000000, "E", "nl-NL", "1,000000E+008", "___")]
-        [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %", "___")]
+        [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %", "___")]
         public void WriteHeading_WhenWritingInt64WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             long value,
             string? format,
@@ -2346,22 +2346,22 @@ namespace Tenjin.Tests.ExtensionsTests
             AssertWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
         }
 
-        [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00", null)]
+        [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00", null)]
         [TestCase(100000000.334f, "F", "en-US", "100000000.000", null)]
         [TestCase(100000000.334f, "E", "nl-NL", "1,000000E+008", null)]
-        [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %", null)]
-        [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00", "-")]
+        [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %", null)]
+        [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00", "-")]
         [TestCase(100000000.334f, "F", "en-US", "100000000.000", "-")]
         [TestCase(100000000.334f, "E", "nl-NL", "1,000000E+008", "-")]
-        [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %", "-")]
-        [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00", "++")]
+        [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %", "-")]
+        [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00", "++")]
         [TestCase(100000000.334f, "F", "en-US", "100000000.000", "++")]
         [TestCase(100000000.334f, "E", "nl-NL", "1,000000E+008", "++")]
-        [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %", "++")]
-        [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00", "___")]
+        [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %", "++")]
+        [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00", "___")]
         [TestCase(100000000.334f, "F", "en-US", "100000000.000", "___")]
         [TestCase(100000000.334f, "E", "nl-NL", "1,000000E+008", "___")]
-        [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %", "___")]
+        [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %", "___")]
         public void WriteHeading_WhenWritingFloatWithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             float value,
             string? format,
@@ -2374,22 +2374,22 @@ namespace Tenjin.Tests.ExtensionsTests
             AssertWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
         }
 
-        [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33", null)]
+        [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33", null)]
         [TestCase(100000000.334, "F", "en-US", "100000000.334", null)]
         [TestCase(100000000.334, "E", "nl-NL", "1,000000E+008", null)]
-        [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %", null)]
-        [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33", "-")]
+        [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %", null)]
+        [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33", "-")]
         [TestCase(100000000.334, "F", "en-US", "100000000.334", "-")]
         [TestCase(100000000.334, "E", "nl-NL", "1,000000E+008", "-")]
-        [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %", "-")]
-        [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33", "++")]
+        [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %", "-")]
+        [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33", "++")]
         [TestCase(100000000.334, "F", "en-US", "100000000.334", "++")]
         [TestCase(100000000.334, "E", "nl-NL", "1,000000E+008", "++")]
-        [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %", "++")]
-        [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33", "___")]
+        [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %", "++")]
+        [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33", "___")]
         [TestCase(100000000.334, "F", "en-US", "100000000.334", "___")]
         [TestCase(100000000.334, "E", "nl-NL", "1,000000E+008", "___")]
-        [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %", "___")]
+        [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %", "___")]
         public void WriteHeading_WhenWritingDoubleWithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             double value,
             string? format,
@@ -2424,19 +2424,19 @@ namespace Tenjin.Tests.ExtensionsTests
         [TestCase((ushort)100, "C", "en-ZA", "R100,00", 0, null)]
         [TestCase((ushort)100, "F", "en-US", "100.000", 1, null)]
         [TestCase((ushort)100, "E", "nl-NL", "1,000000E+002", 2, null)]
-        [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %", 3, null)]
+        [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %", 3, null)]
         [TestCase((ushort)100, "C", "en-ZA", "R100,00", 0, "-")]
         [TestCase((ushort)100, "F", "en-US", "100.000", 1, "-")]
         [TestCase((ushort)100, "E", "nl-NL", "1,000000E+002", 2, "-")]
-        [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %", 3, "-")]
+        [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %", 3, "-")]
         [TestCase((ushort)100, "C", "en-ZA", "R100,00", 0, "++")]
         [TestCase((ushort)100, "F", "en-US", "100.000", 1, "++")]
         [TestCase((ushort)100, "E", "nl-NL", "1,000000E+002", 2, "++")]
-        [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %", 3, "++")]
+        [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %", 3, "++")]
         [TestCase((ushort)100, "C", "en-ZA", "R100,00", 0, "___")]
         [TestCase((ushort)100, "F", "en-US", "100.000", 1, "___")]
         [TestCase((ushort)100, "E", "nl-NL", "1,000000E+002", 2, "___")]
-        [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %", 3, "___")]
+        [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %", 3, "___")]
         public void WriteHeading_WhenWritingUInt16WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
             ushort value,
             string? format,
@@ -2470,22 +2470,22 @@ namespace Tenjin.Tests.ExtensionsTests
                 value, numberOfLineAppends, format, null, expectedResult, headingUnderline);
         }
 
-        [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00", 0, null)]
+        [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00", 0, null)]
         [TestCase((uint)1000000, "F", "en-US", "1000000.000", 1, null)]
         [TestCase((uint)1000000, "E", "nl-NL", "1,000000E+006", 2, null)]
-        [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %", 3, null)]
-        [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00", 0, "-")]
+        [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %", 3, null)]
+        [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00", 0, "-")]
         [TestCase((uint)1000000, "F", "en-US", "1000000.000", 1, "-")]
         [TestCase((uint)1000000, "E", "nl-NL", "1,000000E+006", 2, "-")]
-        [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %", 3, "-")]
-        [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00", 0, "++")]
+        [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %", 3, "-")]
+        [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00", 0, "++")]
         [TestCase((uint)1000000, "F", "en-US", "1000000.000", 1, "++")]
         [TestCase((uint)1000000, "E", "nl-NL", "1,000000E+006", 2, "++")]
-        [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %", 3, "++")]
-        [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00", 0, "___")]
+        [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %", 3, "++")]
+        [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00", 0, "___")]
         [TestCase((uint)1000000, "F", "en-US", "1000000.000", 1, "___")]
         [TestCase((uint)1000000, "E", "nl-NL", "1,000000E+006", 2, "___")]
-        [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %", 3, "___")]
+        [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %", 3, "___")]
         public void WriteHeading_WhenWritingUInt32WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
             uint value,
             string? format,
@@ -2519,22 +2519,22 @@ namespace Tenjin.Tests.ExtensionsTests
                 value, numberOfLineAppends, format, null, expectedResult, headingUnderline);
         }
 
-        [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00", 0, null)]
+        [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00", 0, null)]
         [TestCase((ulong)100000000, "F", "en-US", "100000000.000", 1, null)]
         [TestCase((ulong)100000000, "E", "nl-NL", "1,000000E+008", 2, null)]
-        [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %", 3, null)]
-        [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00", 0, "-")]
+        [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %", 3, null)]
+        [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00", 0, "-")]
         [TestCase((ulong)100000000, "F", "en-US", "100000000.000", 1, "-")]
         [TestCase((ulong)100000000, "E", "nl-NL", "1,000000E+008", 2, "-")]
-        [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %", 3, "-")]
-        [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00", 0, "++")]
+        [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %", 3, "-")]
+        [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00", 0, "++")]
         [TestCase((ulong)100000000, "F", "en-US", "100000000.000", 1, "++")]
         [TestCase((ulong)100000000, "E", "nl-NL", "1,000000E+008", 2, "++")]
-        [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %", 3, "++")]
-        [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00", 0, "___")]
+        [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %", 3, "++")]
+        [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00", 0, "___")]
         [TestCase((ulong)100000000, "F", "en-US", "100000000.000", 1, "___")]
         [TestCase((ulong)100000000, "E", "nl-NL", "1,000000E+008", 2, "___")]
-        [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %", 3, "___")]
+        [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %", 3, "___")]
         public void WriteHeading_WhenWritingUInt64WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
             ulong value,
             string? format,
@@ -2571,19 +2571,19 @@ namespace Tenjin.Tests.ExtensionsTests
         [TestCase(100, "C", "en-ZA", "R100,00", 0, null)]
         [TestCase(100, "F", "en-US", "100.000", 1, null)]
         [TestCase(100, "E", "nl-NL", "1,000000E+002", 2, null)]
-        [TestCase(100, "P", "fr-FR", "10 000,000 %", 3, null)]
+        [TestCase(100, "P", "fr-FR", "10 000,000 %", 3, null)]
         [TestCase(100, "C", "en-ZA", "R100,00", 0, "-")]
         [TestCase(100, "F", "en-US", "100.000", 1, "-")]
         [TestCase(100, "E", "nl-NL", "1,000000E+002", 2, "-")]
-        [TestCase(100, "P", "fr-FR", "10 000,000 %", 3, "-")]
+        [TestCase(100, "P", "fr-FR", "10 000,000 %", 3, "-")]
         [TestCase(100, "C", "en-ZA", "R100,00", 0, "++")]
         [TestCase(100, "F", "en-US", "100.000", 1, "++")]
         [TestCase(100, "E", "nl-NL", "1,000000E+002", 2, "++")]
-        [TestCase(100, "P", "fr-FR", "10 000,000 %", 3, "++")]
+        [TestCase(100, "P", "fr-FR", "10 000,000 %", 3, "++")]
         [TestCase(100, "C", "en-ZA", "R100,00", 0, "___")]
         [TestCase(100, "F", "en-US", "100.000", 1, "___")]
         [TestCase(100, "E", "nl-NL", "1,000000E+002", 2, "___")]
-        [TestCase(100, "P", "fr-FR", "10 000,000 %", 3, "___")]
+        [TestCase(100, "P", "fr-FR", "10 000,000 %", 3, "___")]
         public void WriteHeading_WhenWritingInt16WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
             short value,
             string? format,
@@ -2617,22 +2617,22 @@ namespace Tenjin.Tests.ExtensionsTests
                 value, numberOfLineAppends, format, null, expectedResult, headingUnderline);
         }
 
-        [TestCase(1000000, "C", "en-ZA", "R1 000 000,00", 0, null)]
+        [TestCase(1000000, "C", "en-ZA", "R1 000 000,00", 0, null)]
         [TestCase(1000000, "F", "en-US", "1000000.000", 1, null)]
         [TestCase(1000000, "E", "nl-NL", "1,000000E+006", 2, null)]
-        [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %", 3, null)]
-        [TestCase(1000000, "C", "en-ZA", "R1 000 000,00", 0, "-")]
+        [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %", 3, null)]
+        [TestCase(1000000, "C", "en-ZA", "R1 000 000,00", 0, "-")]
         [TestCase(1000000, "F", "en-US", "1000000.000", 1, "-")]
         [TestCase(1000000, "E", "nl-NL", "1,000000E+006", 2, "-")]
-        [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %", 3, "-")]
-        [TestCase(1000000, "C", "en-ZA", "R1 000 000,00", 0, "++")]
+        [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %", 3, "-")]
+        [TestCase(1000000, "C", "en-ZA", "R1 000 000,00", 0, "++")]
         [TestCase(1000000, "F", "en-US", "1000000.000", 1, "++")]
         [TestCase(1000000, "E", "nl-NL", "1,000000E+006", 2, "++")]
-        [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %", 3, "++")]
-        [TestCase(1000000, "C", "en-ZA", "R1 000 000,00", 0, "___")]
+        [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %", 3, "++")]
+        [TestCase(1000000, "C", "en-ZA", "R1 000 000,00", 0, "___")]
         [TestCase(1000000, "F", "en-US", "1000000.000", 1, "___")]
         [TestCase(1000000, "E", "nl-NL", "1,000000E+006", 2, "___")]
-        [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %", 3, "___")]
+        [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %", 3, "___")]
         public void WriteHeading_WhenWritingInt32WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
             int value,
             string? format,
@@ -2666,22 +2666,22 @@ namespace Tenjin.Tests.ExtensionsTests
                 value, numberOfLineAppends, format, null, expectedResult, headingUnderline);
         }
 
-        [TestCase(100000000, "C", "en-ZA", "R100 000 000,00", 0, null)]
+        [TestCase(100000000, "C", "en-ZA", "R100 000 000,00", 0, null)]
         [TestCase(100000000, "F", "en-US", "100000000.000", 1, null)]
         [TestCase(100000000, "E", "nl-NL", "1,000000E+008", 2, null)]
-        [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %", 3, null)]
-        [TestCase(100000000, "C", "en-ZA", "R100 000 000,00", 0, "-")]
+        [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %", 3, null)]
+        [TestCase(100000000, "C", "en-ZA", "R100 000 000,00", 0, "-")]
         [TestCase(100000000, "F", "en-US", "100000000.000", 1, "-")]
         [TestCase(100000000, "E", "nl-NL", "1,000000E+008", 2, "-")]
-        [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %", 3, "-")]
-        [TestCase(100000000, "C", "en-ZA", "R100 000 000,00", 0, "++")]
+        [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %", 3, "-")]
+        [TestCase(100000000, "C", "en-ZA", "R100 000 000,00", 0, "++")]
         [TestCase(100000000, "F", "en-US", "100000000.000", 1, "++")]
         [TestCase(100000000, "E", "nl-NL", "1,000000E+008", 2, "++")]
-        [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %", 3, "++")]
-        [TestCase(100000000, "C", "en-ZA", "R100 000 000,00", 0, "___")]
+        [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %", 3, "++")]
+        [TestCase(100000000, "C", "en-ZA", "R100 000 000,00", 0, "___")]
         [TestCase(100000000, "F", "en-US", "100000000.000", 1, "___")]
         [TestCase(100000000, "E", "nl-NL", "1,000000E+008", 2, "___")]
-        [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %", 3, "___")]
+        [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %", 3, "___")]
         public void WriteHeading_WhenWritingInt64WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
             long value,
             string? format,
@@ -2696,22 +2696,22 @@ namespace Tenjin.Tests.ExtensionsTests
                 value, numberOfLineAppends, format, formatProvider, expectedResult, headingUnderline);
         }
 
-        [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00", 0, null)]
+        [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00", 0, null)]
         [TestCase(100000000.334f, "F", "en-US", "100000000.000", 1, null)]
         [TestCase(100000000.334f, "E", "nl-NL", "1,000000E+008", 2, null)]
-        [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %", 3, null)]
-        [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00", 0, "-")]
+        [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %", 3, null)]
+        [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00", 0, "-")]
         [TestCase(100000000.334f, "F", "en-US", "100000000.000", 1, "-")]
         [TestCase(100000000.334f, "E", "nl-NL", "1,000000E+008", 2, "-")]
-        [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %", 3, "-")]
-        [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00", 0, "++")]
+        [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %", 3, "-")]
+        [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00", 0, "++")]
         [TestCase(100000000.334f, "F", "en-US", "100000000.000", 1, "++")]
         [TestCase(100000000.334f, "E", "nl-NL", "1,000000E+008", 2, "++")]
-        [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %", 3, "++")]
-        [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00", 0, "___")]
+        [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %", 3, "++")]
+        [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00", 0, "___")]
         [TestCase(100000000.334f, "F", "en-US", "100000000.000", 1, "___")]
         [TestCase(100000000.334f, "E", "nl-NL", "1,000000E+008", 2, "___")]
-        [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %", 3, "___")]
+        [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %", 3, "___")]
         public void WriteHeading_WhenWritingFloatWithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
             float value,
             string? format,
@@ -2726,22 +2726,22 @@ namespace Tenjin.Tests.ExtensionsTests
                 value, numberOfLineAppends, format, formatProvider, expectedResult, headingUnderline);
         }
 
-        [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33", 0, null)]
+        [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33", 0, null)]
         [TestCase(100000000.334, "F", "en-US", "100000000.334", 1, null)]
         [TestCase(100000000.334, "E", "nl-NL", "1,000000E+008", 2, null)]
-        [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %", 3, null)]
-        [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33", 0, "-")]
+        [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %", 3, null)]
+        [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33", 0, "-")]
         [TestCase(100000000.334, "F", "en-US", "100000000.334", 1, "-")]
         [TestCase(100000000.334, "E", "nl-NL", "1,000000E+008", 2, "-")]
-        [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %", 3, "-")]
-        [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33", 0, "++")]
+        [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %", 3, "-")]
+        [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33", 0, "++")]
         [TestCase(100000000.334, "F", "en-US", "100000000.334", 1, "++")]
         [TestCase(100000000.334, "E", "nl-NL", "1,000000E+008", 2, "++")]
-        [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %", 3, "++")]
-        [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33", 0, "___")]
+        [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %", 3, "++")]
+        [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33", 0, "___")]
         [TestCase(100000000.334, "F", "en-US", "100000000.334", 1, "___")]
         [TestCase(100000000.334, "E", "nl-NL", "1,000000E+008", 2, "___")]
-        [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %", 3, "___")]
+        [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %", 3, "___")]
         public void WriteHeading_WhenWritingDoubleWithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
             double value,
             string? format,
@@ -2769,7 +2769,7 @@ namespace Tenjin.Tests.ExtensionsTests
         [TestCase((ushort)100, "C", "en-ZA", "R100,00")]
         [TestCase((ushort)100, "F", "en-US", "100.000")]
         [TestCase((ushort)100, "E", "nl-NL", "1,000000E+002")]
-        [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %")]
+        [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %")]
         public void Write_WhenWritingUInt16WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             ushort value,
             string? format,
@@ -2791,10 +2791,10 @@ namespace Tenjin.Tests.ExtensionsTests
             AssertWriteWithFormat(value, format, null, expectedResult);
         }
 
-        [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00")]
+        [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00")]
         [TestCase((uint)1000000, "F", "en-US", "1000000.000")]
         [TestCase((uint)1000000, "E", "nl-NL", "1,000000E+006")]
-        [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %")]
+        [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %")]
         public void Write_WhenWritingUInt32WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             uint value,
             string? format,
@@ -2816,10 +2816,10 @@ namespace Tenjin.Tests.ExtensionsTests
             AssertWriteWithFormat(value, format, null, expectedResult);
         }
 
-        [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00")]
+        [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00")]
         [TestCase((ulong)100000000, "F", "en-US", "100000000.000")]
         [TestCase((ulong)100000000, "E", "nl-NL", "1,000000E+008")]
-        [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %")]
+        [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %")]
         public void Write_WhenWritingUInt64WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             ulong value,
             string? format,
@@ -2844,7 +2844,7 @@ namespace Tenjin.Tests.ExtensionsTests
         [TestCase(100, "C", "en-ZA", "R100,00")]
         [TestCase(100, "F", "en-US", "100.000")]
         [TestCase(100, "E", "nl-NL", "1,000000E+002")]
-        [TestCase(100, "P", "fr-FR", "10 000,000 %")]
+        [TestCase(100, "P", "fr-FR", "10 000,000 %")]
         public void Write_WhenWritingInt16WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             short value,
             string? format,
@@ -2866,10 +2866,10 @@ namespace Tenjin.Tests.ExtensionsTests
             AssertWriteWithFormat(value, format, null, expectedResult);
         }
 
-        [TestCase(1000000, "C", "en-ZA", "R1 000 000,00")]
+        [TestCase(1000000, "C", "en-ZA", "R1 000 000,00")]
         [TestCase(1000000, "F", "en-US", "1000000.000")]
         [TestCase(1000000, "E", "nl-NL", "1,000000E+006")]
-        [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %")]
+        [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %")]
         public void Write_WhenWritingInt32WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             int value,
             string? format,
@@ -2891,10 +2891,10 @@ namespace Tenjin.Tests.ExtensionsTests
             AssertWriteWithFormat(value, format, null, expectedResult);
         }
 
-        [TestCase(100000000, "C", "en-ZA", "R100 000 000,00")]
+        [TestCase(100000000, "C", "en-ZA", "R100 000 000,00")]
         [TestCase(100000000, "F", "en-US", "100000000.000")]
         [TestCase(100000000, "E", "nl-NL", "1,000000E+008")]
-        [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %")]
+        [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %")]
         public void Write_WhenWritingInt64WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             long value,
             string? format,
@@ -2906,10 +2906,10 @@ namespace Tenjin.Tests.ExtensionsTests
             AssertWriteWithFormat(value, format, formatProvider, expectedResult);
         }
 
-        [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00")]
+        [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00")]
         [TestCase(100000000.334f, "F", "en-US", "100000000.000")]
         [TestCase(100000000.334f, "E", "nl-NL", "1,000000E+008")]
-        [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %")]
+        [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %")]
         public void Write_WhenWritingFloatWithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             float value,
             string? format,
@@ -2921,10 +2921,10 @@ namespace Tenjin.Tests.ExtensionsTests
             AssertWriteWithFormat(value, format, formatProvider, expectedResult);
         }
 
-        [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33")]
+        [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33")]
         [TestCase(100000000.334, "F", "en-US", "100000000.334")]
         [TestCase(100000000.334, "E", "nl-NL", "1,000000E+008")]
-        [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %")]
+        [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %")]
         public void Write_WhenWritingDoubleWithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
             double value,
             string? format,
@@ -2946,7 +2946,7 @@ namespace Tenjin.Tests.ExtensionsTests
 
             root.Write(format, formatProvider);
 
-            Assert.AreEqual(expectedValue, monitor.GetOutputText());
+            AssertValues(expectedValue, monitor.GetOutputText());
         }
 
         private static void AssertWriteLines(
@@ -2963,7 +2963,7 @@ namespace Tenjin.Tests.ExtensionsTests
 
             root.WriteLines(numberOfWriteLines);
 
-            Assert.AreEqual(testValue.ToString(), monitor.GetOutputText());
+            AssertValues(testValue.ToString(), monitor.GetOutputText());
         }
 
         private static void AssertWrite(
@@ -2974,7 +2974,7 @@ namespace Tenjin.Tests.ExtensionsTests
 
             root.Write();
 
-            Assert.AreEqual(expectedValue, monitor.GetOutputText());
+            AssertValues(expectedValue, monitor.GetOutputText());
         }
 
         private static void AssertWriteLine(
@@ -3074,7 +3074,7 @@ namespace Tenjin.Tests.ExtensionsTests
 
             writeToRoot();
 
-            Assert.AreEqual(testValue.ToString(), monitor.GetOutputText());
+            AssertValues(testValue.ToString(), monitor.GetOutputText());
         }
 
         private static void GlobalAssertWriteHeading(
@@ -3109,7 +3109,25 @@ namespace Tenjin.Tests.ExtensionsTests
 
             writeToRoot();
 
-            Assert.AreEqual(testValue.ToString(), monitor.GetOutputText());
+            AssertValues(testValue.ToString(), monitor.GetOutputText());
+        }
+
+        private static void AssertValues(string expected, string provided)
+        {
+            /*
+             * It would seem some Windows installations give different white space characters.
+             * For example, Windows 11 professional gives fr-FR white spaces as (UTF-8):
+             *
+             * 1. \xc2\xa0 - NO-BREAK SPACE
+             * 2. \xe2\x80\xaf	NARROW NO-BREAK SPACE
+             *
+             * Therefore, to compensate for such differences, the code below replaces it with a normal space.
+             */
+            provided = provided
+                .Replace(" ", " ")
+                .Replace(" ", " ");
+
+            Assert.AreEqual(expected, provided);
         }
     }
 }
