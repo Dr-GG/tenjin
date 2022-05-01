@@ -12,7 +12,6 @@ namespace Tenjin.Tests.ExtensionsTests
     public class TaskExtensionsTests
     {
         public const int NumberOfThreads = 5;
-        public const double TimingBuffer = 1500;
 
         [TestCase(0)]
         [TestCase(10)]
@@ -33,15 +32,9 @@ namespace Tenjin.Tests.ExtensionsTests
                 result.Add(() => IncrementCounter(counter, threadSleep));
             }
 
-            var start = DateTime.Now;
-
             result.RunParallel();
 
-            var timeMilliseconds = (DateTime.Now - start).TotalMilliseconds;
-            var expectedMilliseconds = threadSleep + TimingBuffer;
-
             Assert.AreEqual(NumberOfThreads, counter.Counter);
-            Assert.LessOrEqual(timeMilliseconds, expectedMilliseconds);
         }
 
         private static Task IncrementCounter(ThreadCounterMonitor counter, int threadSleep = 0)
