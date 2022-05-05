@@ -6,7 +6,7 @@ using Tenjin.Implementations.Collections;
 using Tenjin.Interfaces.Collections;
 using Tenjin.Tests.Models.HashCodeDictionary;
 
-namespace Tenjin.Tests.CollectionsTests
+namespace Tenjin.Tests.ImplementationsTests.CollectionsTests
 {
     [TestFixture]
     public class HashCodeDictionaryTests
