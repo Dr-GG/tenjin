@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Tenjin.Extensions
 {
@@ -30,6 +31,25 @@ namespace Tenjin.Extensions
         public static bool DoesNotEqualAny(this object? root, params object?[] objects)
         {
             return objects.Any(obj => !Equals(root, obj));
+        }
+
+        /*
+         * This methods exists because the C# compiler does not allow the following code:
+         *
+         * someData.Select(data => () => SomeMethodThatReturnsATask());
+         *
+         * The C# compiler complains that it cannot determine the return type efficiently.
+         *
+         * Therefore, the following code does work:
+         *
+         * someData.Select(data => new Func<Task>(() => SomeMethodThatReturnsATask());
+         *
+         * However, the Resharper, and the C# compiler warns that the explicit cast is redundant and can be dropped.
+         * To circumvent this, the method exists to just cast, the code () => SomeMethodThatReturnsATask() to a Func<Task> type.
+         */
+        public static Func<Task> ToFunctionTask(this object _, Func<Task> function)
+        {
+            return function;
         }
 
         public static void WriteLines(this object? _, int numberOfWriteLines = 1)
@@ -135,7 +155,7 @@ namespace Tenjin.Extensions
             InternalWriteLines(writeLineAppends);
         }
 
-        public static void InternalWriteLines(int? numberOfWriteLines)
+        private static void InternalWriteLines(int? numberOfWriteLines)
         {
             if (numberOfWriteLines == null)
             {

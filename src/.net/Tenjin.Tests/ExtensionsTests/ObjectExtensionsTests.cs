@@ -1,17 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Tenjin.Extensions;
 using Tenjin.Tests.Enums;
 using Tenjin.Tests.Models.Console;
 using Tenjin.Tests.Services;
+using Tenjin.Tests.Utilities;
 
 namespace Tenjin.Tests.ExtensionsTests
 {
     [TestFixture]
     public class ObjectExtensionsTests
     {
+        private const int NumberOfTaskThreads = 30;
+
         private const string DateTimeWriteLineInputFormat = "yyyy-MM-dd";
         private const string DateTimeWriteLineOutputFormat = "dd--MM--yyyy";
 
@@ -2934,6 +2940,59 @@ namespace Tenjin.Tests.ExtensionsTests
             var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
             AssertWriteWithFormat(value, format, formatProvider, expectedResult);
+        }
+
+        [Test]
+        public async Task ToFunctionTask_WhenProvidingAFunctionTask_ExecutesAsAFunction()
+        {
+            var checkDigit = 0;
+            var function = this.ToFunctionTask(() =>
+            {
+                checkDigit++;
+
+                return Task.CompletedTask;
+            });
+
+            Assert.IsInstanceOf<Func<Task>>(function);
+            Assert.AreEqual(0, checkDigit);
+
+            await function();
+
+            Assert.AreEqual(1, checkDigit);
+        }
+
+        [Test]
+        public void ToFunctionTask_WhenRunningMultipleFunctions_ExecutesAsParallel()
+        {
+            var checkDigit = 0;
+            var root = new object();
+            var threadIds = new Dictionary<int, int>();
+            var tasks = new List<Func<Task>>(NumberOfTaskThreads);
+
+            for (var i = 0; i < NumberOfTaskThreads; i++)
+            {
+                var function = this.ToFunctionTask(() =>
+                {
+                    lock (root)
+                    {
+                        checkDigit++;
+                        
+                        ThreadingUtilities.IncreaseThreadIdDictionary(threadIds);
+                        Thread.Sleep(250);
+                    }
+
+                    return Task.CompletedTask;
+                });
+
+                tasks.Add(function);
+            }
+
+            Assert.AreEqual(0, checkDigit);
+
+            tasks.RunParallel();
+
+            Assert.Greater(threadIds.Count, 1);
+            Assert.AreEqual(NumberOfTaskThreads, checkDigit);
         }
 
         private static void AssertWriteWithFormat(
