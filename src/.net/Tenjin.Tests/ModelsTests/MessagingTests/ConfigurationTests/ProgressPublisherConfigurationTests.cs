@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using Tenjin.Enums.Messaging;
-using Tenjin.Models.Messaging.Configuration;
+using Tenjin.Models.Messaging.PublisherSubscriber.Configuration;
 
 namespace Tenjin.Tests.ModelsTests.MessagingTests.ConfigurationTests
 {

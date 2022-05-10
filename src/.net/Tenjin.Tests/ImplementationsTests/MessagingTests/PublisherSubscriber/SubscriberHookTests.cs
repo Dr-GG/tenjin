@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 using Tenjin.Enums.Messaging;
-using Tenjin.Implementations.Messaging;
-using Tenjin.Interfaces.Messaging;
-using Tenjin.Models.Messaging;
+using Tenjin.Implementations.Messaging.PublisherSubscriber;
+using Tenjin.Interfaces.Messaging.PublishSubscriber;
+using Tenjin.Models.Messaging.PublisherSubscriber;
 using Tenjin.Tests.Models.Messaging;
 using Tenjin.Tests.Services;
 using Tenjin.Tests.Utilities;
 using Tenjin.Tests.UtilitiesTests;
 
-namespace Tenjin.Tests.ImplementationsTests.MessagingTests
+namespace Tenjin.Tests.ImplementationsTests.MessagingTests.PublisherSubscriber
 {
     [TestFixture]
     public class SubscriberHookTests

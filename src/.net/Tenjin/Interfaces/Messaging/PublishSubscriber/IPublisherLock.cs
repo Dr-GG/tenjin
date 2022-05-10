@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Tenjin.Interfaces.Messaging
+namespace Tenjin.Interfaces.Messaging.PublishSubscriber
 {
     public interface IPublisherLock : IDisposable, IAsyncDisposable
     { }

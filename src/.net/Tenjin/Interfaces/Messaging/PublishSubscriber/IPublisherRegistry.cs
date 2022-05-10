@@ -1,4 +1,4 @@
-﻿namespace Tenjin.Interfaces.Messaging
+﻿namespace Tenjin.Interfaces.Messaging.PublishSubscriber
 {
     public interface IPublisherRegistry<in TKey, TData> where TKey : notnull
     {

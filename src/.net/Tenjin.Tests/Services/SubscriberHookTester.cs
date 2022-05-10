@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Tenjin.Models.Messaging;
+using Tenjin.Models.Messaging.PublisherSubscriber;
 using Tenjin.Tests.Models.Messaging;
 
 namespace Tenjin.Tests.Services

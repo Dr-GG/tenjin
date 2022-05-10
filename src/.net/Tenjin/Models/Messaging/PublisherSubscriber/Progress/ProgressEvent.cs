@@ -1,4 +1,4 @@
-﻿namespace Tenjin.Models.Messaging.Progress
+﻿namespace Tenjin.Models.Messaging.PublisherSubscriber.Progress
 {
     public record ProgressEvent
     {

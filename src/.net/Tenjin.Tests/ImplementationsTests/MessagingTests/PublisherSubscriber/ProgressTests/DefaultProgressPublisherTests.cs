@@ -6,18 +6,19 @@ using Moq;
 using NUnit.Framework;
 using Tenjin.Enums.Messaging;
 using Tenjin.Extensions;
-using Tenjin.Implementations.Messaging.Progress;
-using Tenjin.Interfaces.Messaging;
-using Tenjin.Interfaces.Messaging.Progress;
-using Tenjin.Models.Messaging;
-using Tenjin.Models.Messaging.Configuration;
-using Tenjin.Models.Messaging.Progress;
+using Tenjin.Implementations.Messaging.PublisherSubscriber.Progress;
+using Tenjin.Interfaces.Messaging.PublishSubscriber;
+using Tenjin.Interfaces.Messaging.PublishSubscriber.Progress;
+using Tenjin.Models.Messaging.PublisherSubscriber;
+using Tenjin.Models.Messaging.PublisherSubscriber.Configuration;
+using Tenjin.Models.Messaging.PublisherSubscriber.Progress;
 using Tenjin.Tests.Utilities;
 
-namespace Tenjin.Tests.ImplementationsTests.MessagingTests.ProgressTests
+namespace Tenjin.Tests.ImplementationsTests.MessagingTests.PublisherSubscriber.ProgressTests
 {
-    public class ProgressPublisherTests
+    public class DefaultProgressPublisherTests
     {
+        private const int InitialPublishTotal = 22433;
         private const int NumberOfThreadProgressPublishers = 25;
 
         [Test]
@@ -69,6 +70,33 @@ namespace Tenjin.Tests.ImplementationsTests.MessagingTests.ProgressTests
             var configuration = new ProgressPublisherConfiguration(10);
 
             Assert.DoesNotThrow(() => publisher.Configure(configuration));
+        }
+
+        [Test]
+        public async Task Initialise_WhenSettingPublishToTrue_PublishesTheInitialProgressEvent()
+        {
+            var publisher = GetProgressPublisher();
+            var tickEvents = new List<PublishEvent<ProgressEvent>>();
+            var subscriber = GetMockSubscriber(tickEvents);
+
+            await publisher.Subscribe(subscriber.Object);
+            await publisher.Initialise(InitialPublishTotal);
+
+            Assert.AreEqual(1, tickEvents.Count);
+            AssertTicks(InitialPublishTotal, new [] { 0 }, tickEvents);
+        }
+
+        [Test]
+        public async Task Initialise_WhenSettingPublishToFalse_DoesNotPublishTheInitialProgressEvent()
+        {
+            var publisher = GetProgressPublisher();
+            var tickEvents = new List<PublishEvent<ProgressEvent>>();
+            var subscriber = GetMockSubscriber(tickEvents);
+
+            await publisher.Subscribe(subscriber.Object);
+            await publisher.Initialise(InitialPublishTotal, false);
+
+            Assert.IsEmpty(tickEvents);
         }
 
         // Perfect test cases.
@@ -314,7 +342,7 @@ namespace Tenjin.Tests.ImplementationsTests.MessagingTests.ProgressTests
             }
         }
 
-        private static IEnumerable<Func<Task>> GetProgressThreadPublishersTasks(IProgressPublisher publisher)
+        private static IEnumerable<Func<Task>> GetProgressThreadPublishersTasks(IProgressPublisher<ProgressEvent> publisher)
         {
             var result = new List<Func<Task>>();
 
@@ -358,9 +386,9 @@ namespace Tenjin.Tests.ImplementationsTests.MessagingTests.ProgressTests
             return result;
         }
 
-        private static IProgressPublisher GetProgressPublisher()
+        private static IProgressPublisher<ProgressEvent> GetProgressPublisher()
         {
-            return new ProgressPublisher();
+            return new DefaultProgressPublisher();
         }
     }
 }

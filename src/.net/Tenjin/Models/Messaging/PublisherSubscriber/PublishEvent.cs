@@ -1,8 +1,8 @@
 ﻿using System;
 using Tenjin.Enums.Messaging;
-using Tenjin.Interfaces.Messaging;
+using Tenjin.Interfaces.Messaging.PublishSubscriber;
 
-namespace Tenjin.Models.Messaging
+namespace Tenjin.Models.Messaging.PublisherSubscriber
 {
     public record PublishEvent<TData>
     {

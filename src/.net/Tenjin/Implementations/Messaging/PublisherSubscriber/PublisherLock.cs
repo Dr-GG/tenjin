@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Tenjin.Interfaces.Messaging;
+using Tenjin.Interfaces.Messaging.PublishSubscriber;
 
-namespace Tenjin.Implementations.Messaging
+namespace Tenjin.Implementations.Messaging.PublisherSubscriber
 {
     public class PublisherLock<TData> : IPublisherLock
     {

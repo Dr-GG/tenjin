@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Tenjin.Enums.Messaging;
 using Tenjin.Extensions;
-using Tenjin.Interfaces.Messaging;
-using Tenjin.Models.Messaging;
-using Tenjin.Models.Messaging.Configuration;
+using Tenjin.Interfaces.Messaging.PublishSubscriber;
+using Tenjin.Models.Messaging.PublisherSubscriber;
+using Tenjin.Models.Messaging.PublisherSubscriber.Configuration;
 
-namespace Tenjin.Implementations.Messaging
+namespace Tenjin.Implementations.Messaging.PublisherSubscriber
 {
     public class Publisher<TData> : IPublisher<TData>
     {
@@ -69,7 +69,7 @@ namespace Tenjin.Implementations.Messaging
 
         public Task<Guid> Publish(TData data)
         {
-            var publishEvent = new PublishEvent<TData>(this, data);
+            var publishEvent = CreatePublishEvent(data);
 
             lock (_root)
             {
@@ -94,6 +94,16 @@ namespace Tenjin.Implementations.Messaging
             }
 
             DisposeSubscribers();
+        }
+
+        protected virtual PublishEvent<TData> CreatePublishEvent(TData data)
+        {
+            return new PublishEvent<TData>(this, data);
+        }
+
+        protected virtual PublishEvent<TData> CreateDisposeEvent()
+        {
+            return new PublishEvent<TData>(this, PublishEventType.Disposing);
         }
 
         protected virtual IPublisherLock GetLock(ISubscriber<TData> subscriber)
@@ -158,7 +168,7 @@ namespace Tenjin.Implementations.Messaging
 
         private void DisposeSubscribers()
         {
-            var publishEvent = new PublishEvent<TData>(this, PublishEventType.Disposing);
+            var publishEvent = CreateDisposeEvent();
 
             lock (_root)
             {

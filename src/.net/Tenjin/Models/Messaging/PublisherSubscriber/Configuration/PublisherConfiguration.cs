@@ -1,4 +1,4 @@
-﻿namespace Tenjin.Models.Messaging.Configuration
+﻿namespace Tenjin.Models.Messaging.PublisherSubscriber.Configuration
 {
     public record PublisherConfiguration
     {

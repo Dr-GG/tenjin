@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Tenjin.Models.Messaging;
+using Tenjin.Models.Messaging.PublisherSubscriber;
 
-namespace Tenjin.Interfaces.Messaging
+namespace Tenjin.Interfaces.Messaging.PublishSubscriber
 {
     public interface ISubscriber<TData>
     {
