@@ -1,4 +1,4 @@
-﻿using Tenjin.Implementations.Messaging;
+﻿using Tenjin.Implementations.Messaging.PublisherSubscriber;
 using Tenjin.Tests.Models.Messaging;
 
 namespace Tenjin.Tests.Services

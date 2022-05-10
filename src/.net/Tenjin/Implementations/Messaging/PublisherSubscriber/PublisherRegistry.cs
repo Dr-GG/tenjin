@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Tenjin.Interfaces.Messaging;
+using Tenjin.Interfaces.Messaging.PublishSubscriber;
 
-namespace Tenjin.Implementations.Messaging
+namespace Tenjin.Implementations.Messaging.PublisherSubscriber
 {
     public abstract class PublisherRegistry<TKey, TData> : IPublisherRegistry<TKey, TData> where TKey : notnull
     {

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
-using Tenjin.Interfaces.Messaging;
+using Tenjin.Interfaces.Messaging.PublishSubscriber;
 using Tenjin.Tests.Models.Messaging;
 using Tenjin.Tests.Services;
 
-namespace Tenjin.Tests.ImplementationsTests.MessagingTests
+namespace Tenjin.Tests.ImplementationsTests.MessagingTests.PublisherSubscriber
 {
     [TestFixture]
     public class PublisherRegistryTests

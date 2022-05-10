@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Tenjin.Models.Messaging.Configuration;
+using Tenjin.Models.Messaging.PublisherSubscriber.Configuration;
 
-namespace Tenjin.Interfaces.Messaging
+namespace Tenjin.Interfaces.Messaging.PublishSubscriber
 {
     public interface IPublisher<TData> : IDisposable, IAsyncDisposable
     {

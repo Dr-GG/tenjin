@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Tenjin.Enums.Messaging;
-using Tenjin.Interfaces.Messaging.Progress;
-using Tenjin.Models.Messaging.Configuration;
-using Tenjin.Models.Messaging.Progress;
+using Tenjin.Interfaces.Messaging.PublishSubscriber.Progress;
+using Tenjin.Models.Messaging.PublisherSubscriber.Configuration;
+using Tenjin.Models.Messaging.PublisherSubscriber.Progress;
 
-namespace Tenjin.Implementations.Messaging.Progress
+namespace Tenjin.Implementations.Messaging.PublisherSubscriber.Progress
 {
-    public class ProgressPublisher : Publisher<ProgressEvent>, IProgressPublisher
+    public abstract class ProgressPublisher<TProgressEvent> : Publisher<TProgressEvent>, IProgressPublisher<TProgressEvent>
+        where TProgressEvent : ProgressEvent
     {
         private const int PercentageDecimals = 5;
 
@@ -20,7 +21,7 @@ namespace Tenjin.Implementations.Messaging.Progress
 
         private readonly object _root = new();
 
-        public IProgressPublisher Configure(ProgressPublisherConfiguration configuration)
+        public IProgressPublisher<TProgressEvent> Configure(ProgressPublisherConfiguration configuration)
         {
             AssertConfiguration(configuration);
             InitialiseFromConfiguration(configuration);
@@ -28,15 +29,25 @@ namespace Tenjin.Implementations.Messaging.Progress
             return this;
         }
 
-        public Task Initialise(ulong total)
+        public async Task Initialise(ulong total, bool publish = true)
         {
+            TProgressEvent? progressEvent = null;
+
             lock (_root)
             {
                 _current = 0;
                 _total = total;
+
+                if (publish)
+                {
+                    progressEvent = CreateProgressEvent(_current, _total);
+                }
             }
 
-            return Task.CompletedTask;
+            if (progressEvent != null)
+            {
+                await Publish(progressEvent);
+            }
         }
 
         public Task Tick()
@@ -46,7 +57,7 @@ namespace Tenjin.Implementations.Messaging.Progress
 
         public async Task Tick(ulong ticks)
         {
-            ProgressEvent? publishEvent = null;
+            TProgressEvent? publishEvent = null;
 
             lock (_root)
             {
@@ -56,7 +67,7 @@ namespace Tenjin.Implementations.Messaging.Progress
 
                 if (_current == _total || PublishProgressEvent(ticks))
                 {
-                    publishEvent = GetProgressEvent();
+                    publishEvent = CreateProgressEvent(_current, _total);
                 }
             }
 
@@ -65,6 +76,8 @@ namespace Tenjin.Implementations.Messaging.Progress
                 await Publish(publishEvent);
             }
         }
+
+        protected abstract TProgressEvent CreateProgressEvent(ulong current, ulong total);
 
         private static void AssertConfiguration(ProgressPublisherConfiguration configuration)
         {
@@ -122,11 +135,6 @@ namespace Tenjin.Implementations.Messaging.Progress
         private void InitialiseFixedInterval()
         {
             _fixedIntervalCounter = _configuration.FixedInterval;
-        }
-
-        private ProgressEvent GetProgressEvent()
-        {
-            return new ProgressEvent(_current, _total);
         }
 
         private bool PublishProgressEvent(ulong ticks)

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Tenjin.Enums.Messaging;
-using Tenjin.Interfaces.Messaging;
-using Tenjin.Models.Messaging;
+using Tenjin.Interfaces.Messaging.PublishSubscriber;
+using Tenjin.Models.Messaging.PublisherSubscriber;
 
-namespace Tenjin.Implementations.Messaging
+namespace Tenjin.Implementations.Messaging.PublisherSubscriber
 {
     public class SubscriberHook<TData> : ISubscriberHook<TData>
     {

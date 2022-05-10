@@ -1,4 +1,4 @@
-﻿namespace Tenjin.Interfaces.Messaging
+﻿namespace Tenjin.Interfaces.Messaging.PublishSubscriber
 {
     public interface IDiscoverablePublisher<out TKey, TData> : IPublisher<TData>
     {

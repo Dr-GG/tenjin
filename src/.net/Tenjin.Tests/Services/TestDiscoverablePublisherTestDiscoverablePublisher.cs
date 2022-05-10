@@ -1,5 +1,5 @@
-﻿using Tenjin.Implementations.Messaging;
-using Tenjin.Interfaces.Messaging;
+﻿using Tenjin.Implementations.Messaging.PublisherSubscriber;
+using Tenjin.Interfaces.Messaging.PublishSubscriber;
 using Tenjin.Tests.Models.Messaging;
 
 namespace Tenjin.Tests.Services

@@ -1,5 +1,5 @@
 ﻿using System;
-using Tenjin.Models.Messaging.Progress;
+using Tenjin.Models.Messaging.PublisherSubscriber.Progress;
 
 namespace Tenjin.Extensions
 {
