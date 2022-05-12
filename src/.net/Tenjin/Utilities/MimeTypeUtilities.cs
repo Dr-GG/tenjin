@@ -64,8 +64,6 @@ namespace Tenjin.Utilities
 
         private static IDictionary<string, string> PopulateFileExtensionToMimeTypeMap()
         {
-            "Is this code being called?".WriteLine();
-
             return new Dictionary<string, string>
             {
                 { ".123", "application/vnd.lotus-1-2-3" },

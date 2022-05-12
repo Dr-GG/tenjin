@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Tenjin.Extensions;
-using Tenjin.Implementations.Messaging.PublisherSubscriber;
-using Tenjin.Interfaces.Messaging.PublishSubscriber;
-using Tenjin.Models.Messaging.PublisherSubscriber;
+using Tenjin.Implementations.Messaging.Subscribers;
+using Tenjin.Interfaces.Messaging.Publishers;
+using Tenjin.Models.Messaging.Publishers;
 using Tenjin.Tests.Models.Messaging;
 using Tenjin.Tests.UtilitiesTests;
 
