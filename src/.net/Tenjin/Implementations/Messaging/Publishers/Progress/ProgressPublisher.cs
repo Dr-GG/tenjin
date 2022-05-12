@@ -57,10 +57,8 @@ namespace Tenjin.Implementations.Messaging.Publishers.Progress
             return Tick(1);
         }
 
-        public async Task Tick(ulong ticks)
+        public Task Tick(ulong ticks)
         {
-            TProgressEvent? publishEvent = null;
-
             lock (_root)
             {
                 var newCurrent = _current + ticks;
@@ -69,20 +67,29 @@ namespace Tenjin.Implementations.Messaging.Publishers.Progress
 
                 if (_current == _total || PublishProgressEvent(ticks))
                 {
-                    publishEvent = CreateProgressEvent(_current, _total);
+                    PublishCurrentProgress();
                 }
             }
 
-            if (publishEvent != null)
-            {
-                await Publish(publishEvent);
-            }
+            return Task.CompletedTask;
         }
 
         protected abstract TProgressEvent CreateProgressEvent(ulong current, ulong total);
 
+        private void PublishCurrentProgress()
+        {
+            var publishEvent = CreateProgressEvent(_current, _total);
+
+            Publish(publishEvent);
+        }
+
         private static void AssertConfiguration(ProgressPublisherConfiguration configuration)
         {
+            if (configuration.Interval == ProgressNotificationInterval.None)
+            {
+                return;
+            }
+
             switch (configuration.Interval)
             {
                 case ProgressNotificationInterval.FixedInterval: 
@@ -92,6 +99,9 @@ namespace Tenjin.Implementations.Messaging.Publishers.Progress
                 case ProgressNotificationInterval.PercentageInterval:
                     AssertPercentageIntervalConfiguration(configuration);
                     break;
+                    
+                default: throw new NotSupportedException(
+                    $"No configuration support for interval {configuration.Interval}");
             }
         }
 
