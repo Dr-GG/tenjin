@@ -397,16 +397,15 @@ namespace Tenjin.Tests.ImplementationsTests.MessagingTests.PublishersTests.Progr
 
             Assert.Greater(threadCountId.Count, 1);
 
-            var orderedEvents = tickEvents
+            var currentValues = tickEvents
                 .Select(e => e.Data!)
-                .OrderBy(e => e.Current)
                 .ToList();
 
-            Assert.AreEqual(NumberOfThreadProgressPublishers, orderedEvents.Count);
+            Assert.AreEqual(NumberOfThreadProgressPublishers, tickEvents.Count);
 
             for (var i = 0; i < NumberOfThreadProgressPublishers; i++)
             {
-                Assert.AreEqual(i + 1, orderedEvents[i]!.Current);
+                Assert.AreEqual(i + 1, currentValues[i]!.Current);
             }
         }
 
