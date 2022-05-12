@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using Tenjin.Extensions;
-using Tenjin.Models.Messaging.PublisherSubscriber.Progress;
+using Tenjin.Models.Messaging.Publishers.Progress;
 
 namespace Tenjin.Tests.ExtensionsTests
 {

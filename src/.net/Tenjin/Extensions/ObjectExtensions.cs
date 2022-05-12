@@ -100,7 +100,7 @@ namespace Tenjin.Extensions
             int? writeLineAppends = null)
         {
             var output = root?.ToString() ?? string.Empty;
-            var underline = headingUnderline.IsNotNullOrEmpty()
+            var underline = headingUnderline.IsNullOrEmpty()
                 ? DefaultHeadingUnderline
                 : headingUnderline;
 
@@ -115,7 +115,7 @@ namespace Tenjin.Extensions
             int? writeLineAppends = null)
         {
             var output = root?.ToString(format, formatProvider) ?? string.Empty;
-            var underline = headingUnderline.IsNotNullOrEmpty()
+            var underline = headingUnderline.IsNullOrEmpty()
                 ? DefaultHeadingUnderline
                 : headingUnderline;
 

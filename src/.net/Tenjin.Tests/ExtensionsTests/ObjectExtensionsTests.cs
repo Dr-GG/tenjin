@@ -3144,7 +3144,7 @@ namespace Tenjin.Tests.ExtensionsTests
         {
             using var monitor = new ConsoleTestMonitor();
             var testValue = new StringBuilder($"{expectedValue}{Environment.NewLine}");
-            var underline = headingUnderline.IsNotNullOrEmpty()
+            var underline = headingUnderline.IsNullOrEmpty()
                 ? ObjectExtensions.DefaultHeadingUnderline
                 : headingUnderline;
 

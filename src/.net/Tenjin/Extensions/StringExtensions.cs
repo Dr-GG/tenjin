@@ -10,7 +10,7 @@ namespace Tenjin.Extensions
             return string.IsNullOrEmpty(value);
         }
 
-        public static bool IsNotNullOrEmpty([NotNullWhen(false)] this string? value)
+        public static bool IsNotNullOrEmpty([NotNullWhen(true)] this string? value)
         {
             return !string.IsNullOrEmpty(value);
         }
