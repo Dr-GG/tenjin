@@ -1,0 +1,12 @@
+﻿using System;
+
+namespace Tenjin.Models.Messaging.Diagnostics
+{
+    public record DiagnosticsStopwatchLapse
+    {
+        public uint Order { get; init; } = 0;
+        public string? Name { get; init; }
+        public DateTime StartTimestamp { get; init; } = DateTime.MinValue;
+        public DateTime EndTimestamp { get; init; } = DateTime.MaxValue;
+    }
+}

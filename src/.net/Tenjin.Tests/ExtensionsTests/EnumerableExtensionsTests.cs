@@ -150,6 +150,30 @@ namespace Tenjin.Tests.ExtensionsTests
             }
         }
 
+        [Test]
+        public void LastIndex_WhenCollectionIsNull_TheMethodReturnsMinusOne()
+        {
+            Assert.AreEqual(-1, ((ICollection<int>?)null).LastIndex());
+        }
+
+        [TestCase(0, -1)]
+        [TestCase(1, 0)]
+        [TestCase(2, 1)]
+        [TestCase(3, 2)]
+        [TestCase(4, 3)]
+        [TestCase(5, 4)]
+        public void LastIndex_WhenPopulatingTheListWithItems_TheLastIndexIsCorrect(int numberOfItems, int expectedLastIndex)
+        {
+            var list = new List<int>();
+
+            for (var i = 0; i < numberOfItems; i++)
+            {
+                list.Add(i);
+            }
+
+            Assert.AreEqual(expectedLastIndex, list.LastIndex());
+        }
+
         private static IEnumerable<int> GetBatchTestList()
         {
             var result = new List<int>();

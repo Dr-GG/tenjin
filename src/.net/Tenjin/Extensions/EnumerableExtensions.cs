@@ -17,6 +17,16 @@ namespace Tenjin.Extensions
             return !enumerable?.Any() ?? true;
         }
 
+        public static int LastIndex<T>(this IEnumerable<T>? collection)
+        {
+            if (collection == null)
+            {
+                return -1;
+            }
+
+            return collection.Count() - 1;
+        }
+
         public static IEnumerable<IEnumerable<T>> Batch<T>(this IEnumerable<T>? collection, int numberOfBatches)
         {
             if (collection == null)
