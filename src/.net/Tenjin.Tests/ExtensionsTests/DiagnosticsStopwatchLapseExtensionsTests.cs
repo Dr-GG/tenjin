@@ -1,12 +1,12 @@
 ﻿using System;
 using NUnit.Framework;
 using Tenjin.Extensions;
-using Tenjin.Models.Messaging.Diagnostics;
+using Tenjin.Models.Diagnostics;
 
 namespace Tenjin.Tests.ExtensionsTests
 {
     [TestFixture]
-    public class DiagnosticsStopwatchLapseExtensionsTests
+    public class DiagnosticsStopwatchLapExtensionsTests
     {
         private const string TimestampFormat = "yyyy-MM-dd HH:mm:ss";
 
@@ -21,13 +21,13 @@ namespace Tenjin.Tests.ExtensionsTests
             var startTimestamp = DateTime.ParseExact(start, TimestampFormat, null);
             var stopTimestamp = DateTime.ParseExact(stop, TimestampFormat, null);
             var timespan = stopTimestamp - startTimestamp;
-            var lapse = new DiagnosticsStopwatchLapse
+            var lap = new DiagnosticsStopwatchLap
             {
                 StartTimestamp = startTimestamp,
                 EndTimestamp = stopTimestamp
             };
 
-            Assert.AreEqual(timespan, lapse.Timespan());
+            Assert.AreEqual(timespan, lap.Timespan());
         }
     }
 }

@@ -29,28 +29,28 @@ namespace Tenjin.Tests.ImplementationsTests.DiagnosticsTests
         [TestCase(50)]
         [TestCase(75)]
         [TestCase(100)]
-        public async Task StartStop_WhenCreatingMultipleLapses_CreatesTheCorrectLapseNamesAndOrders(int numberOfLapses)
+        public async Task StartStop_WhenCreatingMultipleLaps_CreatesTheCorrectLapNamesAndOrders(int numberOfLaps)
         {
             var stopwatch = GetStopwatch();
 
-            for (var i = 0; i < numberOfLapses; i++)
+            for (var i = 0; i < numberOfLaps; i++)
             {
-                var lapseName = GetLapseName(i);
+                var lapName = GetLapName(i);
 
-                await stopwatch.Start(lapseName);
+                await stopwatch.Start(lapName);
                 await stopwatch.Stop();
             }
 
-            var lapses = (await stopwatch.GetAllLapses()).ToList();
+            var laps = (await stopwatch.GetAllLaps()).ToList();
 
-            Assert.AreEqual(numberOfLapses, lapses.Count);
+            Assert.AreEqual(numberOfLaps, laps.Count);
 
-            for (var i = 0; i < lapses.Count; i++)
+            for (var i = 0; i < laps.Count; i++)
             {
-                var lapse = lapses[i];
+                var lap = laps[i];
 
-                Assert.AreEqual(GetLapseName(i), lapse.Name);
-                Assert.AreEqual(i + 1, lapse.Order);
+                Assert.AreEqual(GetLapName(i), lap.Name);
+                Assert.AreEqual(i + 1, lap.Order);
             }
         }
 
@@ -73,7 +73,7 @@ namespace Tenjin.Tests.ImplementationsTests.DiagnosticsTests
         }
 
         [Test]
-        public void GetStatistics_WithNoLapses_ThrowsAnException()
+        public void GetStatistics_WithNoLaps_ThrowsAnException()
         {
             var stopwatch = GetStopwatch();
 
@@ -81,14 +81,14 @@ namespace Tenjin.Tests.ImplementationsTests.DiagnosticsTests
         }
 
         [Test]
-        public async Task GetAllLapses_WhenRunningCompleteLapses_ReturnsExpectedStatistics()
+        public async Task GetAllLaps_WhenRunningCompleteLaps_ReturnsExpectedStatistics()
         {
             var timestamps = GetFixedTimestamps().ToList();
             var clockProvider = new CollectionSystemClockProvider(timestamps);
             var stopwatch = GetStopwatch(clockProvider);
-            var lapseCount = timestamps.Count / 2;
+            var lapCount = timestamps.Count / 2;
 
-            for (var i = 0; i < lapseCount; i++)
+            for (var i = 0; i < lapCount; i++)
             {
                 await stopwatch.Start();
                 await stopwatch.Stop();
@@ -97,12 +97,12 @@ namespace Tenjin.Tests.ImplementationsTests.DiagnosticsTests
             var statistics = await stopwatch.GetStatistics();
 
             // Fastest.
-            Assert.AreEqual(2, statistics.FastestLapse.Order);
-            Assert.AreEqual(1.0, statistics.FastestLapse.Timespan().TotalSeconds);
+            Assert.AreEqual(2, statistics.FastestLap.Order);
+            Assert.AreEqual(1.0, statistics.FastestLap.Timespan().TotalSeconds);
 
             // Slowest.
-            Assert.AreEqual(4, statistics.SlowestLapse.Order);
-            Assert.AreEqual(60.0, statistics.SlowestLapse.Timespan().TotalSeconds);
+            Assert.AreEqual(4, statistics.SlowestLap.Order);
+            Assert.AreEqual(60.0, statistics.SlowestLap.Timespan().TotalSeconds);
 
             // Other stats.
             Assert.AreEqual(89.0, statistics.TotalTimespan.TotalSeconds);
@@ -117,25 +117,25 @@ namespace Tenjin.Tests.ImplementationsTests.DiagnosticsTests
             return new[]
             {
                 new DateTime(2000, 01, 01, 01, 00, 00),
-                new DateTime(2000, 01, 01, 01, 00, 10), // Lapse 01 = 10 Seconds.
+                new DateTime(2000, 01, 01, 01, 00, 10), // Lap 01 = 10 Seconds.
 
                 new DateTime(2000, 01, 01, 01, 00, 11),
-                new DateTime(2000, 01, 01, 01, 00, 12), // Lapse 02 = 01 second. Fastest lap.
+                new DateTime(2000, 01, 01, 01, 00, 12), // Lap 02 = 01 second. Fastest lap.
 
                 new DateTime(2000, 01, 01, 01, 01, 30),
-                new DateTime(2000, 01, 01, 01, 01, 45), // Lapse 03 = 15 seconds.
+                new DateTime(2000, 01, 01, 01, 01, 45), // Lap 03 = 15 seconds.
 
                 new DateTime(2000, 01, 01, 01, 02, 30),
-                new DateTime(2000, 01, 01, 01, 03, 30), // Lapse 04 = 60 seconds. Slowest lap.
+                new DateTime(2000, 01, 01, 01, 03, 30), // Lap 04 = 60 seconds. Slowest lap.
 
                 new DateTime(2000, 01, 01, 01, 05, 00),
-                new DateTime(2000, 01, 01, 01, 05, 03), // Lapse 05 = 03 seconds.
+                new DateTime(2000, 01, 01, 01, 05, 03), // Lap 05 = 03 seconds.
             };
         }
 
-        private static string GetLapseName(int index)
+        private static string GetLapName(int index)
         {
-            return $"Lapse {index + 1}";
+            return $"Lap {index + 1}";
         }
 
         private static IDiagnosticsStopwatch GetStopwatch(ISystemClockProvider? clockProvider = null)
