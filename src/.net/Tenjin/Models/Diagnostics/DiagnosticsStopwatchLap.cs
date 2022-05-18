@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Tenjin.Models.Messaging.Diagnostics
+namespace Tenjin.Models.Diagnostics
 {
-    public record DiagnosticsStopwatchLapse
+    public record DiagnosticsStopwatchLap
     {
         public uint Order { get; init; } = 0;
         public string? Name { get; init; }
