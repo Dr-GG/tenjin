@@ -4,7 +4,7 @@ using Tenjin.Models.Messaging.Publishers.Configuration;
 
 namespace Tenjin.Tests.ModelsTests.MessagingTests.PublishersTests.ConfigurationTests
 {
-    [TestFixture]
+    [TestFixture, Parallelizable(ParallelScope.Children)]
     public class ProgressPublisherConfigurationTests
     {
         [Test]

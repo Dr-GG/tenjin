@@ -4,7 +4,7 @@ using Tenjin.Implementations.Diagnostics;
 
 namespace Tenjin.Tests.ImplementationsTests.DiagnosticsTests
 {
-    [TestFixture]
+    [TestFixture, Parallelizable(ParallelScope.Children)]
     public class SystemClockProviderTests
     {
         [Test]

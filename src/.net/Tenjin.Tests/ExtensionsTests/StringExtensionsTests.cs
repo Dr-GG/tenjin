@@ -3,7 +3,7 @@ using Tenjin.Extensions;
 
 namespace Tenjin.Tests.ExtensionsTests
 {
-    [TestFixture]
+    [TestFixture, Parallelizable(ParallelScope.Children)]
     public class StringExtensionsTests
     {
         [TestCase(null, false)]

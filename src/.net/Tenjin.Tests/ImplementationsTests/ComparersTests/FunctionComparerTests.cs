@@ -4,7 +4,7 @@ using Tenjin.Implementations.Comparers;
 
 namespace Tenjin.Tests.ImplementationsTests.ComparersTests
 {
-    [TestFixture]
+    [TestFixture, Parallelizable(ParallelScope.Children)]
     public class FunctionComparerTests
     {
         private static readonly Func<int, int, int> TestFunctionComparer = (x, y) => x.CompareTo(y);

@@ -4,7 +4,7 @@ using Tenjin.Models.Messaging.Publishers.Progress;
 
 namespace Tenjin.Tests.ExtensionsTests
 {
-    [TestFixture]
+    [TestFixture, Parallelizable(ParallelScope.Children)]
     public class ProgressEventExtensionsTests
     {
         [Test]
