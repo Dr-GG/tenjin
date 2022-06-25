@@ -9,7 +9,7 @@ using Tenjin.Tests.Models.Mappers;
 
 namespace Tenjin.Tests.ExtensionsTests
 {
-    [TestFixture]
+    [TestFixture, Parallelizable(ParallelScope.Children)]
     public class MapperExtensionsTests
     {
         [Test]

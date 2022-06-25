@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Tenjin.Implementations.Comparers;
 
 namespace Tenjin.Extensions
 {
@@ -69,6 +70,50 @@ namespace Tenjin.Extensions
             }
 
             return batches;
+        }
+
+        public static IEnumerable<T> BinaryInsert<T>(this IEnumerable<T>? collection,
+            T item, bool addIfFound = false)
+        {
+            return BinaryInsert(collection, item, Comparer<T>.Default, addIfFound);
+        }
+
+        public static IEnumerable<T> BinaryInsert<T>(this IEnumerable<T>? collection,
+            T item, Func<T, T, int> comparerAction, bool addIfFound = false)
+        {
+            var comparer = new FunctionComparer<T>(comparerAction);
+
+            return BinaryInsert(collection, item, comparer, addIfFound);
+        }
+
+        public static IEnumerable<T> BinaryInsert<T>(this IEnumerable<T>? collection,
+            T item, IComparer<T> comparer, bool addIfFound = false)
+        {
+            if (collection == null)
+            {
+                return Enumerable.Empty<T>();
+            }
+
+            var array = collection.ToArray();
+            var binaryIndex = Array.BinarySearch(array, item, comparer);
+
+            if (binaryIndex < 0)
+            {
+                return BinaryInsertMerge(array, item, ~binaryIndex);
+            }
+
+            return addIfFound
+                ? BinaryInsertMerge(array, item, binaryIndex)
+                : array;
+        }
+
+        private static IEnumerable<T> BinaryInsertMerge<T>(IEnumerable<T> source, T item, int index)
+        {
+            var result = new List<T>(source);
+
+            result.Insert(index, item);
+
+            return result;
         }
     }
 }

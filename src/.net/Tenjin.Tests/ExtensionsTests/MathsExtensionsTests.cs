@@ -3,7 +3,7 @@ using Tenjin.Extensions;
 
 namespace Tenjin.Tests.ExtensionsTests
 {
-    [TestFixture]
+    [TestFixture, Parallelizable(ParallelScope.Children)]
     public class MathsExtensionsTests
     {
         public const float SingleMiddleTolerance = 0.00001f;

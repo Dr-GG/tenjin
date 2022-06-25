@@ -11,6 +11,7 @@ using Tenjin.Tests.Services;
 
 namespace Tenjin.Tests.ImplementationsTests.DiagnosticsTests
 {
+    [TestFixture, Parallelizable(ParallelScope.Children)]
     public class DiagnosticsStopwatchTests
     {
         [Test]

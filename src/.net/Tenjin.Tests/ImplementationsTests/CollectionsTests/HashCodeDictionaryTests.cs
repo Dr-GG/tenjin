@@ -8,7 +8,7 @@ using Tenjin.Tests.Models.HashCodeDictionary;
 
 namespace Tenjin.Tests.ImplementationsTests.CollectionsTests
 {
-    [TestFixture]
+    [TestFixture, Parallelizable(ParallelScope.Children)]
     public class HashCodeDictionaryTests
     {
         public const int NumberOfModels = 1000;
