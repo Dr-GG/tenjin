@@ -1,8 +1,7 @@
-﻿namespace Tenjin.Interfaces.Mappers
+﻿namespace Tenjin.Interfaces.Mappers;
+
+public interface IBinaryMapper<TLeft, TRight>
 {
-    public interface IBinaryMapper<TLeft, TRight>
-    {
-        TLeft Map(TRight value);
-        TRight Map(TLeft value);
-    }
+    TLeft Map(TRight value);
+    TRight Map(TLeft value);
 }

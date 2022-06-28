@@ -1,9 +1,9 @@
-﻿namespace Tenjin.Enums.Messaging
+﻿namespace Tenjin.Enums.Messaging;
+
+public enum ProgressNotificationInterval
 {
-    public enum ProgressNotificationInterval
-    {
-        None = 0,
-        FixedInterval = 1,
-        PercentageInterval = 2,
-    }
+    None = 0,
+    FixedInterval = 1,
+    PercentageInterval = 2
 }
+

@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace Tenjin.Exceptions.Diagnostics
+namespace Tenjin.Exceptions.Diagnostics;
+
+public class DiagnosticsStopwatchException : Exception
 {
-    public class DiagnosticsStopwatchException : Exception
-    {
-        public DiagnosticsStopwatchException(string message): base(message)
-        { }
-    }
+    public DiagnosticsStopwatchException(string message): base(message)
+    { }
 }

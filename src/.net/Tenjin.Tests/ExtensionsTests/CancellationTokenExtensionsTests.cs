@@ -2,22 +2,21 @@
 using NUnit.Framework;
 using Tenjin.Extensions;
 
-namespace Tenjin.Tests.ExtensionsTests
+namespace Tenjin.Tests.ExtensionsTests;
+
+[TestFixture]
+public class CancellationTokenExtensionsTests
 {
-    [TestFixture]
-    public class CancellationTokenExtensionsTests
+    [Test]
+    public void CanContinue_WhenCancellationTokenGoesThroughLifeCycle_ReturnsCorrectValue()
     {
-        [Test]
-        public void CanContinue_WhenCancellationTokenGoesThroughLifeCycle_ReturnsCorrectValue()
-        {
-            var source = new CancellationTokenSource();
-            var token = source.Token;
+        var source = new CancellationTokenSource();
+        var token = source.Token;
 
-            Assert.IsTrue(token.CanContinue());
+        Assert.IsTrue(token.CanContinue());
 
-            source.Cancel();
+        source.Cancel();
 
-            Assert.IsFalse(token.CanContinue());
-        }
+        Assert.IsFalse(token.CanContinue());
     }
 }

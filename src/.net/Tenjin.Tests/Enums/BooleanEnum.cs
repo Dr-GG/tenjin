@@ -1,8 +1,7 @@
-﻿namespace Tenjin.Tests.Enums
+﻿namespace Tenjin.Tests.Enums;
+
+public enum BooleanEnum
 {
-    public enum BooleanEnum
-    {
-        False = 0,
-        True = 1
-    }
+    False = 0,
+    True = 1
 }

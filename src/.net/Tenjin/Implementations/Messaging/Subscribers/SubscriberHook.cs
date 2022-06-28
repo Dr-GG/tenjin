@@ -5,103 +5,102 @@ using Tenjin.Interfaces.Messaging.Publishers;
 using Tenjin.Interfaces.Messaging.Subscribers;
 using Tenjin.Models.Messaging.Publishers;
 
-namespace Tenjin.Implementations.Messaging.Subscribers
+namespace Tenjin.Implementations.Messaging.Subscribers;
+
+public class SubscriberHook<TData> : ISubscriberHook<TData>
 {
-    public class SubscriberHook<TData> : ISubscriberHook<TData>
+    private bool _disposed;
+    private IPublisherLock? _lock;
+
+    private readonly Func<PublishEvent<TData>, Task> _onNextAction;
+    private readonly Func<PublishEvent<TData>, Task>? _onDisposeAction;
+    private readonly Func<PublishEvent<TData>, Task>? _onErrorAction;
+
+    public SubscriberHook(
+        object parent,
+        Func<PublishEvent<TData>, Task> onNextAction,
+        Func<PublishEvent<TData>, Task>? onDisposeAction = null,
+        Func<PublishEvent<TData>, Task>? onErrorAction = null) : 
+        this(
+            parent.GetHashCode().ToString(),
+            onNextAction, onDisposeAction, onErrorAction
+        )
+    { }
+
+    public SubscriberHook(
+        string id,
+        Func<PublishEvent<TData>, Task> onNextAction,
+        Func<PublishEvent<TData>, Task>? onDisposeAction = null,
+        Func<PublishEvent<TData>, Task>? onErrorAction = null)
     {
-        private bool _disposed;
-        private IPublisherLock? _lock;
+        Id = id;
+        _onNextAction = onNextAction;
+        _onDisposeAction = onDisposeAction;
+        _onErrorAction = onErrorAction;
+    }
 
-        private readonly Func<PublishEvent<TData>, Task> _onNextAction;
-        private readonly Func<PublishEvent<TData>, Task>? _onDisposeAction;
-        private readonly Func<PublishEvent<TData>, Task>? _onErrorAction;
+    public string Id { get; }
 
-        public SubscriberHook(
-            object parent,
-            Func<PublishEvent<TData>, Task> onNextAction,
-            Func<PublishEvent<TData>, Task>? onDisposeAction = null,
-            Func<PublishEvent<TData>, Task>? onErrorAction = null) : 
-            this(
-                    parent.GetHashCode().ToString(),
-                    onNextAction, onDisposeAction, onErrorAction
-                )
-        { }
-
-        public SubscriberHook(
-            string id,
-            Func<PublishEvent<TData>, Task> onNextAction,
-            Func<PublishEvent<TData>, Task>? onDisposeAction = null,
-            Func<PublishEvent<TData>, Task>? onErrorAction = null)
+    public async Task<ISubscriberHook<TData>> Subscribe(IPublisher<TData> publisher)
+    {
+        if (_lock != null)
         {
-            Id = id;
-            _onNextAction = onNextAction;
-            _onDisposeAction = onDisposeAction;
-            _onErrorAction = onErrorAction;
+            throw new InvalidOperationException("Subscriber hook already has a publisher");
         }
 
-        public string Id { get; }
+        _lock = await publisher.Subscribe(this);
 
-        public async Task<ISubscriberHook<TData>> Subscribe(IPublisher<TData> publisher)
+        return this;
+    }
+
+    public async Task Receive(PublishEvent<TData> publishEvent)
+    {
+        switch (publishEvent.Type)
         {
-            if (_lock != null)
-            {
-                throw new InvalidOperationException("Subscriber hook already has a publisher");
-            }
+            case PublishEventType.Publish:
+                await ExecuteAction(publishEvent, _onNextAction);
+                break;
 
-            _lock = await publisher.Subscribe(this);
+            case PublishEventType.Disposing:
+                await ExecuteAction(publishEvent, _onDisposeAction);
+                break;
 
-            return this;
+            case PublishEventType.Error:
+                await ExecuteAction(publishEvent, _onErrorAction);
+                break;
+
+            default:
+                throw new NotSupportedException(
+                    $"No action relay for publish event type {publishEvent.Type}");
+        }
+    }
+
+    private static Task ExecuteAction(
+        PublishEvent<TData> publishEvent,
+        Func<PublishEvent<TData>, Task>? action)
+    {
+        return action == null 
+            ? Task.CompletedTask 
+            : action(publishEvent);
+    }
+
+    public void Dispose()
+    {
+        DisposeAsync().GetAwaiter().GetResult();
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_disposed)
+        {
+            return;
         }
 
-        public async Task Receive(PublishEvent<TData> publishEvent)
+        if (_lock != null)
         {
-            switch (publishEvent.Type)
-            {
-                case PublishEventType.Publish:
-                    await ExecuteAction(publishEvent, _onNextAction);
-                    break;
-
-                case PublishEventType.Disposing:
-                    await ExecuteAction(publishEvent, _onDisposeAction);
-                    break;
-
-                case PublishEventType.Error:
-                    await ExecuteAction(publishEvent, _onErrorAction);
-                    break;
-
-                default:
-                    throw new NotSupportedException(
-                        $"No action relay for publish event type {publishEvent.Type}");
-            }
+            await _lock.DisposeAsync();
         }
 
-        private static Task ExecuteAction(
-            PublishEvent<TData> publishEvent,
-            Func<PublishEvent<TData>, Task>? action)
-        {
-            return action == null 
-                ? Task.CompletedTask 
-                : action(publishEvent);
-        }
-
-        public void Dispose()
-        {
-            DisposeAsync().GetAwaiter().GetResult();
-        }
-
-        public async ValueTask DisposeAsync()
-        {
-            if (_disposed)
-            {
-                return;
-            }
-
-            if (_lock != null)
-            {
-                await _lock.DisposeAsync();
-            }
-
-            _disposed = true;
-        }
+        _disposed = true;
     }
 }

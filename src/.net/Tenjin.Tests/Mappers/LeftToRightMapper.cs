@@ -1,17 +1,16 @@
 ﻿using Tenjin.Interfaces.Mappers;
 using Tenjin.Tests.Models.Mappers;
 
-namespace Tenjin.Tests.Mappers
+namespace Tenjin.Tests.Mappers;
+
+public class LeftToRightMapper : IUnaryMapper<LeftModel, RightModel>
 {
-    public class LeftToRightMapper : IUnaryMapper<LeftModel, RightModel>
+    public RightModel Map(LeftModel source)
     {
-        public RightModel Map(LeftModel source)
+        return new RightModel
         {
-            return new()
-            {
-                Property1 = source.Property1,
-                Property2 = source.Property2
-            };
-        }
+            Property1 = source.Property1,
+            Property2 = source.Property2
+        };
     }
 }

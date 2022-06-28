@@ -2,36 +2,35 @@
 using Tenjin.Interfaces.Messaging.Publishers;
 using Tenjin.Interfaces.Messaging.Subscribers;
 
-namespace Tenjin.Implementations.Messaging.Publishers
+namespace Tenjin.Implementations.Messaging.Publishers;
+
+public class PublisherLock<TData> : IPublisherLock
 {
-    public class PublisherLock<TData> : IPublisherLock
+    private bool _disposed;
+
+    private readonly IPublisher<TData> _publisher;
+    private readonly ISubscriber<TData> _subscriber;
+
+    public PublisherLock(IPublisher<TData> publisher, ISubscriber<TData> subscriber)
     {
-        private bool _disposed;
+        _publisher = publisher;
+        _subscriber = subscriber;
+    }
 
-        private readonly IPublisher<TData> _publisher;
-        private readonly ISubscriber<TData> _subscriber;
+    public void Dispose()
+    {
+        DisposeAsync().GetAwaiter().GetResult();
+    }
 
-        public PublisherLock(IPublisher<TData> publisher, ISubscriber<TData> subscriber)
+    public async ValueTask DisposeAsync()
+    {
+        if (_disposed)
         {
-            _publisher = publisher;
-            _subscriber = subscriber;
+            return;
         }
 
-        public void Dispose()
-        {
-            DisposeAsync().GetAwaiter().GetResult();
-        }
+        await _publisher.Unsubscribe(_subscriber);
 
-        public async ValueTask DisposeAsync()
-        {
-            if (_disposed)
-            {
-                return;
-            }
-
-            await _publisher.Unsubscribe(_subscriber);
-
-            _disposed = true;
-        }
+        _disposed = true;
     }
 }

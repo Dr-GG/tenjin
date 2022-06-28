@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace Tenjin.Interfaces.Diagnostics
+namespace Tenjin.Interfaces.Diagnostics;
+
+public interface ISystemClockProvider
 {
-    public interface ISystemClockProvider
-    {
-        DateTime Now();
-    }
+    DateTime Now();
 }

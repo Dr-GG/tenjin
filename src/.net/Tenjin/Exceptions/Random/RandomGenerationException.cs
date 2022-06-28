@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace Tenjin.Exceptions.Random
+namespace Tenjin.Exceptions.Random;
+
+public class RandomGenerationException : Exception
 {
-    public class RandomGenerationException : Exception
-    {
-        public RandomGenerationException(string message) : base(message)
-        { }
-    }
+    public RandomGenerationException(string message) : base(message)
+    { }
 }
