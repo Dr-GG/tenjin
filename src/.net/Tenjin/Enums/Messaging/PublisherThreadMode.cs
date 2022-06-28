@@ -1,8 +1,7 @@
-﻿namespace Tenjin.Enums.Messaging
+﻿namespace Tenjin.Enums.Messaging;
+
+public enum PublisherThreadMode
 {
-    public enum PublisherThreadMode
-    {
-        Multi = 0,
-        Single = 1,
-    }
+    Multi = 0,
+    Single = 1
 }

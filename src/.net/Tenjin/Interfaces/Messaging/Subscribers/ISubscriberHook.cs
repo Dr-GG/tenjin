@@ -2,10 +2,9 @@
 using System.Threading.Tasks;
 using Tenjin.Interfaces.Messaging.Publishers;
 
-namespace Tenjin.Interfaces.Messaging.Subscribers
+namespace Tenjin.Interfaces.Messaging.Subscribers;
+
+public interface ISubscriberHook<TData> : ISubscriber<TData>, IDisposable, IAsyncDisposable
 {
-    public interface ISubscriberHook<TData> : ISubscriber<TData>, IDisposable, IAsyncDisposable
-    {
-        Task<ISubscriberHook<TData>> Subscribe(IPublisher<TData> publisher);
-    }
+    Task<ISubscriberHook<TData>> Subscribe(IPublisher<TData> publisher);
 }

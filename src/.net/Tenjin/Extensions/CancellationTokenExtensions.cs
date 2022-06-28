@@ -1,12 +1,11 @@
 ﻿using System.Threading;
 
-namespace Tenjin.Extensions
+namespace Tenjin.Extensions;
+
+public static class CancellationTokenExtensions
 {
-    public static class CancellationTokenExtensions
+    public static bool CanContinue(this CancellationToken cancellationToken)
     {
-        public static bool CanContinue(this CancellationToken cancellationToken)
-        {
-            return !cancellationToken.IsCancellationRequested;
-        }
+        return !cancellationToken.IsCancellationRequested;
     }
 }

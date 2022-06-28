@@ -9,124 +9,125 @@ using Tenjin.Models.Messaging.Publishers;
 using Tenjin.Tests.Models.Messaging;
 using Tenjin.Tests.UtilitiesTests;
 
-namespace Tenjin.Tests.Services
+namespace Tenjin.Tests.Services;
+
+public class SubscriberThreadWorker
 {
-    public class SubscriberThreadWorker
+    private const int MinimumNumberOfPublishes = 2;
+    private const int MaximumNumberOfPublishes = 5;
+    private const int MinimumRandomMilliseconds = 10;
+    private const int MaximumRandomMilliseconds = 100;
+
+    private int _subscribeOffset;
+    private int _unsubscribeOffset;
+    private int _publishOffset;
+    private IPublisherLock? _publisherLock;
+    private readonly object _root = new();
+    private readonly List<PublishEvent<TestPublishData>> _publishedEventsReceived = new();
+    private readonly List<TestPublishData> _publishedDataSent = new();
+    private readonly IPublisher<TestPublishData> _publisher;
+    private readonly SubscriberHook<TestPublishData> _hook;
+
+    public SubscriberThreadWorker(IPublisher<TestPublishData> publisher)
     {
-        private const int MinimumNumberOfPublishes = 2;
-        private const int MaximumNumberOfPublishes = 5;
-        private const int MinimumRandomMilliseconds = 10;
-        private const int MaximumRandomMilliseconds = 100;
+        _publisher = publisher;
+        _hook = new SubscriberHook<TestPublishData>(this, OnNext);
+    }
 
-        private int _subscribeOffset;
-        private int _unsubscribeOffset;
-        private int _publishOffset;
-        private IPublisherLock? _publisherLock;
-        private readonly object _root = new();
-        private readonly List<PublishEvent<TestPublishData>> _publishedEventsReceived = new();
-        private readonly List<TestPublishData> _publishedDataSent = new();
-        private readonly IPublisher<TestPublishData> _publisher;
-        private readonly SubscriberHook<TestPublishData> _hook;
+    public bool ReceivedPublishedEvents => _publishedEventsReceived.IsNotEmpty();
+    public bool ReceivedNoPublishedEvents => _publishedEventsReceived.IsEmpty();
+    public int NumberOfPublishes { get; private set; }
+    public IEnumerable<PublishEvent<TestPublishData>> PublishedEventsReceived => _publishedEventsReceived;
+    public IEnumerable<TestPublishData> PublishedDataSent => _publishedDataSent;
 
-        public SubscriberThreadWorker(IPublisher<TestPublishData> publisher)
+    public bool PublishData { get; set; }
+    public bool UnsubscribeWithLock { get; set; }
+
+    public async Task Run()
+    {
+        Initialise();
+
+        await Subscribe();
+        await Publish();
+        await Unsubscribe();
+    }
+
+    private Task OnNext(PublishEvent<TestPublishData> publishEvent)
+    {
+        lock (_root)
         {
-            _publisher = publisher;
-            _hook = new SubscriberHook<TestPublishData>(this, OnNext);
+            _publishedEventsReceived.Add(publishEvent);
         }
 
-        public bool ReceivedPublishedEvents => _publishedEventsReceived.IsNotEmpty();
-        public bool ReceivedNoPublishedEvents => _publishedEventsReceived.IsEmpty();
-        public int NumberOfPublishes { get; private set; }
-        public IEnumerable<PublishEvent<TestPublishData>> PublishedEventsReceived => _publishedEventsReceived;
-        public IEnumerable<TestPublishData> PublishedDataSent => _publishedDataSent;
+        return Task.CompletedTask;
+    }
 
-        public bool PublishData { get; set; }
-        public bool UnsubscribeWithLock { get; set; }
+    private async Task Subscribe()
+    {
+        Thread.Sleep(_subscribeOffset);
 
-        public async Task Run()
+        _publisherLock = await _publisher.Subscribe(_hook);
+    }
+
+    private async Task Publish()
+    {
+        if (!PublishData)
         {
-            Initialise();
-
-            await Subscribe();
-            await Publish();
-            await Unsubscribe();
+            return;
         }
 
-        private Task OnNext(PublishEvent<TestPublishData> publishEvent)
+        for (var i = 0; i < NumberOfPublishes; i++)
         {
-            lock (_root)
-            {
-                _publishedEventsReceived.Add(publishEvent);
-            }
+            var data = MessagingUtilities.GetRandomTestPublishData();
 
-            return Task.CompletedTask;
+            _publishedDataSent.Add(data);
+            await _publisher.Publish(data);
+
+            Thread.Sleep(_publishOffset);
+        }
+    }
+
+    private async Task Unsubscribe()
+    {
+        Thread.Sleep(_unsubscribeOffset);
+
+        // if statements read easier than switch.
+        // ReSharper disable once ConvertIfStatementToSwitchStatement
+        if (UnsubscribeWithLock && _publisherLock != null)
+        {
+            await _publisherLock.DisposeAsync();
+        }
+        else if (!UnsubscribeWithLock)
+        {
+            await _publisher.Unsubscribe(_hook);
+        }
+    }
+
+    private void Initialise()
+    {
+        _subscribeOffset = GetRandomTimeOffset();
+        _unsubscribeOffset = GetRandomTimeOffset();
+
+        if (!PublishData)
+        {
+            return;
         }
 
-        private async Task Subscribe()
-        {
-            Thread.Sleep(_subscribeOffset);
+        _publishOffset = GetRandomTimeOffset();
+        NumberOfPublishes = GetRandomPublishCount();
+    }
 
-            _publisherLock = await _publisher.Subscribe(_hook);
-        }
+    private static int GetRandomTimeOffset()
+    {
+        var random = new Random();
 
-        private async Task Publish()
-        {
-            if (!this.PublishData)
-            {
-                return;
-            }
+        return random.Next(MinimumRandomMilliseconds, MaximumRandomMilliseconds + 1);
+    }
 
-            for (var i = 0; i < NumberOfPublishes; i++)
-            {
-                var data = MessagingUtilities.GetRandomTestPublishData();
+    private static int GetRandomPublishCount()
+    {
+        var random = new Random();
 
-                _publishedDataSent.Add(data);
-                await _publisher.Publish(data);
-
-                Thread.Sleep(_publishOffset);
-            }
-        }
-
-        private async Task Unsubscribe()
-        {
-            Thread.Sleep(_unsubscribeOffset);
-
-            if (UnsubscribeWithLock && _publisherLock != null)
-            {
-                await _publisherLock.DisposeAsync();
-            }
-            else if (!UnsubscribeWithLock)
-            {
-                await _publisher.Unsubscribe(_hook);
-            }
-        }
-
-        private void Initialise()
-        {
-            _subscribeOffset = GetRandomTimeOffset();
-            _unsubscribeOffset = GetRandomTimeOffset();
-
-            if (!PublishData)
-            {
-                return;
-            }
-
-            _publishOffset = GetRandomTimeOffset();
-            NumberOfPublishes = GetRandomPublishCount();
-        }
-
-        private static int GetRandomTimeOffset()
-        {
-            var random = new Random();
-
-            return random.Next(MinimumRandomMilliseconds, MaximumRandomMilliseconds + 1);
-        }
-
-        private static int GetRandomPublishCount()
-        {
-            var random = new Random();
-
-            return random.Next(MinimumNumberOfPublishes, MaximumNumberOfPublishes + 1);
-        }
+        return random.Next(MinimumNumberOfPublishes, MaximumNumberOfPublishes + 1);
     }
 }

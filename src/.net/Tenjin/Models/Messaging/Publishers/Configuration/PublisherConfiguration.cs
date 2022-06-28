@@ -1,7 +1,6 @@
-﻿namespace Tenjin.Models.Messaging.Publishers.Configuration
+﻿namespace Tenjin.Models.Messaging.Publishers.Configuration;
+
+public record PublisherConfiguration
 {
-    public record PublisherConfiguration
-    {
-        public PublisherThreadConfiguration Threading = new();
-    }
+    public PublisherThreadConfiguration Threading = new();
 }

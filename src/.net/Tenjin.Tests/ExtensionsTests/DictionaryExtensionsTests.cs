@@ -2,29 +2,28 @@
 using NUnit.Framework;
 using Tenjin.Extensions;
 
-namespace Tenjin.Tests.ExtensionsTests
+namespace Tenjin.Tests.ExtensionsTests;
+
+[TestFixture]
+public class DictionaryExtensionsTests
 {
-    [TestFixture]
-    public class DictionaryExtensionsTests
+    private const string ExistingTestKey1 = "key1";
+    private const string ExistingTestKey2 = "key2";
+    private const string NonExistingTestKey1 = "non-key1";
+    private const string NonExistingTestKey2 = "non-key2";
+
+    [TestCase(ExistingTestKey1, false)]
+    [TestCase(ExistingTestKey2, false)]
+    [TestCase(NonExistingTestKey1, true)]
+    [TestCase(NonExistingTestKey2, true)]
+    public void DoesNotContainKey_WhenGivingASpecificKey_ReturnsTheExpectedValue(string key, bool expectedValue)
     {
-        private const string ExistingTestKey1 = "key1";
-        private const string ExistingTestKey2 = "key2";
-        private const string NonExistingTestKey1 = "non-key1";
-        private const string NonExistingTestKey2 = "non-key2";
-
-        [TestCase(ExistingTestKey1, false)]
-        [TestCase(ExistingTestKey2, false)]
-        [TestCase(NonExistingTestKey1, true)]
-        [TestCase(NonExistingTestKey2, true)]
-        public void DoesNotContainKey_WhenGivingASpecificKey_ReturnsTheExpectedValue(string key, bool expectedValue)
+        var dictionary = new Dictionary<string, string>
         {
-            var dictionary = new Dictionary<string, string>
-            {
-                {ExistingTestKey1, "value1"},
-                {ExistingTestKey2, "value2"},
-            };
+            {ExistingTestKey1, "value1"},
+            {ExistingTestKey2, "value2"}
+        };
 
-            Assert.AreEqual(expectedValue, dictionary.DoesNotContainKey(key));
-        }
+        Assert.AreEqual(expectedValue, dictionary.DoesNotContainKey(key));
     }
 }

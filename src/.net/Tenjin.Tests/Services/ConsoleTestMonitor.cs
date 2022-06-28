@@ -2,44 +2,43 @@
 using System.IO;
 using System.Text;
 
-namespace Tenjin.Tests.Services
+namespace Tenjin.Tests.Services;
+
+public class ConsoleTestMonitor : IDisposable
 {
-    public class ConsoleTestMonitor : IDisposable
+    private bool _disposed;
+
+    private readonly StringBuilder _output;
+    private readonly TextWriter _originalConsoleStream;
+
+    public ConsoleTestMonitor()
     {
-        private bool _disposed;
+        _output = new StringBuilder();
+        _originalConsoleStream = Console.Out;
 
-        private readonly StringBuilder _output;
-        private readonly TextWriter _originalConsoleStream;
+        var writer = new StringWriter(_output);
 
-        public ConsoleTestMonitor()
+        Console.SetOut(writer);
+    }
+
+    public string GetOutputText()
+    {
+        var result = _output.ToString();
+
+        Dispose();
+
+        return result;
+    }
+
+    public void Dispose()
+    {
+        if (_disposed)
         {
-            _output = new StringBuilder();
-            _originalConsoleStream = Console.Out;
-
-            var writer = new StringWriter(_output);
-
-            Console.SetOut(writer);
+            return;
         }
 
-        public string GetOutputText()
-        {
-            var result = _output.ToString();
+        _disposed = true;
 
-            Dispose();
-
-            return result;
-        }
-
-        public void Dispose()
-        {
-            if (_disposed)
-            {
-                return;
-            }
-
-            _disposed = true;
-
-            Console.SetOut(_originalConsoleStream);
-        }
+        Console.SetOut(_originalConsoleStream);
     }
 }
