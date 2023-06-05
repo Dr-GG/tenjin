@@ -1,5 +1,6 @@
-﻿using System.Threading;
+﻿using FluentAssertions;
 using NUnit.Framework;
+using System.Threading;
 using Tenjin.Extensions;
 
 namespace Tenjin.Tests.ExtensionsTests;
@@ -13,10 +14,10 @@ public class CancellationTokenExtensionsTests
         var source = new CancellationTokenSource();
         var token = source.Token;
 
-        Assert.IsTrue(token.CanContinue());
+        token.CanContinue().Should().BeTrue();
 
         source.Cancel();
 
-        Assert.IsFalse(token.CanContinue());
+        token.CanContinue().Should().BeFalse();
     }
 }

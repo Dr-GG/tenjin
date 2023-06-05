@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using FluentAssertions;
+using NUnit.Framework;
 using Tenjin.Extensions;
 
 namespace Tenjin.Tests.ExtensionsTests;
@@ -3571,8 +3572,8 @@ public class MathsExtensionsTests
         double tolerance,
         bool result)
     {
-        Assert.AreEqual(result, left.ToleranceEquals(right, tolerance));
-        Assert.AreEqual(result, right.ToleranceEquals(left, tolerance));
+        result.Should().Be(left.ToleranceEquals(right, tolerance));
+        result.Should().Be(right.ToleranceEquals(left, tolerance));
     }
 
     [TestCase(0.0, 0.0, MathExtensions.DefaultDoubleTolerance, false)]
@@ -7137,8 +7138,8 @@ public class MathsExtensionsTests
         double tolerance,
         bool result)
     {
-        Assert.AreEqual(result, left.NoToleranceEquals(right, tolerance));
-        Assert.AreEqual(result, right.NoToleranceEquals(left, tolerance));
+        result.Should().Be(left.NoToleranceEquals(right, tolerance));
+        result.Should().Be(right.NoToleranceEquals(left, tolerance));
     }
 
     [TestCase(0.0f, 0.0f, MathExtensions.DefaultSingleTolerance, true)]
@@ -11271,7 +11272,7 @@ public class MathsExtensionsTests
         float tolerance,
         bool result)
     {
-        Assert.AreEqual(result, left.NoToleranceEquals(right, tolerance));
-        Assert.AreEqual(result, right.NoToleranceEquals(left, tolerance));
+        result.Should().Be(left.NoToleranceEquals(right, tolerance));
+        result.Should().Be(right.NoToleranceEquals(left, tolerance));
     }
 }

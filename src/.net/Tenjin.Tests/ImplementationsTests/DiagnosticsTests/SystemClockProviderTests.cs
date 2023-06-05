@@ -1,6 +1,8 @@
-﻿using System;
+﻿using FluentAssertions;
 using NUnit.Framework;
+using System;
 using Tenjin.Implementations.Diagnostics;
+using Tenjin.Interfaces.Diagnostics;
 
 namespace Tenjin.Tests.ImplementationsTests.DiagnosticsTests;
 
@@ -8,14 +10,15 @@ namespace Tenjin.Tests.ImplementationsTests.DiagnosticsTests;
 public class SystemClockProviderTests
 {
     [Test]
+    public void Constructor_WhenProvidingNoParameters_ProvidesNonUtcDate()
+    {
+        AssertNonUtc(new SystemClockProvider());
+    }
+
+    [Test]
     public void Constructor_WhenProvidingNonUtc_ProvidesNonUtcDate()
     {
-        var provided = new SystemClockProvider(false);
-        var realNow = DateTime.Now;
-        var providedNow = provided.Now();
-        var secondsDifference = (providedNow - realNow).TotalSeconds;
-
-        Assert.LessOrEqual(secondsDifference, 1.0);
+        AssertNonUtc(new SystemClockProvider(false));
     }
 
     [Test]
@@ -26,6 +29,15 @@ public class SystemClockProviderTests
         var providedNow = provided.Now();
         var secondsDifference = (providedNow - realNow).TotalSeconds;
 
-        Assert.LessOrEqual(secondsDifference, 1.0);
+        secondsDifference.Should().BeLessThanOrEqualTo(1.0);
+    }
+
+    private static void AssertNonUtc(ISystemClockProvider provider)
+    {
+        var realNow = DateTime.Now;
+        var providedNow = provider.Now();
+        var secondsDifference = (providedNow - realNow).TotalSeconds;
+
+        secondsDifference.Should().BeLessThanOrEqualTo(1.0);
     }
 }

@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using FluentAssertions;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
 using Tenjin.Exceptions.Random;
 using Tenjin.Models.Random;
 using Tenjin.Utilities;
@@ -10,6 +11,7 @@ namespace Tenjin.Tests.UtilitiesTests;
 [TestFixture, Parallelizable(ParallelScope.Children)]
 public class RandomGenerationUtilitiesTests
 {
+    private const int DefaultSeed = 10;
     private const int Iterations = 5000;
 
     private static readonly RandomGenerationParameters DefaultRandomGenerationParameters = new()
@@ -19,7 +21,7 @@ public class RandomGenerationUtilitiesTests
         MaximumLength = 20,
         MinimumLength = 10
     };
-        
+
     [TestCase(1u)]
     [TestCase(2u)]
     [TestCase(3u)]
@@ -56,7 +58,7 @@ public class RandomGenerationUtilitiesTests
                 AssertRandomString(parameters, (int)length, (int)length));
         }
 
-        Assert.LessOrEqual(randomList.Distinct().Count(), Iterations);
+        randomList.Distinct().Should().HaveCountLessThanOrEqualTo(Iterations);
     }
 
     [TestCase(1u, 10)]
@@ -96,7 +98,38 @@ public class RandomGenerationUtilitiesTests
                 AssertRandomString(parameters, (int)length, (int)length));
         }
 
-        Assert.AreEqual(1, randomList.Distinct().Count());
+        randomList.Distinct().Should().HaveCount(1);
+    }
+
+    [TestCase(1u)]
+    [TestCase(2u)]
+    [TestCase(3u)]
+    [TestCase(4u)]
+    [TestCase(5u)]
+    [TestCase(6u)]
+    [TestCase(7u)]
+    [TestCase(8u)]
+    [TestCase(9u)]
+    [TestCase(10u)]
+    public void GenerateRandomString_WithGivenAFixedLengthAndTheSameRandomObject_GeneratesTheExactSameValue(uint length)
+    {
+        var randomList = new List<string>();
+
+        for (var i = 0; i < Iterations; i++)
+        {
+            var parameters = DefaultRandomGenerationParameters with
+            {
+                Random = new System.Random(DefaultSeed),
+                MaximumLength = null,
+                MinimumLength = null,
+                Length = length
+            };
+
+            randomList.Add(
+                AssertRandomString(parameters, (int)length, (int)length));
+        }
+
+        randomList.Distinct().Should().HaveCount(1);
     }
 
     [TestCase(1u, 2u)]
@@ -136,7 +169,7 @@ public class RandomGenerationUtilitiesTests
                 AssertRandomString(parameters, (int)minimumLength, (int)maximumLength));
         }
 
-        Assert.LessOrEqual(randomList.Distinct().Count(), Iterations);
+        randomList.Distinct().Should().HaveCountLessThanOrEqualTo(Iterations);
     }
 
     [TestCase(1u, 2u, 1)]
@@ -161,7 +194,7 @@ public class RandomGenerationUtilitiesTests
     [TestCase(20u, 40u, 654)]
     public void GenerateRandomString_WithMinimumAndMaximumLengthsAndTheSameSeed_GeneratesRandomStringsWithVariablesLength(
         uint minimumLength,
-        uint maximumLength, 
+        uint maximumLength,
         int seed)
     {
         var randomList = new List<string>();
@@ -179,7 +212,50 @@ public class RandomGenerationUtilitiesTests
                 AssertRandomString(parameters, (int)minimumLength, (int)maximumLength));
         }
 
-        Assert.AreEqual(1, randomList.Distinct().Count());
+        randomList.Distinct().Should().HaveCount(1);
+    }
+
+    [TestCase(1u, 2u)]
+    [TestCase(2u, 4u)]
+    [TestCase(3u, 6u)]
+    [TestCase(4u, 8u)]
+    [TestCase(5u, 10u)]
+    [TestCase(6u, 12u)]
+    [TestCase(7u, 14u)]
+    [TestCase(8u, 16u)]
+    [TestCase(9u, 18u)]
+    [TestCase(10u, 20u)]
+    [TestCase(11u, 22u)]
+    [TestCase(12u, 24u)]
+    [TestCase(13u, 26u)]
+    [TestCase(14u, 28u)]
+    [TestCase(15u, 30u)]
+    [TestCase(16u, 32u)]
+    [TestCase(17u, 34u)]
+    [TestCase(18u, 36u)]
+    [TestCase(19u, 38u)]
+    [TestCase(20u, 40u)]
+    public void GenerateRandomString_WithMinimumAndMaximumLengthsAndTheSameRandomObject_GeneratesRandomStringsWithVariablesLength(
+        uint minimumLength,
+        uint maximumLength)
+    {
+        var randomList = new List<string>();
+
+        for (var i = 0; i < Iterations; i++)
+        {
+            var parameters = DefaultRandomGenerationParameters with
+            {
+                Random = new System.Random(DefaultSeed),
+                MinimumLength = minimumLength,
+                MaximumLength = maximumLength,
+                Length = null
+            };
+
+            randomList.Add(
+                AssertRandomString(parameters, (int)minimumLength, (int)maximumLength));
+        }
+
+        randomList.Distinct().Should().HaveCount(1);
     }
 
     [TestCase(null)]
@@ -191,7 +267,10 @@ public class RandomGenerationUtilitiesTests
             AllowedRandomCharacters = characters
         };
 
-        Assert.Throws<RandomGenerationException>(() => RandomGenerationUtilities.GenerateRandomString(parameters));
+        var error = Assert.Throws<RandomGenerationException>(() => RandomGenerationUtilities.GenerateRandomString(parameters))!;
+
+        error.Should().NotBeNull();
+        error.Message.Should().Be("AllowedRandomCharacters not allowed to be null or empty.");
     }
 
     [Test]
@@ -204,7 +283,10 @@ public class RandomGenerationUtilitiesTests
             Length = null
         };
 
-        Assert.Throws<RandomGenerationException>(() => RandomGenerationUtilities.GenerateRandomString(parameters));
+        var error = Assert.Throws<RandomGenerationException>(() => RandomGenerationUtilities.GenerateRandomString(parameters))!;
+
+        error.Should().NotBeNull();
+        error.Message.Should().Be("Minimum/maximum or fixed lengths must be specified.");
     }
 
     [TestCase(1u, null)]
@@ -221,7 +303,10 @@ public class RandomGenerationUtilitiesTests
             Length = 10
         };
 
-        Assert.Throws<RandomGenerationException>(() => RandomGenerationUtilities.GenerateRandomString(parameters));
+        var error = Assert.Throws<RandomGenerationException>(() => RandomGenerationUtilities.GenerateRandomString(parameters))!;
+
+        error.Should().NotBeNull();
+        error.Message.Should().Be("Minimum and/or maximum and/or fixed lengths were specified.");
     }
 
     [TestCase(1u, null)]
@@ -237,7 +322,10 @@ public class RandomGenerationUtilitiesTests
             Length = null
         };
 
-        Assert.Throws<RandomGenerationException>(() => RandomGenerationUtilities.GenerateRandomString(parameters));
+        var error = Assert.Throws<RandomGenerationException>(() => RandomGenerationUtilities.GenerateRandomString(parameters))!;
+
+        error.Should().NotBeNull();
+        error.Message.Should().Be("Minimum and maximum length should both be set.");
     }
 
     [Test]
@@ -250,7 +338,10 @@ public class RandomGenerationUtilitiesTests
             Length = null
         };
 
-        Assert.Throws<RandomGenerationException>(() => RandomGenerationUtilities.GenerateRandomString(parameters));
+        var error = Assert.Throws<RandomGenerationException>(() => RandomGenerationUtilities.GenerateRandomString(parameters))!;
+
+        error.Should().NotBeNull();
+        error.Message.Should().Be("Minimum length cannot be greater than maximum length.");
     }
 
     [TestCase(1, null)]
@@ -263,7 +354,10 @@ public class RandomGenerationUtilitiesTests
             MaximumDouble = maximum
         };
 
-        Assert.Throws<RandomGenerationException>(() => RandomGenerationUtilities.GetRandomDouble(parameters));
+        var error = Assert.Throws<RandomGenerationException>(() => RandomGenerationUtilities.GetRandomDouble(parameters))!;
+
+        error.Should().NotBeNull();
+        error.Message.Should().Be("When specifying minimum or maximum double, then both minimum and maximum double must be set.");
     }
 
     [Test]
@@ -275,7 +369,10 @@ public class RandomGenerationUtilitiesTests
             MaximumDouble = 5
         };
 
-        Assert.Throws<RandomGenerationException>(() => RandomGenerationUtilities.GetRandomDouble(parameters));
+        var error = Assert.Throws<RandomGenerationException>(() => RandomGenerationUtilities.GetRandomDouble(parameters))!;
+
+        error.Should().NotBeNull();
+        error.Message.Should().Be("Minimum double cannot be greater than maximum double.");
     }
 
     [Test]
@@ -287,7 +384,10 @@ public class RandomGenerationUtilitiesTests
             MaximumDouble = 10
         };
 
-        Assert.Throws<RandomGenerationException>(() => RandomGenerationUtilities.GetRandomDouble(parameters));
+        var error = Assert.Throws<RandomGenerationException>(() => RandomGenerationUtilities.GetRandomDouble(parameters))!;
+
+        error.Should().NotBeNull();
+        error.Message.Should().Be("Minimum and maximum double cannot be of the same value.");
     }
 
     [TestCase(0, 1)]
@@ -322,7 +422,7 @@ public class RandomGenerationUtilitiesTests
             randomList.Add(AssertRandomDouble(parameters, minimum, maximum));
         }
 
-        Assert.LessOrEqual(randomList.Distinct().Count(), Iterations);
+        randomList.Distinct().Should().HaveCountLessThanOrEqualTo(Iterations);
     }
 
     [TestCase(0, 1, 10)]
@@ -344,7 +444,7 @@ public class RandomGenerationUtilitiesTests
     [TestCase(10.999, 100, 9900)]
     [TestCase(10.9999, 100, 8833)]
     public void GenerateRandomDouble_WithMinimumAndMaximumAndAFixedSeed_GeneratesTheSameValues(
-        double minimum, 
+        double minimum,
         double maximum,
         int seed)
     {
@@ -361,7 +461,46 @@ public class RandomGenerationUtilitiesTests
             randomList.Add(AssertRandomDouble(parameters, minimum, maximum));
         }
 
-        Assert.AreEqual(1, randomList.Distinct().Count());
+        randomList.Distinct().Should().HaveCount(1);
+    }
+
+    [TestCase(0, 1)]
+    [TestCase(0.5, 1)]
+    [TestCase(0.75, 1)]
+    [TestCase(0.90, 1)]
+    [TestCase(0.999, 1)]
+    [TestCase(0.9999, 1)]
+    [TestCase(1, 10)]
+    [TestCase(1.5, 10)]
+    [TestCase(1.75, 10)]
+    [TestCase(1.90, 10)]
+    [TestCase(1.999, 10)]
+    [TestCase(1.9999, 10)]
+    [TestCase(10, 100)]
+    [TestCase(10.5, 100)]
+    [TestCase(10.75, 100)]
+    [TestCase(10.90, 100)]
+    [TestCase(10.999, 100)]
+    [TestCase(10.9999, 100)]
+    public void GenerateRandomDouble_WithMinimumAndMaximumAndTheSameRandomObject_GeneratesTheSameValues(
+        double minimum,
+        double maximum)
+    {
+        var randomList = new List<double>();
+
+        for (var i = 0; i < Iterations; i++)
+        {
+            var parameters = DefaultRandomGenerationParameters with
+            {
+                Random = new System.Random(DefaultSeed),
+                MinimumDouble = minimum,
+                MaximumDouble = maximum
+            };
+
+            randomList.Add(AssertRandomDouble(parameters, minimum, maximum));
+        }
+
+        randomList.Distinct().Should().HaveCount(1);
     }
 
     [Test]
@@ -374,7 +513,7 @@ public class RandomGenerationUtilitiesTests
             randomList.Add(AssertRandomDouble(DefaultRandomGenerationParameters, 0, 1));
         }
 
-        Assert.LessOrEqual(randomList.Distinct().Count(), Iterations);
+        randomList.Distinct().Should().HaveCountLessThanOrEqualTo(Iterations);
     }
 
     [TestCase(1)]
@@ -432,7 +571,271 @@ public class RandomGenerationUtilitiesTests
             randomList.Add(AssertRandomDouble(parameters, 0, 1));
         }
 
-        Assert.AreEqual(1, randomList.Distinct().Count());
+        randomList.Distinct().Should().HaveCount(1);
+    }
+
+    [Test]
+    public void GenerateRandomDouble_SpecifyingNoMinimumOrMaximumWithTheSameRandomObject_GeneratesBetween0And1WithTheSameValues()
+    {
+        var randomList = new List<double>();
+
+        for (var i = 0; i < Iterations; i++)
+        {
+            var parameters = DefaultRandomGenerationParameters with
+            {
+                Random = new System.Random(DefaultSeed)
+            };
+
+            randomList.Add(AssertRandomDouble(parameters, 0, 1));
+        }
+
+        randomList.Distinct().Should().HaveCount(1);
+    }
+
+    [TestCase(1, null)]
+    [TestCase(null, 1)]
+    public void GenerateRandomInt32_WhenMinimumOrMaximumIsNullAndTheOtherNot_ThrowsAnError(int? minimum, int? maximum)
+    {
+        var parameters = DefaultRandomGenerationParameters with
+        {
+            MinimumInt32 = minimum,
+            MaximumInt32 = maximum
+        };
+
+        var error = Assert.Throws<RandomGenerationException>(() => RandomGenerationUtilities.GetRandomInt32(parameters))!;
+
+        error.Should().NotBeNull();
+        error.Message.Should().Be("When specifying minimum or maximum Int32, then both minimum and maximum Int32 must be set.");
+    }
+
+    [Test]
+    public void GenerateRandomInt32_WhenMinimumIsLargerThanMaximum_ThrowsAnError()
+    {
+        var parameters = DefaultRandomGenerationParameters with
+        {
+            MinimumInt32 = 10,
+            MaximumInt32 = 5
+        };
+
+        var error = Assert.Throws<RandomGenerationException>(() => RandomGenerationUtilities.GetRandomInt32(parameters))!;
+
+        error.Should().NotBeNull();
+        error.Message.Should().Be("Minimum Int32 cannot be greater than maximum Int32.");
+    }
+
+    [Test]
+    public void GenerateRandomInt32_WhenMinimumEqualsThanMaximum_ThrowsAnError()
+    {
+        var parameters = DefaultRandomGenerationParameters with
+        {
+            MinimumInt32 = 10,
+            MaximumInt32 = 10
+        };
+
+        var error = Assert.Throws<RandomGenerationException>(() => RandomGenerationUtilities.GetRandomInt32(parameters))!;
+
+        error.Should().NotBeNull();
+        error.Message.Should().Be("Minimum and maximum Int32 cannot be of the same value.");
+    }
+
+    [TestCase(0, 1)]
+    [TestCase(1, 10)]
+    [TestCase(2, 10)]
+    [TestCase(5, 10)]
+    [TestCase(8, 10)]
+    [TestCase(10, 100)]
+    [TestCase(25, 100)]
+    [TestCase(50, 100)]
+    [TestCase(75, 100)]
+    [TestCase(100, 1000)]
+    [TestCase(250, 1000)]
+    [TestCase(500, 1000)]
+    [TestCase(750, 1000)]
+    public void GenerateRandomInt32_WithMinimumAndMaximum_GeneratesValidInt32(int minimum, int maximum)
+    {
+        var randomList = new List<double>();
+        var parameters = DefaultRandomGenerationParameters with
+        {
+            MinimumInt32 = minimum,
+            MaximumInt32 = maximum
+        };
+
+        for (var i = 0; i < Iterations; i++)
+        {
+            randomList.Add(AssertRandomInt32(parameters, minimum, maximum));
+        }
+
+        randomList.Distinct().Should().HaveCountLessThanOrEqualTo(Iterations);
+    }
+
+    [TestCase(0, 1, 10)]
+    [TestCase(1, 10, 30)]
+    [TestCase(2, 10, 45)]
+    [TestCase(5, 10, 66)]
+    [TestCase(8, 10, -10)]
+    [TestCase(10, 100, -100)]
+    [TestCase(25, 100, 775)]
+    [TestCase(50, 100, 5521)]
+    [TestCase(75, 100, 199)]
+    [TestCase(100, 1000, 788)]
+    [TestCase(250, 1000, 899)]
+    [TestCase(500, 1000, -88)]
+    [TestCase(750, 1000, 3)]
+    public void GenerateRandomInt32_WithMinimumAndMaximumAndAFixedSeed_GeneratesTheSameValues(
+        int minimum,
+        int maximum,
+        int seed)
+    {
+        var randomList = new List<double>();
+        var parameters = DefaultRandomGenerationParameters with
+        {
+            Seed = seed,
+            MinimumInt32 = minimum,
+            MaximumInt32 = maximum
+        };
+
+        for (var i = 0; i < Iterations; i++)
+        {
+            randomList.Add(AssertRandomInt32(parameters, minimum, maximum));
+        }
+
+        randomList.Distinct().Should().HaveCount(1);
+    }
+
+    [TestCase(0, 1)]
+    [TestCase(1, 10)]
+    [TestCase(2, 10)]
+    [TestCase(5, 10)]
+    [TestCase(8, 10)]
+    [TestCase(10, 100)]
+    [TestCase(25, 100)]
+    [TestCase(50, 100)]
+    [TestCase(75, 100)]
+    [TestCase(100, 1000)]
+    [TestCase(250, 1000)]
+    [TestCase(500, 1000)]
+    [TestCase(750, 1000)]
+    public void GenerateRandomInt32_WithMinimumAndMaximumAndTheSameRandomObject_GeneratesTheSameValues(
+        int minimum,
+        int maximum)
+    {
+        var randomList = new List<double>();
+
+        for (var i = 0; i < Iterations; i++)
+        {
+            var parameters = DefaultRandomGenerationParameters with
+            {
+                Random = new System.Random(DefaultSeed),
+                MinimumInt32 = minimum,
+                MaximumInt32 = maximum
+            };
+
+            randomList.Add(AssertRandomInt32(parameters, minimum, maximum));
+        }
+
+        randomList.Distinct().Should().HaveCount(1);
+    }
+
+    [Test]
+    public void GenerateRandomInt32_SpecifyingNoMinimumOrMaximum_GeneratesBetweenMinInt32AndMaxInt32()
+    {
+        var randomList = new List<double>();
+
+        for (var i = 0; i < Iterations; i++)
+        {
+            randomList.Add(AssertRandomInt32(DefaultRandomGenerationParameters, int.MinValue, int.MaxValue));
+        }
+
+        randomList.Distinct().Should().HaveCountLessThanOrEqualTo(Iterations);
+    }
+
+    [TestCase(1)]
+    [TestCase(2)]
+    [TestCase(3)]
+    [TestCase(4)]
+    [TestCase(5)]
+    [TestCase(111)]
+    [TestCase(222)]
+    [TestCase(333)]
+    [TestCase(444)]
+    [TestCase(555)]
+    [TestCase(123)]
+    [TestCase(321)]
+    [TestCase(456)]
+    [TestCase(654)]
+    [TestCase(987)]
+    [TestCase(789)]
+    [TestCase(1199)]
+    [TestCase(9911)]
+    [TestCase(8822)]
+    [TestCase(2288)]
+    [TestCase(3366)]
+    [TestCase(-1)]
+    [TestCase(-2)]
+    [TestCase(-3)]
+    [TestCase(-4)]
+    [TestCase(-5)]
+    [TestCase(-111)]
+    [TestCase(-222)]
+    [TestCase(-333)]
+    [TestCase(-444)]
+    [TestCase(-555)]
+    [TestCase(-123)]
+    [TestCase(-321)]
+    [TestCase(-456)]
+    [TestCase(-654)]
+    [TestCase(-987)]
+    [TestCase(-789)]
+    [TestCase(-1199)]
+    [TestCase(-9911)]
+    [TestCase(-8822)]
+    [TestCase(-2288)]
+    [TestCase(-3366)]
+    public void GenerateRandomInt32_SpecifyingNoMinimumOrMaximumWithAFixedSeed_GeneratesBetweenMinInt32AndMaxInt32WithTheSameValues(int seed)
+    {
+        var randomList = new List<double>();
+        var parameters = DefaultRandomGenerationParameters with
+        {
+            Seed = seed
+        };
+
+        for (var i = 0; i < Iterations; i++)
+        {
+            randomList.Add(AssertRandomInt32(parameters, int.MinValue, int.MaxValue));
+        }
+
+        randomList.Distinct().Should().HaveCount(1);
+    }
+
+    [Test]
+    public void GenerateRandomInt32_SpecifyingNoMinimumOrMaximumWithTheSameRandomObject_GeneratesBetweenMinInt32AndMaxInt32WithTheSameValues()
+    {
+        var randomList = new List<double>();
+
+        for (var i = 0; i < Iterations; i++)
+        {
+            var parameters = DefaultRandomGenerationParameters with
+            {
+                Random = new System.Random(DefaultSeed)
+            };
+
+            randomList.Add(AssertRandomInt32(parameters, int.MinValue, int.MaxValue));
+        }
+
+        randomList.Distinct().Should().HaveCount(1);
+    }
+
+    private static double AssertRandomInt32(
+        RandomGenerationParameters parameters,
+        int minimum,
+        int maximum)
+    {
+        var random = RandomGenerationUtilities.GetRandomInt32(parameters);
+
+        random.Should().BeLessThanOrEqualTo(maximum);
+        random.Should().BeGreaterThanOrEqualTo(minimum);
+
+        return random;
     }
 
     private static double AssertRandomDouble(
@@ -442,8 +845,8 @@ public class RandomGenerationUtilitiesTests
     {
         var random = RandomGenerationUtilities.GetRandomDouble(parameters);
 
-        Assert.LessOrEqual(random, maximum);
-        Assert.GreaterOrEqual(random, minimum);
+        random.Should().BeLessThanOrEqualTo(maximum);
+        random.Should().BeGreaterThanOrEqualTo(minimum);
 
         return random;
     }
@@ -455,11 +858,17 @@ public class RandomGenerationUtilitiesTests
     {
         var random = RandomGenerationUtilities.GenerateRandomString(parameters);
 
-        Assert.LessOrEqual(random.Length, expectedMaximumLength);
-        Assert.GreaterOrEqual(random.Length, expectedMinimumLength);
+        random.Length.Should().BeLessThanOrEqualTo(expectedMaximumLength);
+        random.Length.Should().BeGreaterThanOrEqualTo(expectedMinimumLength);
 
-        Assert.IsTrue(random.ToCharArray().All(c => DefaultRandomGenerationParameters
-            .AllowedRandomCharacters.ToCharArray().Contains(c)));
+        random
+            .ToCharArray()
+            .All(c => DefaultRandomGenerationParameters
+                .AllowedRandomCharacters
+                    .ToCharArray()
+                    .Contains(c))
+            .Should()
+            .BeTrue();
 
         return random;
     }

@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Tenjin.Enums.Messaging;
+using Tenjin.Exceptions.Messaging;
 using Tenjin.Interfaces.Messaging.Publishers.Progress;
 using Tenjin.Models.Messaging.Publishers.Configuration;
 using Tenjin.Models.Messaging.Publishers.Progress;
 
 namespace Tenjin.Implementations.Messaging.Publishers.Progress;
 
+/// <summary>
+/// The default implementation of the IProgressPublisher interface.
+/// </summary>
 public abstract class ProgressPublisher<TProgressEvent> : Publisher<TProgressEvent>, IProgressPublisher<TProgressEvent>
     where TProgressEvent : ProgressEvent
 {
@@ -21,6 +25,7 @@ public abstract class ProgressPublisher<TProgressEvent> : Publisher<TProgressEve
 
     private readonly object _root = new();
 
+    /// <inheritdoc />
     public IProgressPublisher<TProgressEvent> Configure(ProgressPublisherConfiguration configuration)
     {
         AssertConfiguration(configuration);
@@ -29,6 +34,7 @@ public abstract class ProgressPublisher<TProgressEvent> : Publisher<TProgressEve
         return this;
     }
 
+    /// <inheritdoc />
     public async Task Initialise(ulong total, bool publish = true)
     {
         TProgressEvent? progressEvent = null;
@@ -52,11 +58,13 @@ public abstract class ProgressPublisher<TProgressEvent> : Publisher<TProgressEve
         }
     }
 
+    /// <inheritdoc />
     public Task Tick()
     {
         return Tick(1);
     }
 
+    /// <inheritdoc />
     public Task Tick(ulong ticks)
     {
         lock (_root)
@@ -74,6 +82,9 @@ public abstract class ProgressPublisher<TProgressEvent> : Publisher<TProgressEve
         return Task.CompletedTask;
     }
 
+    /// <summary>
+    /// Creates the appropriate ProgressEvent based instance.
+    /// </summary>
     protected abstract TProgressEvent CreateProgressEvent(ulong current, ulong total);
 
     private void PublishCurrentProgress()
@@ -92,7 +103,7 @@ public abstract class ProgressPublisher<TProgressEvent> : Publisher<TProgressEve
 
         switch (configuration.Interval)
         {
-            case ProgressNotificationInterval.FixedInterval: 
+            case ProgressNotificationInterval.FixedInterval:
                 AssertFixedIntervalConfiguration(configuration);
                 break;
 
@@ -101,8 +112,9 @@ public abstract class ProgressPublisher<TProgressEvent> : Publisher<TProgressEve
                 break;
 
             case ProgressNotificationInterval.None:
-            default: throw new NotSupportedException(
-                $"No configuration support for interval {configuration.Interval}");
+            default:
+                throw new NotSupportedException(
+                $"No configuration support for interval {configuration.Interval}.");
         }
     }
 
@@ -110,7 +122,7 @@ public abstract class ProgressPublisher<TProgressEvent> : Publisher<TProgressEve
     {
         if (configuration.FixedInterval == null)
         {
-            throw new InvalidOperationException("Fixed Interval property not set for fixed interval configuration");
+            throw new PublisherException("Fixed Interval property not set for fixed interval configuration.");
         }
     }
 
@@ -118,7 +130,7 @@ public abstract class ProgressPublisher<TProgressEvent> : Publisher<TProgressEve
     {
         if (configuration.PercentageInterval == null)
         {
-            throw new InvalidOperationException("Percentage Interval property not set for fixed percentage interval configuration");
+            throw new PublisherException("Percentage Interval property not set for fixed percentage interval configuration.");
         }
     }
 
@@ -145,7 +157,7 @@ public abstract class ProgressPublisher<TProgressEvent> : Publisher<TProgressEve
                 break;
 
             case ProgressNotificationInterval.None: break; // No reconfiguration needed.
-                
+
             default:
                 throw new NotSupportedException(
                     $"Interval {_configuration.Interval} not supported");
@@ -191,7 +203,7 @@ public abstract class ProgressPublisher<TProgressEvent> : Publisher<TProgressEve
 
     private bool PublishPercentageInterval()
     {
-        var currentPercentage = Math.Round((double) _current / _total * 100.0, PercentageDecimals);
+        var currentPercentage = Math.Round((double)_current / _total * 100.0, PercentageDecimals);
 
         if (currentPercentage < _nextPercentageInterval)
         {

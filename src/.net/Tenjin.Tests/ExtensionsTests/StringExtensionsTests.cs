@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using FluentAssertions;
+using NUnit.Framework;
 using Tenjin.Extensions;
 
 namespace Tenjin.Tests.ExtensionsTests;
@@ -16,7 +17,7 @@ public class StringExtensionsTests
         string? value,
         bool expectedOutput)
     {
-        Assert.AreEqual(expectedOutput, value.IsNotNullOrEmpty());
+        expectedOutput.Should().Be(value.IsNotNullOrEmpty());
     }
 
     [TestCase(null, true)]
@@ -29,7 +30,7 @@ public class StringExtensionsTests
         string? value,
         bool expectedOutput)
     {
-        Assert.AreEqual(expectedOutput, value.IsNullOrEmpty());
+        expectedOutput.Should().Be(value.IsNullOrEmpty());
     }
 
     [TestCase(null, null, true)]
@@ -44,7 +45,7 @@ public class StringExtensionsTests
     public void EqualsOrdinalIgnoreCase_WhenGivenInput_MatchesExpectedOutput(
         string? left, string? right, bool expectedOutput)
     {
-        Assert.AreEqual(expectedOutput, left.EqualsOrdinalIgnoreCase(right));
-        Assert.AreEqual(expectedOutput, right.EqualsOrdinalIgnoreCase(left));
+        expectedOutput.Should().Be(left.EqualsOrdinalIgnoreCase(right));
+        expectedOutput.Should().Be(right.EqualsOrdinalIgnoreCase(left));
     }
 }

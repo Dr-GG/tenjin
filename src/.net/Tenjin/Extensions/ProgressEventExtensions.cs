@@ -3,8 +3,14 @@ using Tenjin.Models.Messaging.Publishers.Progress;
 
 namespace Tenjin.Extensions;
 
+/// <summary>
+/// A collection of extension methods for the ProgressEvent class.
+/// </summary>
 public static class ProgressEventExtensions
 {
+    /// <summary>
+    /// Calculates the percentage value of a ProgressEvent.
+    /// </summary>
     public static double Percentage(this ProgressEvent? progressEvent, int numberOfDecimals = 2)
     {
         if (progressEvent == null

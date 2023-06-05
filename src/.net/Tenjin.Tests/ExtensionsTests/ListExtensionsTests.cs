@@ -1,7 +1,8 @@
-﻿using System;
+﻿using FluentAssertions;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
 using Tenjin.Extensions;
 
 namespace Tenjin.Tests.ExtensionsTests;
@@ -259,8 +260,37 @@ public class ListExtensionsTests
         itemsList
             .BinaryInsert(value, (left, right) => ((IComparable)right).CompareTo(left), addWhenFound);
 
-        Assert.AreEqual(reversedItems, itemsList);
-        Assert.AreNotSame(reversedItems, itemsList);
+        reversedItems.Should().BeEquivalentTo(itemsList);
+        reversedItems.Should().NotBeSameAs(itemsList);
+    }
+
+    [Test]
+    public void InsertRange_WhenRootCollectionIsNullAndNewCollectionIsNull_ReturnsAnEmptyArray()
+    {
+        Assert.DoesNotThrow(() => ((IList<int>?)null).RemoveRange(null));
+    }
+
+    [Test]
+    public void InsertRange_WhenRootCollectionIsNotNullAndNewCollectionIsNull_DoesNothing()
+    {
+        IList<int> collection = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+        collection.InsertRange(1, null);
+
+        collection.Should().HaveCount(10);
+    }
+
+    [Test]
+    public void InsertRange_WhenRootCollectionIsNotNullAndNewCollectionIsNotNull_ReturnsTheInputCollection()
+    {
+        IList<int> collection = new List<int>() { 1, 5, 8 };
+        IList<int> expected = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+        collection.InsertRange(1, new[] { 2, 3, 4 });
+        collection.InsertRange(5, new[] { 6, 7 });
+        collection.InsertRange(8, new[] { 9, 10 });
+
+        collection.Should().BeEquivalentTo(expected);
     }
 
     private static void AssertBinaryInsert<T>(IEnumerable<T> items, T value, bool addWhenFound)
@@ -276,7 +306,7 @@ public class ListExtensionsTests
 
         itemsList.BinaryInsert(value, addWhenFound);
 
-        Assert.AreEqual(expectedItems, itemsList);
-        Assert.AreNotSame(expectedItems, itemsList);
+        expectedItems.Should().BeEquivalentTo(itemsList);
+        expectedItems.Should().NotBeSameAs(itemsList);
     }
 }

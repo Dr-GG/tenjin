@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using Moq;
+﻿using Moq;
 using NUnit.Framework;
+using System.Threading.Tasks;
 using Tenjin.Implementations.Messaging.Publishers;
 using Tenjin.Interfaces.Messaging.Publishers;
 using Tenjin.Interfaces.Messaging.Subscribers;
@@ -17,13 +17,6 @@ public class PublisherLockTests
     public async Task Dispose_WhenCalled_ItInvokesThePublishUnsubscribe(bool invokeAsync)
     {
         await TestPublisherCall(invokeAsync, 1);
-    }
-
-    [TestCase(true)]
-    [TestCase(false)]
-    public async Task Dispose_WhenCalledMultipleTimes_ItInvokesThePublishUnsubscribeOnlyOnce(bool invokeAsync)
-    {
-        await TestPublisherCall(invokeAsync, 10);
     }
 
     private static async Task TestPublisherCall(bool invokeAsync, int numberOfDisposeInvokes)

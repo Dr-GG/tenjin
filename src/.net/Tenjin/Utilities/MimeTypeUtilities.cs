@@ -6,16 +6,22 @@ using Tenjin.Extensions;
 
 namespace Tenjin.Utilities;
 
+/// <summary>
+/// A collection of Mimetype utilities.
+/// </summary>
 public static class MimeTypeUtilities
 {
     private const char FileExtensionDelimiter = '.';
 
-    public static readonly IDictionary<string, string> FileExtensionToMimeTypeMap =
+    private static readonly IDictionary<string, string> FileExtensionToMimeTypeMap =
         PopulateFileExtensionToMimeTypeMap();
 
-    public static readonly IDictionary<string, IEnumerable<string>>MimeTypeToFileExtensionsMap =
+    private static readonly IDictionary<string, IEnumerable<string>> MimeTypeToFileExtensionsMap =
         PopulateMimeTypeToFileExtensionsMap();
 
+    /// <summary>
+    /// Gets the MIME type for a file extension.
+    /// </summary>
     public static string? GetMimeType(string fileExtension)
     {
         if (fileExtension.IsNullOrEmpty())
@@ -27,11 +33,14 @@ public static class MimeTypeUtilities
             ? fileExtension.ToLower()
             : $"{FileExtensionDelimiter}{fileExtension.ToLower()}";
 
-        return FileExtensionToMimeTypeMap.TryGetValue(key, out var value) 
-            ? value 
+        return FileExtensionToMimeTypeMap.TryGetValue(key, out var value)
+            ? value
             : null;
     }
 
+    /// <summary>
+    /// Gets the common file extension for a MIME type.
+    /// </summary>
     public static string? GetFileExtension(string mimeType)
     {
         if (mimeType.IsNullOrEmpty())
@@ -41,11 +50,14 @@ public static class MimeTypeUtilities
 
         var key = mimeType.ToLower();
 
-        return MimeTypeToFileExtensionsMap.TryGetValue(key, out var fileExtensions) 
-            ? fileExtensions.First() 
+        return MimeTypeToFileExtensionsMap.TryGetValue(key, out var fileExtensions)
+            ? fileExtensions.First()
             : null;
     }
 
+    /// <summary>
+    /// Gets all file extensions for a MIME type.
+    /// </summary>
     public static IEnumerable<string> GetAllFileExtensions(string mimeType)
     {
         if (mimeType.IsNullOrEmpty())

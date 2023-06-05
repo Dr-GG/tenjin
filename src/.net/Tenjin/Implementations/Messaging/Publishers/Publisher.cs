@@ -11,14 +11,17 @@ using Tenjin.Models.Messaging.Publishers.Configuration;
 
 namespace Tenjin.Implementations.Messaging.Publishers;
 
+/// <summary>
+/// The default implementation of the IPublisher interface.
+/// </summary>\
 public class Publisher<TData> : IPublisher<TData>
 {
-    private bool _disposed;
     private PublisherConfiguration _configuration = new();
 
     private readonly object _root = new();
     private readonly IDictionary<string, ISubscriber<TData>> _subscribers = new Dictionary<string, ISubscriber<TData>>();
 
+    /// <inheritdoc />
     public IPublisher<TData> Configure(PublisherConfiguration configuration)
     {
         lock (_root)
@@ -29,6 +32,7 @@ public class Publisher<TData> : IPublisher<TData>
         return this;
     }
 
+    /// <inheritdoc />
     public async Task<IEnumerable<IPublisherLock>> Subscribe(params ISubscriber<TData>[] subscribers)
     {
         if (subscribers.IsEmpty())
@@ -46,6 +50,7 @@ public class Publisher<TData> : IPublisher<TData>
         return result;
     }
 
+    /// <inheritdoc />
     public Task<IPublisherLock> Subscribe(ISubscriber<TData> subscriber)
     {
         AddNewSubscriber(subscriber);
@@ -53,12 +58,11 @@ public class Publisher<TData> : IPublisher<TData>
         return Task.FromResult(GetLock(subscriber));
     }
 
+    /// <inheritdoc />
     public Task Unsubscribe(params ISubscriber<TData>[] subscribers)
     {
         lock (_root)
         {
-            AssertDisposeState();
-
             foreach (var subscriber in subscribers)
             {
                 _subscribers.Remove(subscriber.Id);
@@ -68,67 +72,81 @@ public class Publisher<TData> : IPublisher<TData>
         return Task.CompletedTask;
     }
 
+    /// <inheritdoc />
     public Task<Guid> Publish(TData data)
     {
         var publishEvent = CreatePublishEvent(data);
 
         lock (_root)
         {
-            InternalPublish(publishEvent, true);
+            InternalPublish(publishEvent);
         }
 
         return Task.FromResult(publishEvent.Id);
     }
 
+    /// <inheritdoc />
     public ValueTask DisposeAsync()
     {
-        Dispose();
+        Dispose(true);
+
+        GC.SuppressFinalize(this);
 
         return ValueTask.CompletedTask;
     }
 
+    /// <inheritdoc />
     public void Dispose()
     {
-        if (_disposed)
-        {
-            return;
-        }
+        Dispose(true);
 
+        GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    /// Disposes the Publisher instance.
+    /// </summary>
+    protected virtual void Dispose(bool disposing)
+    {
         DisposeSubscribers();
     }
 
+    /// <summary>
+    /// The method that is invoked when an event was published.
+    /// </summary>
     protected virtual PublishEvent<TData> CreatePublishEvent(TData data)
     {
         return new PublishEvent<TData>(this, data);
     }
 
+    /// <summary>
+    /// The method that is invoked when the IPublisher instance is disposing.
+    /// </summary>
     protected virtual PublishEvent<TData> CreateDisposeEvent()
     {
         return new PublishEvent<TData>(this, PublishEventType.Disposing);
     }
 
+    /// <summary>
+    /// Gets a new IPublisherLock instance.
+    /// </summary>
     protected virtual IPublisherLock GetLock(ISubscriber<TData> subscriber)
     {
         return new PublisherLock<TData>(this, subscriber);
     }
 
-    private void InternalPublish(PublishEvent<TData> publishEvent, bool checkDisposeState)
+    private void InternalPublish(PublishEvent<TData> publishEvent)
     {
         switch (_configuration.Threading.Mode)
         {
-            case PublisherThreadMode.Multi: MultiThreadPublish(publishEvent, checkDisposeState); break;
-            case PublisherThreadMode.Single: SingleThreadPublish(publishEvent, checkDisposeState); break;
-            default: throw new NotSupportedException($"No dispatch method found for threading mode {_configuration.Threading.Mode}");
+            case PublisherThreadMode.Multi: MultiThreadPublish(publishEvent); break;
+            case PublisherThreadMode.Single: SingleThreadPublish(publishEvent); break;
+            default: throw new NotSupportedException($"No dispatch method found for threading mode {_configuration.Threading.Mode}.");
         }
     }
 
-    private void SingleThreadPublish(PublishEvent<TData> publishEvent, bool checkDisposeState = true)
+    private void SingleThreadPublish(PublishEvent<TData> publishEvent)
     {
-        if (checkDisposeState)
-        {
-            AssertDisposeState();
-        }
-
         ConfigurePrePublish(publishEvent);
 
         foreach (var subscriber in _subscribers.Values)
@@ -137,13 +155,8 @@ public class Publisher<TData> : IPublisher<TData>
         }
     }
 
-    private void MultiThreadPublish(PublishEvent<TData> publishEvent, bool checkDisposeState = true)
+    private void MultiThreadPublish(PublishEvent<TData> publishEvent)
     {
-        if (checkDisposeState)
-        {
-            AssertDisposeState();
-        }
-
         var batchSize = _configuration.Threading.NumberOfThreads ?? Environment.ProcessorCount;
 
         _subscribers.Values
@@ -155,7 +168,7 @@ public class Publisher<TData> : IPublisher<TData>
     private static async Task Publish(PublishEvent<TData> publishEvent, IEnumerable<ISubscriber<TData>> subscribers)
     {
         ConfigurePrePublish(publishEvent);
-            
+
         foreach (var subscriber in subscribers)
         {
             await subscriber.Receive(publishEvent);
@@ -173,10 +186,9 @@ public class Publisher<TData> : IPublisher<TData>
 
         lock (_root)
         {
-            InternalPublish(publishEvent, false);
+            InternalPublish(publishEvent);
 
             _subscribers.Clear();
-            _disposed = true;
         }
     }
 
@@ -184,20 +196,10 @@ public class Publisher<TData> : IPublisher<TData>
     {
         lock (_root)
         {
-            AssertDisposeState();
-
             if (_subscribers.DoesNotContainKey(subscriber.Id))
             {
                 _subscribers.Add(subscriber.Id, subscriber);
             }
-        }
-    }
-
-    private void AssertDisposeState()
-    {
-        if (_disposed)
-        {
-            throw new ObjectDisposedException("Published is disposed");
         }
     }
 }

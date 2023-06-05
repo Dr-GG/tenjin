@@ -2,22 +2,34 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Tenjin.Implementations.Comparers;
+using Tenjin.Models.Enumerables;
 
 namespace Tenjin.Extensions;
 
+/// <summary>
+/// A collection of extension methods for IEnumerable instances.
+/// </summary>
 public static class EnumerableExtensions
 {
+    /// <summary>
+    /// Determines if an IEnumerable is not empty.
+    /// </summary>
     public static bool IsNotEmpty<T>([NotNullWhen(true)] this IEnumerable<T>? enumerable)
     {
         return enumerable?.Any() ?? false;
     }
 
+    /// <summary>
+    /// Determines if an IEnumerable is empty.
+    /// </summary>
     public static bool IsEmpty<T>([NotNullWhen(false)] this IEnumerable<T>? enumerable)
     {
         return !enumerable?.Any() ?? true;
     }
 
+    /// <summary>
+    /// Provides the last index of an IEnumerable instance.
+    /// </summary>
     public static int LastIndex<T>(this IEnumerable<T>? collection)
     {
         if (collection == null)
@@ -28,6 +40,9 @@ public static class EnumerableExtensions
         return collection.Count() - 1;
     }
 
+    /// <summary>
+    /// Transforms an IEnumerable into a number of batches of equal or near-equal size.
+    /// </summary>
     public static IEnumerable<IEnumerable<T>> Batch<T>(this IEnumerable<T>? collection, int numberOfBatches)
     {
         if (collection == null)
@@ -39,7 +54,7 @@ public static class EnumerableExtensions
         {
             case < 1:
                 throw new ArgumentOutOfRangeException(
-                    nameof(numberOfBatches), "Argument cannot be zero or less");
+                    nameof(numberOfBatches), "Argument cannot be zero or less.");
             case 1:
                 return new[] { collection };
         }
@@ -72,47 +87,60 @@ public static class EnumerableExtensions
         return batches;
     }
 
-    public static IEnumerable<T> BinaryInsert<T>(this IEnumerable<T>? collection,
-        T item, bool addIfFound = false)
-    {
-        return BinaryInsert(collection, item, Comparer<T>.Default, addIfFound);
-    }
-
-    public static IEnumerable<T> BinaryInsert<T>(this IEnumerable<T>? collection,
-        T item, Func<T, T, int> comparerAction, bool addIfFound = false)
-    {
-        var comparer = new FunctionComparer<T>(comparerAction);
-
-        return BinaryInsert(collection, item, comparer, addIfFound);
-    }
-
-    public static IEnumerable<T> BinaryInsert<T>(this IEnumerable<T>? collection,
-        T item, IComparer<T> comparer, bool addIfFound = false)
+    /// <summary>
+    /// Executes a ForEach on each item within an IEnumerable instance.
+    /// </summary>
+    public static void ForEach<T>(this IEnumerable<T>? collection, Action<T> action)
     {
         if (collection == null)
         {
-            return Enumerable.Empty<T>();
+            return;
         }
 
-        var array = collection.ToArray();
-        var binaryIndex = Array.BinarySearch(array, item, comparer);
-
-        if (binaryIndex < 0)
+        foreach (var item in collection)
         {
-            return BinaryInsertMerge(array, item, ~binaryIndex);
+            action(item);
         }
-
-        return addIfFound
-            ? BinaryInsertMerge(array, item, binaryIndex)
-            : array;
     }
 
-    private static IEnumerable<T> BinaryInsertMerge<T>(IEnumerable<T> source, T item, int index)
+    /// <summary>
+    /// Determines if an IEnumerable does not contain a specific item.
+    /// </summary>
+    public static bool DoesNotContain<T>(this IEnumerable<T> collection, T item)
     {
-        var result = new List<T>(source);
+        return !collection.Contains(item);
+    }
 
-        result.Insert(index, item);
+    /// <summary>
+    /// Iterates over an IEnumerable with a given action, allowing for access to index position.
+    /// </summary>
+    public static void ForLoop<T>(this IEnumerable<T> collection, Action<int, T> action)
+    {
+        var index = 0;
 
-        return result;
+        foreach (var item in collection)
+        {
+            action(index++, item);
+        }
+    }
+
+    /// <summary>
+    /// Iterates over an IEnumerable with a given action, allowing for access to index position and a contextual object about the index.
+    /// </summary>
+    public static void ForLoopWithContext<T>(this IEnumerable<T> collection, Action<ForLoopContext, T> action)
+    {
+        var index = 0;
+        var lastIndex = collection.LastIndex();
+        var context = new ForLoopContext();
+
+        foreach (var item in collection)
+        {
+            context.IsFirst = index == 0;
+            context.IsLast = index == lastIndex;
+            context.IsInBetween = index > 0 && index < lastIndex;
+            context.Index = index++;
+
+            action(context, item);
+        }
     }
 }

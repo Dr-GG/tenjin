@@ -1,7 +1,8 @@
-﻿using System;
+﻿using FluentAssertions;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
 using Tenjin.Implementations.Collections;
 using Tenjin.Interfaces.Collections;
 using Tenjin.Tests.Models.HashCodeDictionary;
@@ -27,7 +28,7 @@ public class HashCodeDictionaryTests
         {
             var (key, value) = enumerator.Current;
 
-            Assert.AreEqual(key, value.GetHashCode());
+            key.Should().Be(value.GetHashCode());
         }
     }
 
@@ -41,8 +42,8 @@ public class HashCodeDictionaryTests
             var compareModel = GetHashCodeModel(i);
             var dictionaryModel = dictionary[compareModel.GetHashCode()];
 
-            Assert.AreEqual(compareModel, dictionaryModel);
-            Assert.AreEqual(compareModel.GetHashCode(), dictionaryModel.GetHashCode());
+            compareModel.Should().Be(dictionaryModel);
+            compareModel.GetHashCode().Should().Be(dictionaryModel.GetHashCode());
         }
     }
 
@@ -54,11 +55,13 @@ public class HashCodeDictionaryTests
         for (var i = NonExistingModelsOffset; i < NumberOfNonExistingModels; i++)
         {
             var compareModel = GetHashCodeModel(i);
-
-            Assert.Throws<KeyNotFoundException>(() =>
+            var error = Assert.Throws<KeyNotFoundException>(() =>
             {
                 var _ = dictionary[compareModel.GetHashCode()];
-            });
+            })!;
+
+            error.Should().NotBeNull();
+            error.Message.Should().Be($"The given key '{compareModel.GetHashCode()}' was not present in the dictionary.");
         }
     }
 
@@ -72,8 +75,8 @@ public class HashCodeDictionaryTests
             var compareModel = GetHashCodeModel(i);
             var dictionaryModel = dictionary[compareModel];
 
-            Assert.AreEqual(compareModel, dictionaryModel);
-            Assert.AreEqual(compareModel.GetHashCode(), dictionaryModel.GetHashCode());
+            compareModel.Should().Be(dictionaryModel);
+            compareModel.GetHashCode().Should().Be(dictionaryModel.GetHashCode());
         }
     }
 
@@ -85,11 +88,13 @@ public class HashCodeDictionaryTests
         for (var i = NonExistingModelsOffset; i < NumberOfNonExistingModels; i++)
         {
             var compareModel = GetHashCodeModel(i);
-
-            Assert.Throws<KeyNotFoundException>(() =>
+            var error = Assert.Throws<KeyNotFoundException>(() =>
             {
-                var _ = dictionary[compareModel];
-            });
+                var _ = dictionary[compareModel.GetHashCode()];
+            })!;
+
+            error.Should().NotBeNull();
+            error.Message.Should().Be($"The given key '{compareModel.GetHashCode()}' was not present in the dictionary.");
         }
     }
 
@@ -106,7 +111,7 @@ public class HashCodeDictionaryTests
             var model = GetHashCodeModel(i);
             var key = keys[i];
 
-            Assert.AreEqual(key, model.GetHashCode());
+            key.Should().Be(model.GetHashCode());
         }
     }
 
@@ -123,8 +128,8 @@ public class HashCodeDictionaryTests
             var model = GetHashCodeModel(i);
             var value = values[i];
 
-            Assert.AreEqual(value.GetHashCode(), model.GetHashCode());
-            Assert.AreEqual(value, model);
+            value.GetHashCode().Should().Be(model.GetHashCode());
+            value.Should().Be(model);
         }
     }
 
@@ -133,13 +138,13 @@ public class HashCodeDictionaryTests
     {
         var dictionary = GetDefaultDictionary();
 
-        Assert.AreEqual(NumberOfModels, dictionary.Count);
+        dictionary.Should().HaveCount(NumberOfModels);
 
         dictionary.Clear();
 
-        Assert.IsEmpty(dictionary);
-        Assert.IsEmpty(dictionary.Keys);
-        Assert.IsEmpty(dictionary.Values);
+        dictionary.Should().BeEmpty();
+        dictionary.Keys.Should().BeEmpty();
+        dictionary.Values.Should().BeEmpty();
 
         using var enumerator = dictionary.GetEnumerator();
         var enumeratorCounter = 0;
@@ -162,7 +167,7 @@ public class HashCodeDictionaryTests
             var model = GetHashCodeModel(i);
             var pair = new KeyValuePair<int, HashCodeModel>(model.GetHashCode(), model);
 
-            Assert.IsTrue(dictionary.Contains(pair));
+            dictionary.Contains(pair).Should().BeTrue();
         }
     }
 
@@ -176,7 +181,7 @@ public class HashCodeDictionaryTests
             var model = GetHashCodeModel(i);
             var pair = new KeyValuePair<int, HashCodeModel>(model.GetHashCode(), model);
 
-            Assert.IsFalse(dictionary.Contains(pair));
+            dictionary.Contains(pair).Should().BeFalse();
         }
     }
 
@@ -189,7 +194,7 @@ public class HashCodeDictionaryTests
         {
             var model = GetHashCodeModel(i);
 
-            Assert.IsTrue(dictionary.ContainsKey(model.GetHashCode()));
+            dictionary.ContainsKey(model.GetHashCode()).Should().BeTrue();
         }
     }
 
@@ -202,7 +207,7 @@ public class HashCodeDictionaryTests
         {
             var model = GetHashCodeModel(i);
 
-            Assert.IsFalse(dictionary.ContainsKey(model.GetHashCode()));
+            dictionary.ContainsKey(model.GetHashCode()).Should().BeFalse();
         }
     }
 
@@ -215,7 +220,7 @@ public class HashCodeDictionaryTests
         {
             var model = GetHashCodeModel(i);
 
-            Assert.IsTrue(dictionary.Contains(model));
+            dictionary.Contains(model).Should().BeTrue();
         }
     }
 
@@ -228,7 +233,7 @@ public class HashCodeDictionaryTests
         {
             var model = GetHashCodeModel(i);
 
-            Assert.IsFalse(dictionary.Contains(model));
+            dictionary.Contains(model).Should().BeFalse();
         }
     }
 
@@ -245,8 +250,8 @@ public class HashCodeDictionaryTests
             var (key, value) = keyValuePairs[i];
             var model = GetHashCodeModel(i);
 
-            Assert.AreEqual(key, model.GetHashCode());
-            Assert.AreEqual(value, model);
+            key.Should().Be(model.GetHashCode());
+            value.Should().Be(model);
         }
     }
 
@@ -271,9 +276,9 @@ public class HashCodeDictionaryTests
         {
             var model = GetHashCodeModel(i);
 
-            Assert.IsTrue(dictionary.Remove(model.GetHashCode()));
-            Assert.IsFalse(dictionary.Contains(model));
-            Assert.AreEqual(--count, dictionary.Count);
+            dictionary.Remove(model.GetHashCode()).Should().BeTrue();
+            dictionary.Contains(model).Should().BeFalse();
+            dictionary.Should().HaveCount(--count);
         }
     }
 
@@ -286,9 +291,9 @@ public class HashCodeDictionaryTests
         {
             var model = GetHashCodeModel(i);
 
-            Assert.IsFalse(dictionary.Remove(model.GetHashCode()));
-            Assert.IsFalse(dictionary.Contains(model));
-            Assert.AreEqual(NumberOfModels, dictionary.Count);
+            dictionary.Remove(model.GetHashCode()).Should().BeFalse();
+            dictionary.Contains(model).Should().BeFalse();
+            dictionary.Should().HaveCount(NumberOfModels);
         }
     }
 
@@ -303,9 +308,9 @@ public class HashCodeDictionaryTests
             var model = GetHashCodeModel(i);
             var keyValuePair = new KeyValuePair<int, HashCodeModel>(model.GetHashCode(), model);
 
-            Assert.IsTrue(dictionary.Remove(keyValuePair));
-            Assert.IsFalse(dictionary.Contains(keyValuePair));
-            Assert.AreEqual(--count, dictionary.Count);
+            dictionary.Remove(keyValuePair).Should().BeTrue();
+            dictionary.Contains(keyValuePair).Should().BeFalse();
+            dictionary.Should().HaveCount(--count);
         }
     }
 
@@ -319,9 +324,9 @@ public class HashCodeDictionaryTests
             var model = GetHashCodeModel(i);
             var keyValuePair = new KeyValuePair<int, HashCodeModel>(model.GetHashCode(), model);
 
-            Assert.IsFalse(dictionary.Remove(keyValuePair));
-            Assert.IsFalse(dictionary.Contains(keyValuePair));
-            Assert.AreEqual(NumberOfModels, dictionary.Count);
+            dictionary.Remove(model.GetHashCode()).Should().BeFalse();
+            dictionary.Contains(model).Should().BeFalse();
+            dictionary.Should().HaveCount(NumberOfModels);
         }
     }
 
@@ -335,9 +340,9 @@ public class HashCodeDictionaryTests
         {
             var model = GetHashCodeModel(i);
 
-            Assert.IsTrue(dictionary.Remove(model));
-            Assert.IsFalse(dictionary.Contains(model));
-            Assert.AreEqual(--count, dictionary.Count);
+            dictionary.Remove(model).Should().BeTrue();
+            dictionary.Contains(model).Should().BeFalse();
+            dictionary.Should().HaveCount(--count);
         }
     }
 
@@ -350,9 +355,9 @@ public class HashCodeDictionaryTests
         {
             var model = GetHashCodeModel(i);
 
-            Assert.IsFalse(dictionary.Remove(model));
-            Assert.IsFalse(dictionary.Contains(model));
-            Assert.AreEqual(NumberOfModels, dictionary.Count);
+            dictionary.Remove(model.GetHashCode()).Should().BeFalse();
+            dictionary.Contains(model).Should().BeFalse();
+            dictionary.Should().HaveCount(NumberOfModels);
         }
     }
 
@@ -368,8 +373,8 @@ public class HashCodeDictionaryTests
 
             dictionary.Add(model.GetHashCode(), model);
 
-            Assert.AreEqual(++count, dictionary.Count);
-            Assert.IsTrue(dictionary.ContainsKey(model.GetHashCode()));
+            dictionary.Should().HaveCount(++count);
+            dictionary.ContainsKey(model.GetHashCode()).Should().BeTrue();
         }
     }
 
@@ -382,8 +387,11 @@ public class HashCodeDictionaryTests
         {
             var model = GetHashCodeModel(i);
 
-            Assert.Throws<ArgumentException>(() => dictionary.Add(model.GetHashCode(), model));
-            Assert.AreEqual(NumberOfModels, dictionary.Count);
+            var error = Assert.Throws<ArgumentException>(() => dictionary.Add(model.GetHashCode(), model))!;
+            dictionary.Should().HaveCount(NumberOfModels);
+
+            error.Should().NotBeNull();
+            error.Message.Should().Be($"An item with the same key has already been added. Key: {model.GetHashCode()}");
         }
     }
 
@@ -400,8 +408,8 @@ public class HashCodeDictionaryTests
 
             dictionary.Add(pair);
 
-            Assert.AreEqual(++count, dictionary.Count);
-            Assert.IsTrue(dictionary.ContainsKey(model.GetHashCode()));
+            dictionary.Should().HaveCount(++count);
+            dictionary.ContainsKey(model.GetHashCode()).Should().BeTrue();
         }
     }
 
@@ -415,8 +423,11 @@ public class HashCodeDictionaryTests
             var model = GetHashCodeModel(i);
             var pair = new KeyValuePair<int, HashCodeModel>(model.GetHashCode(), model);
 
-            Assert.Throws<ArgumentException>(() => dictionary.Add(pair));
-            Assert.AreEqual(NumberOfModels, dictionary.Count);
+            var error = Assert.Throws<ArgumentException>(() => dictionary.Add(pair))!;
+            dictionary.Should().HaveCount(NumberOfModels);
+
+            error.Should().NotBeNull();
+            error.Message.Should().Be($"An item with the same key has already been added. Key: {model.GetHashCode()}");
         }
     }
 
@@ -432,8 +443,8 @@ public class HashCodeDictionaryTests
 
             dictionary.Add(model);
 
-            Assert.AreEqual(++count, dictionary.Count);
-            Assert.IsTrue(dictionary.ContainsKey(model.GetHashCode()));
+            dictionary.Should().HaveCount(++count);
+            dictionary.ContainsKey(model.GetHashCode()).Should().BeTrue();
         }
     }
 
@@ -446,8 +457,11 @@ public class HashCodeDictionaryTests
         {
             var model = GetHashCodeModel(i);
 
-            Assert.Throws<ArgumentException>(() => dictionary.Add(model));
-            Assert.AreEqual(NumberOfModels, dictionary.Count);
+            var error = Assert.Throws<ArgumentException>(() => dictionary.Add(model))!;
+            dictionary.Should().HaveCount(NumberOfModels);
+
+            error.Should().NotBeNull();
+            error.Message.Should().Be($"An item with the same key has already been added. Key: {model.GetHashCode()}");
         }
     }
 
@@ -469,7 +483,7 @@ public class HashCodeDictionaryTests
         for (var i = 0; i < NumberOfModels; i++)
         {
             var model = GetHashCodeModel(i);
-                
+
             keyValuePairs.Add(new KeyValuePair<int, HashCodeModel>(model.GetHashCode(), model));
         }
 
@@ -488,9 +502,9 @@ public class HashCodeDictionaryTests
             var model = GetHashCodeModel(i);
             var result = dictionary.TryGetValue(model.GetHashCode(), out var dictionaryModel);
 
-            Assert.IsTrue(result);
-            Assert.AreEqual(model, dictionaryModel);
-            Assert.AreEqual(model.GetHashCode(), dictionaryModel.GetHashCode());
+            result.Should().BeTrue();
+            dictionaryModel.Should().Be(model);
+            dictionaryModel.GetHashCode().Should().Be(model.GetHashCode());
         }
     }
 
@@ -504,8 +518,8 @@ public class HashCodeDictionaryTests
             var model = GetHashCodeModel(i);
             var result = dictionary.TryGetValue(model.GetHashCode(), out var dictionaryModel);
 
-            Assert.IsFalse(result);
-            Assert.IsNull(dictionaryModel);
+            result.Should().BeFalse();
+            dictionaryModel.Should().BeNull();
         }
     }
 
@@ -518,8 +532,8 @@ public class HashCodeDictionaryTests
             var sourceModel = right[key];
             var destinationModel = left[key];
 
-            Assert.AreEqual(sourceModel.GetHashCode(), destinationModel.GetHashCode());
-            Assert.AreEqual(sourceModel, destinationModel);
+            destinationModel.GetHashCode().Should().Be(sourceModel.GetHashCode());
+            destinationModel.Should().Be(sourceModel);
         }
     }
 

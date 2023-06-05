@@ -1,10 +1,11 @@
-﻿using System;
+﻿using FluentAssertions;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Tenjin.Extensions;
 using Tenjin.Tests.Enums;
 using Tenjin.Tests.Models.Console;
@@ -165,9 +166,9 @@ public class ObjectExtensionsTests
     [TestCase(BooleanEnum.True, (ushort)1)]
     public void DoesNotEqual_WhenProvidingNotEqualObjects_ReturnsTrue(object? left, object? right)
     {
-        Assert.IsTrue(left.DoesNotEqual(right));
+        left.DoesNotEqual(right).Should().BeTrue();
     }
-        
+
     [TestCase(null, new object?[] { null, null })]
     [TestCase(1, new object?[] { 1, 1 })]
     [TestCase(1.0, new object?[] { 1.0, 1.0 })]
@@ -179,15 +180,15 @@ public class ObjectExtensionsTests
     [TestCase((ulong)1, new object?[] { (ulong)1, (ulong)1 })]
     [TestCase((uint)1, new object?[] { (uint)1, (uint)1 })]
     [TestCase((ushort)1, new object?[] { (ushort)1, (ushort)1 })]
-    [TestCase(true, new object?[] {true, true})]
+    [TestCase(true, new object?[] { true, true })]
     [TestCase(false, new object?[] { false, false })]
     [TestCase(BooleanEnum.True, new object?[] { BooleanEnum.True, BooleanEnum.True })]
     [TestCase(BooleanEnum.False, new object?[] { BooleanEnum.False, BooleanEnum.False })]
     public void EqualsAll_WhenProvidingMatchingObjects_ReturnsTrue(
-        object? root, 
+        object? root,
         object?[] objects)
     {
-        Assert.IsTrue(root.EqualsAll(objects));
+        root.EqualsAll(objects).Should().BeTrue();
     }
 
     [TestCase(null, new object?[] { 1, null })]
@@ -444,7 +445,7 @@ public class ObjectExtensionsTests
         object? root,
         object?[] objects)
     {
-        Assert.IsFalse(root.EqualsAll(objects));
+        root.EqualsAll(objects).Should().BeFalse();
     }
 
     [TestCase(null, new object?[] { null, null })]
@@ -462,13 +463,13 @@ public class ObjectExtensionsTests
     [TestCase(1, new object?[] { 1, 2 })]
     [TestCase(1, new object?[] { 1, 2.0 })]
     [TestCase(1, new object?[] { 1, 2.0f })]
-    [TestCase(1, new object?[] { 1, (byte)2})]
-    [TestCase(1, new object?[] { 1, (char)2})]
-    [TestCase(1, new object?[] { 1, (uint)2})]
-    [TestCase(1, new object?[] { 1, (ushort)2})]
-    [TestCase(1, new object?[] { 1, (ulong)2})]
-    [TestCase(1, new object?[] { 1, (short)2})]
-    [TestCase(1, new object?[] { 1, (long)2})]
+    [TestCase(1, new object?[] { 1, (byte)2 })]
+    [TestCase(1, new object?[] { 1, (char)2 })]
+    [TestCase(1, new object?[] { 1, (uint)2 })]
+    [TestCase(1, new object?[] { 1, (ushort)2 })]
+    [TestCase(1, new object?[] { 1, (ulong)2 })]
+    [TestCase(1, new object?[] { 1, (short)2 })]
+    [TestCase(1, new object?[] { 1, (long)2 })]
     [TestCase(1.0, new object?[] { 2, 1.0 })]
     [TestCase(1.0, new object?[] { 2.0, 1.0 })]
     [TestCase(1.0, new object?[] { 2.0f, 1.0 })]
@@ -733,7 +734,7 @@ public class ObjectExtensionsTests
         object? root,
         object?[] objects)
     {
-        Assert.IsTrue(root.EqualsAny(objects));
+        root.EqualsAny(objects).Should().BeTrue();
     }
 
     [TestCase(null, new object?[] { 1, null })]
@@ -1022,7 +1023,7 @@ public class ObjectExtensionsTests
         object? root,
         object?[] objects)
     {
-        Assert.IsTrue(root.DoesNotEqualAny(objects));
+        root.DoesNotEqualAny(objects).Should().BeTrue();
     }
 
     [TestCase(null, new object?[] { 1, 2 })]
@@ -1311,7 +1312,7 @@ public class ObjectExtensionsTests
         object? root,
         object?[] objects)
     {
-        Assert.IsTrue(root.DoesNotEqualAll(objects));
+        root.DoesNotEqualAll(objects).Should().BeTrue();
     }
 
     [TestCase(null)]
@@ -1331,7 +1332,7 @@ public class ObjectExtensionsTests
     [TestCase(null, "++")]
     [TestCase(null, "___")]
     public void WriteHeading_WhenWritingFromANullObject_LogsAnEmptyStringToTheConsole(
-        object? root, 
+        object? root,
         string? headingUnderline)
     {
         AssertWriteHeading(root, string.Empty, headingUnderline);
@@ -1391,7 +1392,7 @@ public class ObjectExtensionsTests
     [TestCase(true, "True", 2)]
     [TestCase(false, "False", 3)]
     public void WriteLine_WhenWritingFromANonNullObjectWithLineAppends_LogsTheExpectedValueToTheConsole(
-        object root, 
+        object root,
         string expectedValue,
         int numberOfLineAppends)
     {
@@ -1410,12 +1411,12 @@ public class ObjectExtensionsTests
     [TestCase(1, "1", "++")]
     [TestCase(true, "True", "++")]
     [TestCase(false, "False", "++")]
-    [TestCase("Test a string", "Test a string", "___")] 
+    [TestCase("Test a string", "Test a string", "___")]
     [TestCase(1, "1", "___")]
     [TestCase(true, "True", "___")]
     [TestCase(false, "False", "___")]
     public void WriteHeading_WhenWritingFromANonNullObject_LogsTheExpectedValueToTheConsole(
-        object root, 
+        object root,
         string expectedValue,
         string? headingUnderline)
     {
@@ -1790,8 +1791,8 @@ public class ObjectExtensionsTests
     [TestCase(100, "E", "nl-NL", "1,000000E+002")]
     [TestCase(100, "P", "fr-FR", "10 000,000 %")]
     public void WriteLine_WhenWritingInt16WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
-        short value, 
-        string? format, 
+        short value,
+        string? format,
         string culture,
         string expectedResult)
     {
@@ -2081,7 +2082,7 @@ public class ObjectExtensionsTests
         AssertWriteLineWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult);
     }
-        
+
     [TestCase((ushort)255, "X", "FF", null)]
     [TestCase((ushort)255, "x", "ff", null)]
     [TestCase((ushort)255, "X", "FF", "-")]
@@ -2953,12 +2954,12 @@ public class ObjectExtensionsTests
             return Task.CompletedTask;
         });
 
-        Assert.IsInstanceOf<Func<Task>>(function);
-        Assert.AreEqual(0, checkDigit);
+        function.Should().BeOfType<Func<Task>>();
+        checkDigit.Should().Be(0);
 
         await function();
 
-        Assert.AreEqual(1, checkDigit);
+        checkDigit.Should().Be(1);
     }
 
     [Test]
@@ -2976,7 +2977,7 @@ public class ObjectExtensionsTests
                 lock (root)
                 {
                     checkDigit++;
-                        
+
                     ThreadingUtilities.IncreaseThreadIdDictionary(threadIds);
                     Thread.Sleep(250);
                 }
@@ -2987,12 +2988,12 @@ public class ObjectExtensionsTests
             tasks.Add(function);
         }
 
-        Assert.AreEqual(0, checkDigit);
+        checkDigit.Should().Be(0);
 
         tasks.RunParallel();
 
-        Assert.Greater(threadIds.Count, 1);
-        Assert.AreEqual(NumberOfTaskThreads, checkDigit);
+        threadIds.Should().HaveCountGreaterThan(1);
+        checkDigit.Should().Be(NumberOfTaskThreads);
     }
 
     private static void AssertWriteWithFormat(
@@ -3048,7 +3049,7 @@ public class ObjectExtensionsTests
         string expectedValue,
         int numberOfLineAppends)
     {
-        GlobalAssertWriteLine(expectedValue, numberOfLineAppends, () => 
+        GlobalAssertWriteLine(expectedValue, numberOfLineAppends, () =>
             root.WriteLine(numberOfLineAppends));
     }
 
@@ -3186,6 +3187,6 @@ public class ObjectExtensionsTests
             .Replace(" ", " ")
             .Replace(" ", " ");
 
-        Assert.AreEqual(expected, provided);
+        expected.Should().Be(provided);
     }
 }

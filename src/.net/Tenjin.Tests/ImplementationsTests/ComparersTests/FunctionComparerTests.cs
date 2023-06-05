@@ -1,5 +1,6 @@
-﻿using System;
+﻿using FluentAssertions;
 using NUnit.Framework;
+using System;
 using Tenjin.Implementations.Comparers;
 
 namespace Tenjin.Tests.ImplementationsTests.ComparersTests;
@@ -20,7 +21,7 @@ public class FunctionComparerTests
         var comparer = GetFunctionComparer();
         var result = comparer.Compare(x, y);
 
-        Assert.AreEqual(expectedResult, result);
+        expectedResult.Should().Be(result);
     }
 
     [TestCase(null, null, 0)]
@@ -34,7 +35,7 @@ public class FunctionComparerTests
         var comparer = GetFunctionComparer();
         var result = comparer.Compare(x, y);
 
-        Assert.AreEqual(expectedResult, result);
+        expectedResult.Should().Be(result);
     }
 
     private static FunctionComparer<int> GetFunctionComparer()

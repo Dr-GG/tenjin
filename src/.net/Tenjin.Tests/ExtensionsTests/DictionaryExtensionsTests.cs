@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using FluentAssertions;
 using NUnit.Framework;
+using System.Collections.Generic;
 using Tenjin.Extensions;
 
 namespace Tenjin.Tests.ExtensionsTests;
@@ -24,6 +25,6 @@ public class DictionaryExtensionsTests
             {ExistingTestKey2, "value2"}
         };
 
-        Assert.AreEqual(expectedValue, dictionary.DoesNotContainKey(key));
+        expectedValue.Should().Be(dictionary.DoesNotContainKey(key));
     }
 }

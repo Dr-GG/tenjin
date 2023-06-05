@@ -11,10 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tenjin", "Tenjin\Tenjin.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tenjin.Tests", "Tenjin.Tests\Tenjin.Tests.csproj", "{495ABA7F-20D3-4412-8711-3489B9BB08BF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 - Utilities", "03 - Utilities", "{329682BE-A63E-4029-BB4A-F84D97B6254F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tenjin.MimeTypes.Generator", "Tenjin.MimeTypes.Generator\Tenjin.MimeTypes.Generator.csproj", "{56161295-1B6D-4380-A0BA-5C23A51EC262}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +25,6 @@ Global
 		{495ABA7F-20D3-4412-8711-3489B9BB08BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{495ABA7F-20D3-4412-8711-3489B9BB08BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{495ABA7F-20D3-4412-8711-3489B9BB08BF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56161295-1B6D-4380-A0BA-5C23A51EC262}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56161295-1B6D-4380-A0BA-5C23A51EC262}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56161295-1B6D-4380-A0BA-5C23A51EC262}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56161295-1B6D-4380-A0BA-5C23A51EC262}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -40,7 +32,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{F6A15A84-4056-407B-A1B9-E61F8EE3162C} = {38869F10-6980-43A5-8CAF-422CAE4E6B00}
 		{495ABA7F-20D3-4412-8711-3489B9BB08BF} = {F0CC2CC9-F1A9-4255-BC10-5BECF3E5113C}
-		{56161295-1B6D-4380-A0BA-5C23A51EC262} = {329682BE-A63E-4029-BB4A-F84D97B6254F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A0AF260B-4B49-4204-81A4-604CD4516679}

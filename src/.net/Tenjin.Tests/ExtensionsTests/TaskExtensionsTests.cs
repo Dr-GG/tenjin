@@ -1,8 +1,9 @@
-﻿using System;
+﻿using FluentAssertions;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Tenjin.Extensions;
 using Tenjin.Tests.Services;
 
@@ -34,7 +35,7 @@ public class TaskExtensionsTests
 
         result.RunParallel();
 
-        Assert.AreEqual(NumberOfThreads, counter.Counter);
+        counter.Counter.Should().Be(NumberOfThreads);
     }
 
     private static Task IncrementCounter(ThreadCounterMonitor counter, int threadSleep = 0)

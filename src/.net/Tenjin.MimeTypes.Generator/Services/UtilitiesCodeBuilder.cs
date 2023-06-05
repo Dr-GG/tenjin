@@ -38,7 +38,7 @@ public class UtilitiesCodeBuilder
     private static string GetFileExtensionToMimeTypeMapCode(IEnumerable<MimeTypeRecord> mimeTypes)
     {
         var items = GetFileExtensionToMimeTypeMapItemsCode(mimeTypes);
-            
+
         return CodeConstants.PopulateFileExtensionToMimeTypeMapMethodTemplate
             .Replace(CodeConstants.CodeSnippet, items);
     }
@@ -108,7 +108,7 @@ public class UtilitiesCodeBuilder
         {
             return string.Empty;
         }
-            
+
         var fileExtensions = mimeType
             .FileExtensions
             .Select(f => $"\"{f}\"")
@@ -118,7 +118,7 @@ public class UtilitiesCodeBuilder
     }
 
     private static async Task WriteTestFileExtensionToMimeTypeTestCasesCode(
-        MimeTypeData data, 
+        MimeTypeData data,
         string path)
     {
         var code = GetTestFileExtensionToMimeTypeTestCasesCode(data.MimeTypeToFileExtensions);

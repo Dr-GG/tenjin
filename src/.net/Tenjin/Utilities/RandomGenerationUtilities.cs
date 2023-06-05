@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 using System.Text;
 using Tenjin.Exceptions.Random;
 using Tenjin.Extensions;
@@ -6,11 +7,20 @@ using Tenjin.Models.Random;
 
 namespace Tenjin.Utilities;
 
+/// <summary>
+/// A collection of methods used for random generation.
+/// </summary>
 public static class RandomGenerationUtilities
 {
+    public const int DefaultMinimumInt32 = int.MinValue;
+    public const int DefaultMaximumInt32 = int.MaxValue - 1;
+
     public const double DefaultMinimumDouble = 0.0;
     public const double DefaultMaximumDouble = 1.0;
 
+    /// <summary>
+    /// Generates a random double.
+    /// </summary>
     public static double GetRandomDouble(RandomGenerationParameters parameters)
     {
         AssertRandomDoubleGenerationParameters(parameters);
@@ -22,6 +32,23 @@ public static class RandomGenerationUtilities
         return random.NextDouble() * (maximum - minimum) + minimum;
     }
 
+    /// <summary>
+    /// Generates a random Int32 value.
+    /// </summary>
+    public static int GetRandomInt32(RandomGenerationParameters parameters)
+    {
+        AssertRandomInt32GenerationParameters(parameters);
+
+        var random = GetRandom(parameters);
+        var minimum = parameters.MinimumInt32 ?? DefaultMinimumInt32;
+        var maximum = parameters.MaximumInt32 ?? DefaultMaximumInt32;
+
+        return random.Next(minimum, maximum + 1);
+    }
+
+    /// <summary>
+    /// Generates a random string.
+    /// </summary>
     public static string GenerateRandomString(RandomGenerationParameters parameters)
     {
         AssertRandomStringGenerationParameters(parameters);
@@ -61,11 +88,16 @@ public static class RandomGenerationUtilities
         }
 
         throw new NotSupportedException(
-            "Fatal error! Scenario not supported in generating random length");
+            "Fatal error! Scenario not supported in generating random length.");
     }
 
     private static Random GetRandom(RandomGenerationParameters parameters)
     {
+        if (parameters.Random != null)
+        {
+            return parameters.Random;
+        }
+
         var seed = parameters.Seed ?? (int)(parameters.GetHashCode() ^ DateTime.Now.Ticks);
 
         return new Random(seed);
@@ -80,21 +112,48 @@ public static class RandomGenerationUtilities
             && parameters.MaximumDouble == null)
         {
             throw new RandomGenerationException(
-                "When specifying minimum or maximum double, then both minimum and maximum double must be set");
+                "When specifying minimum or maximum double, then both minimum and maximum double must be set.");
         }
 
         if (parameters.MinimumDouble.HasValue
             && parameters.MaximumDouble.HasValue
             && parameters.MinimumDouble > parameters.MaximumDouble)
         {
-            throw new RandomGenerationException("Minimum double cannot be greater than maximum double");
+            throw new RandomGenerationException("Minimum double cannot be greater than maximum double.");
         }
 
         if (parameters.MinimumDouble.HasValue
             && parameters.MaximumDouble.HasValue
             && parameters.MinimumDouble.Value.ToleranceEquals(parameters.MaximumDouble.Value))
         {
-            throw new RandomGenerationException("Minimum and maximum double cannot be of the same value");
+            throw new RandomGenerationException("Minimum and maximum double cannot be of the same value.");
+        }
+    }
+
+    private static void AssertRandomInt32GenerationParameters(RandomGenerationParameters parameters)
+    {
+        if (parameters.MinimumInt32 == null
+            && parameters.MaximumInt32 != null
+            ||
+            parameters.MinimumInt32 != null
+            && parameters.MaximumInt32 == null)
+        {
+            throw new RandomGenerationException(
+                "When specifying minimum or maximum Int32, then both minimum and maximum Int32 must be set.");
+        }
+
+        if (parameters.MinimumInt32.HasValue
+            && parameters.MaximumInt32.HasValue
+            && parameters.MinimumInt32 > parameters.MaximumInt32)
+        {
+            throw new RandomGenerationException("Minimum Int32 cannot be greater than maximum Int32.");
+        }
+
+        if (parameters.MinimumInt32.HasValue
+            && parameters.MaximumInt32.HasValue
+            && parameters.MinimumInt32.Value == parameters.MaximumInt32.Value)
+        {
+            throw new RandomGenerationException("Minimum and maximum Int32 cannot be of the same value.");
         }
     }
 
@@ -102,34 +161,34 @@ public static class RandomGenerationUtilities
     {
         if (parameters.AllowedRandomCharacters.IsNullOrEmpty())
         {
-            throw new RandomGenerationException("AllowedRandomCharacters not allowed to be null or empty");
+            throw new RandomGenerationException("AllowedRandomCharacters not allowed to be null or empty.");
         }
 
         if (parameters.MinimumLength == null
             && parameters.MaximumLength == null
             && parameters.Length == null)
         {
-            throw new RandomGenerationException("Minimum/maximum or fixed lengths must be specified");
+            throw new RandomGenerationException("Minimum/maximum or fixed lengths must be specified.");
         }
 
         if (parameters.Length == null
             && (parameters.MinimumLength == null
                 || parameters.MaximumLength == null))
         {
-            throw new RandomGenerationException("Minimum and maximum length should both be set");
+            throw new RandomGenerationException("Minimum and maximum length should both be set.");
         }
 
         if (parameters.Length != null
             && (parameters.MinimumLength != null
                 || parameters.MaximumLength != null))
         {
-            throw new RandomGenerationException("Minimum and/or maximum and/or fixed lengths were specified");
+            throw new RandomGenerationException("Minimum and/or maximum and/or fixed lengths were specified.");
         }
 
-        if (parameters.MinimumLength.HasValue 
+        if (parameters.MinimumLength.HasValue
             && parameters.MinimumLength > parameters.MaximumLength)
         {
-            throw new RandomGenerationException("Minimum length cannot be greater than maximum length");
+            throw new RandomGenerationException("Minimum length cannot be greater than maximum length.");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using FluentAssertions;
+using NUnit.Framework;
 using Tenjin.Extensions;
 using Tenjin.Models.Messaging.Publishers.Progress;
 
@@ -12,7 +13,7 @@ public class ProgressEventExtensionsTests
     {
         var result = ((ProgressEvent?)null).Percentage();
 
-        Assert.AreEqual(0, result);
+        result.Should().Be(0);
     }
 
     [TestCase(0ul, 0ul, 0, 0)]
@@ -41,6 +42,6 @@ public class ProgressEventExtensionsTests
     {
         var progress = new ProgressEvent(current, total);
 
-        Assert.AreEqual(expected, progress.Percentage(numberOfDecimals));
+        expected.Should().Be(progress.Percentage(numberOfDecimals));
     }
 }

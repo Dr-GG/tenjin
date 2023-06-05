@@ -1,36 +1,47 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Tenjin.Interfaces.Messaging.Publishers;
 using Tenjin.Interfaces.Messaging.Subscribers;
 
 namespace Tenjin.Implementations.Messaging.Publishers;
 
+/// <summary>
+/// The default implementation of the IPublisherLock interface that provides automated unsubscriptions.
+/// </summary>
 public class PublisherLock<TData> : IPublisherLock
 {
-    private bool _disposed;
-
     private readonly IPublisher<TData> _publisher;
     private readonly ISubscriber<TData> _subscriber;
 
+    /// <summary>
+    /// Creates a new instance.
+    /// </summary>
     public PublisherLock(IPublisher<TData> publisher, ISubscriber<TData> subscriber)
     {
         _publisher = publisher;
         _subscriber = subscriber;
     }
 
+    /// <inheritdoc />
     public void Dispose()
     {
-        DisposeAsync().GetAwaiter().GetResult();
+        Dispose(true);
+
+        GC.SuppressFinalize(this);
     }
 
-    public async ValueTask DisposeAsync()
+    /// <inheritdoc />
+    public ValueTask DisposeAsync()
     {
-        if (_disposed)
-        {
-            return;
-        }
+        Dispose(true);
 
-        await _publisher.Unsubscribe(_subscriber);
+        GC.SuppressFinalize(this);
 
-        _disposed = true;
+        return ValueTask.CompletedTask;
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        _publisher.Unsubscribe(_subscriber).GetAwaiter().GetResult();
     }
 }

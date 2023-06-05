@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using FluentAssertions;
+using NUnit.Framework;
 using Tenjin.Extensions;
 using Tenjin.Tests.Enums;
 
@@ -94,7 +95,7 @@ public class BitwiseOperationExtensionsTests
         BitwiseEnum right,
         bool expectedAnswer)
     {
-        Assert.AreEqual(expectedAnswer, left.IsBitwiseEqual((int)right));
-        Assert.AreEqual(expectedAnswer, right.IsBitwiseEqual((int)left));
+        expectedAnswer.Should().Be(left.IsBitwiseEqual((int)right));
+        expectedAnswer.Should().Be(right.IsBitwiseEqual((int)left));
     }
 }

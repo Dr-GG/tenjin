@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using FluentAssertions;
 using NUnit.Framework;
+using System.Collections.Generic;
 using Tenjin.Interfaces.Messaging.Publishers;
 using Tenjin.Tests.Models.Messaging;
 using Tenjin.Tests.Services;
@@ -29,7 +30,7 @@ public class PublisherRegistryTests
             "key-5"
         },
 
-        TestExistingPublisherIds = new []
+        TestExistingPublisherIds = new[]
         {
             "key-2",
             "key-1",
@@ -226,9 +227,9 @@ public class PublisherRegistryTests
         {
             var gotPublisher = registry.TryGet(id, out var publisher);
 
-            Assert.IsTrue(gotPublisher);
-            Assert.IsNotNull(publisher);
-            Assert.AreEqual(id, ((IDiscoverablePublisher<TKey, TestPublishData>)publisher).Id);
+            gotPublisher.Should().BeTrue();
+            publisher.Should().NotBeNull();
+            ((IDiscoverablePublisher<TKey, TestPublishData>)publisher).Id.Should().Be(id);
         }
     }
 
@@ -240,8 +241,8 @@ public class PublisherRegistryTests
         {
             var gotPublisher = registry.TryGet(id, out var publisher);
 
-            Assert.IsFalse(gotPublisher);
-            Assert.IsNull(publisher);
+            gotPublisher.Should().BeFalse();
+            publisher.Should().BeNull();
         }
     }
 
@@ -253,8 +254,8 @@ public class PublisherRegistryTests
         {
             var publisher = registry.Get(id);
 
-            Assert.IsNotNull(publisher);
-            Assert.AreEqual(id, ((IDiscoverablePublisher<TKey, TestPublishData>)publisher).Id);
+            publisher.Should().NotBeNull();
+            ((IDiscoverablePublisher<TKey, TestPublishData>)publisher).Id.Should().Be(id);
         }
     }
 
@@ -264,7 +265,10 @@ public class PublisherRegistryTests
 
         foreach (var id in data.NonExistingPublisherIds)
         {
-            Assert.Throws<KeyNotFoundException>(() => registry.Get(id));
+            var error = Assert.Throws<KeyNotFoundException>(() => registry.Get(id))!;
+
+            error.Should().NotBeNull();
+            error.Message.Should().Be($"A discoverable publisher with the key {id} was not found.");
         }
     }
 
@@ -276,8 +280,8 @@ public class PublisherRegistryTests
         {
             var publisher = registry[id];
 
-            Assert.IsNotNull(publisher);
-            Assert.AreEqual(id, ((IDiscoverablePublisher<TKey, TestPublishData>)publisher).Id);
+            publisher.Should().NotBeNull();
+            ((IDiscoverablePublisher<TKey, TestPublishData>)publisher).Id.Should().Be(id);
         }
     }
 
@@ -287,7 +291,10 @@ public class PublisherRegistryTests
 
         foreach (var id in data.NonExistingPublisherIds)
         {
-            Assert.Throws<KeyNotFoundException>(() => registry[id].Dispose());
+            var error = Assert.Throws<KeyNotFoundException>(() => registry[id].Dispose())!;
+
+            error.Should().NotBeNull();
+            error.Message.Should().Be($"A discoverable publisher with the key {id} was not found.");
         }
     }
 }
