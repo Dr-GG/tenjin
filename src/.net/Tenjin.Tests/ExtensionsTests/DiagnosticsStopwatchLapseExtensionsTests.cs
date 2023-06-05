@@ -1,5 +1,6 @@
-﻿using System;
+﻿using FluentAssertions;
 using NUnit.Framework;
+using System;
 using Tenjin.Extensions;
 using Tenjin.Models.Diagnostics;
 
@@ -16,7 +17,7 @@ public class DiagnosticsStopwatchLapExtensionsTests
     [TestCase("2000-01-01 09:00:00", "2000-01-02 09:00:00")]
     [TestCase("2000-01-01 09:00:00", "2000-02-01 09:00:00")]
     [TestCase("2000-01-01 09:00:00", "2001-01-01 09:00:00")]
-    public void Timespan_WhenProvidingDifferentTimestamps_ProvidesTheExpectedResult(string start, string stop)
+    public void TimeSpan_WhenProvidingDifferentTimestamps_ProvidesTheExpectedResult(string start, string stop)
     {
         var startTimestamp = DateTime.ParseExact(start, TimestampFormat, null);
         var stopTimestamp = DateTime.ParseExact(stop, TimestampFormat, null);
@@ -27,6 +28,6 @@ public class DiagnosticsStopwatchLapExtensionsTests
             EndTimestamp = stopTimestamp
         };
 
-        Assert.AreEqual(timespan, lap.Timespan());
+        timespan.Should().Be(lap.TimeSpan());
     }
 }

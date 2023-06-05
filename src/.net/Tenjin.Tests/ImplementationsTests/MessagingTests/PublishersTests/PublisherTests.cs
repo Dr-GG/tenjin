@@ -1,9 +1,10 @@
-﻿using System;
+﻿using FluentAssertions;
+using Moq;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Moq;
-using NUnit.Framework;
 using Tenjin.Enums.Messaging;
 using Tenjin.Extensions;
 using Tenjin.Implementations.Messaging.Publishers;
@@ -28,6 +29,16 @@ public class PublisherTests
 
     [TestCase(PublisherThreadMode.Multi)]
     [TestCase(PublisherThreadMode.Single)]
+    public async Task Subscribe_WhenSubscribersIsEmpty_ReturnsEmpty(PublisherThreadMode threadMode)
+    {
+        var publisher = GetPublisher(threadMode);
+        var result = await publisher.Subscribe();
+
+        result.Should().BeEmpty();
+    }
+
+    [TestCase(PublisherThreadMode.Multi)]
+    [TestCase(PublisherThreadMode.Single)]
     public async Task SubscribeAndPublish_WhenSubscribingASingleSubscriber_SubscribesTheSubscriberAndReceivesPublishedEvents(
         PublisherThreadMode threadMode)
     {
@@ -39,7 +50,7 @@ public class PublisherTests
 
         await PublishDefaultData(publisher, testData_1, testData_2, testData_3);
 
-        Assert.IsNotNull(publisherLock);
+        publisherLock.Should().NotBeNull();
 
         AssertDefaultPublishEvents(publisher, testData_1, testData_2, testData_3, 1, mockSubscriber);
     }
@@ -77,8 +88,8 @@ public class PublisherTests
 
         await PublishDefaultData(publisher, testData_1, testData_2, testData_3);
 
-        Assert.IsNotNull(publisherLocks);
-        Assert.AreEqual(mockSubscribers.Length, publisherLocks.Count());
+        publisherLocks.Should().NotBeNull();
+        publisherLocks.Should().HaveCount(mockSubscribers.Length);
         AssertDefaultPublishEvents(publisher, testData_1, testData_2, testData_3, 1, mockSubscribers);
     }
 
@@ -98,7 +109,7 @@ public class PublisherTests
             locks.Add(publisherLock);
         }
 
-        Assert.AreEqual(NumberOfTestRepetitionMethodCalls, locks.Count);
+        locks.Should().HaveCount(NumberOfTestRepetitionMethodCalls);
         Assert.IsTrue(locks
             .All(outerLock => locks
                 .Count(innerLock => outerLock != innerLock) == NumberOfTestRepetitionMethodCalls - 1));
@@ -183,60 +194,38 @@ public class PublisherTests
         Assert.DoesNotThrowAsync(() => publisher.Publish(testData_1));
     }
 
-    [TestCase(PublisherThreadMode.Multi)]
-    [TestCase(PublisherThreadMode.Single)]
-    public void Dispose_WhenSubscribing_ThrowsAnObjectDisposedException(PublisherThreadMode threadMode)
-    {
-        var publisher = GetPublisher(threadMode);
-
-        publisher.Dispose();
-
-        Assert.ThrowsAsync<ObjectDisposedException>(() =>
-            publisher.Subscribe(GetMockSubscriber().Object));
-    }
-
-    [TestCase(PublisherThreadMode.Multi)]
-    [TestCase(PublisherThreadMode.Single)]
-    public void Dispose_WhenUnsubscribing_ThrowsAnObjectDisposedException(PublisherThreadMode threadMode)
-    {
-        var publisher = GetPublisher(threadMode);
-
-        publisher.Dispose();
-
-        Assert.ThrowsAsync<ObjectDisposedException>(() =>
-            publisher.Unsubscribe(GetMockSubscriber().Object));
-    }
-
-    [TestCase(PublisherThreadMode.Multi)]
-    [TestCase(PublisherThreadMode.Single)]
-    public void Dispose_WhenPublishing_ThrowsAnObjectDisposedException(PublisherThreadMode threadMode)
-    {
-        var publisher = GetPublisher(threadMode);
-
-        publisher.Dispose();
-
-        Assert.ThrowsAsync<ObjectDisposedException>(() =>
-            publisher.Publish(MessagingUtilities.GetRandomTestPublishData()));
-    }
-
-    [TestCase(PublisherThreadMode.Multi)]
-    [TestCase(PublisherThreadMode.Single)]
+    [TestCase(PublisherThreadMode.Multi, false)]
+    [TestCase(PublisherThreadMode.Single, false)]
+    [TestCase(PublisherThreadMode.Multi, true)]
+    [TestCase(PublisherThreadMode.Single, true)]
     public async Task Dispose_WhenSubscribersExist_InvokesTheExistingSubscribersWithTheAppropriateDisposeCalls(
-        PublisherThreadMode threadMode)
+        PublisherThreadMode threadMode,
+        bool disposeAsync)
     {
         var publisher = GetPublisher(threadMode);
         var mockSubscribers = GetMockSubscribers(NumberOfTestSubscribers).ToList();
-            
+
         await publisher.Subscribe(mockSubscribers.Select(m => m.Object).ToArray());
-        await publisher.DisposeAsync();
-            
+
+        if (disposeAsync)
+        {
+            await publisher.DisposeAsync();
+        }
+        else
+        {
+            publisher.Dispose();
+        }
+
         AssertSubscribersDisposedCall(mockSubscribers, publisher);
     }
 
-    [TestCase(PublisherThreadMode.Multi)]
-    [TestCase(PublisherThreadMode.Single)]
+    [TestCase(PublisherThreadMode.Multi, false)]
+    [TestCase(PublisherThreadMode.Single, false)]
+    [TestCase(PublisherThreadMode.Multi, true)]
+    [TestCase(PublisherThreadMode.Single, true)]
     public async Task Dispose_WhenSubscribersExistedAndThenRemoved_DoesNotInvokeAnyPublishedEvents(
-        PublisherThreadMode threadMode)
+        PublisherThreadMode threadMode,
+        bool disposeAsync)
     {
         var publisher = GetPublisher(threadMode);
         var mockToRemoveSubscribers = GetMockSubscribers(NumberOfTestSubscribers).ToList();
@@ -247,7 +236,15 @@ public class PublisherTests
         await publisher.Subscribe(toRemoveSubscribers);
         await publisher.Subscribe(toReceiveSubscribers);
         await publisher.Unsubscribe(toRemoveSubscribers);
-        await publisher.DisposeAsync();
+
+        if (disposeAsync)
+        {
+            await publisher.DisposeAsync();
+        }
+        else
+        {
+            publisher.Dispose();
+        }
 
         AssertSubscribersDisposedCall(mockToReceiveSubscribers, publisher);
 
@@ -257,10 +254,13 @@ public class PublisherTests
         }
     }
 
-    [TestCase(PublisherThreadMode.Multi)]
-    [TestCase(PublisherThreadMode.Single)]
+    [TestCase(PublisherThreadMode.Multi, false)]
+    [TestCase(PublisherThreadMode.Single, false)]
+    [TestCase(PublisherThreadMode.Multi, true)]
+    [TestCase(PublisherThreadMode.Single, true)]
     public async Task Dispose_WhenCalledMultipleTimes_WorksAsExpectedAndPublishesOnlyOnce(
-        PublisherThreadMode threadMode)
+        PublisherThreadMode threadMode,
+        bool disposeAsync)
     {
         var publisher = GetPublisher(threadMode);
         var mockSubscribers = GetMockSubscribers(NumberOfTestSubscribers).ToList();
@@ -269,7 +269,14 @@ public class PublisherTests
 
         for (var i = 0; i < NumberOfTestRepetitionMethodCalls; i++)
         {
-            await publisher.DisposeAsync();
+            if (disposeAsync)
+            {
+                await publisher.DisposeAsync();
+            }
+            else
+            {
+                publisher.Dispose();
+            }
         }
 
         AssertSubscribersDisposedCall(mockSubscribers, publisher);
@@ -455,14 +462,14 @@ public class PublisherTests
         var threadWorkers = GetSubscriberThreadWorkers(publisher, false, disposeUsingLock).ToList();
 
         GetDefaultPublishData(out var testData_1, out var testData_2, out var testData_3);
-            
+
         threadWorkers
             .Select(t => t.ToFunctionTask(t.Run))
             .RunParallel();
 
         await PublishDefaultData(publisher, testData_1, testData_2, testData_3);
-            
-        Assert.IsTrue(threadWorkers.All(t => t.ReceivedNoPublishedEvents));
+
+        threadWorkers.All(t => t.ReceivedNoPublishedEvents).Should().BeTrue();
     }
 
     [TestCase(PublisherThreadMode.Multi, false)]
@@ -486,7 +493,7 @@ public class PublisherTests
         AssertSubscribeThreadWorkers(controlCheckSubscriber, threadWorkers);
     }
 
-    [Test] 
+    [Test]
     public async Task Publish_WhenRunningOnSingleThreadMode_AllSubscribersExecuteSequentiallyAndOnOneThread()
     {
         var publisher = GetPublisher(PublisherThreadMode.Single);
@@ -515,8 +522,8 @@ public class PublisherTests
             }
         }
 
-        Assert.AreEqual(1, threadIdCounts.Count);
-        Assert.AreEqual(orderOfReceivedSubscribers.Count, threadIdCounts[threadIdCounts.Keys.First()]);
+        threadIdCounts.Should().HaveCount(1);
+        orderOfReceivedSubscribers.Should().HaveCount(threadIdCounts[threadIdCounts.Keys.First()]);
     }
 
     [Test]
@@ -536,8 +543,28 @@ public class PublisherTests
 
         var threadCounts = threadIdCounts.Values.Sum();
 
-        Assert.Greater(threadIdCounts.Count, 1);
-        Assert.AreEqual(orderOfReceivedSubscribers.Count, threadCounts);
+        threadIdCounts.Should().HaveCountGreaterThan(1);
+        orderOfReceivedSubscribers.Should().HaveCount(threadCounts);
+    }
+
+    [Test]
+    public void Publish_WhenAnInvlidThreadingConfigurationModeWasProvided_ThrowsAnError()
+    {
+        var publisher = GetPublisher(PublisherThreadMode.Multi);
+        var invalidConfiguration = new PublisherConfiguration
+        {
+            Threading = new PublisherThreadConfiguration
+            {
+                Mode = (PublisherThreadMode)(-1)
+            }
+        };
+
+        publisher.Configure(invalidConfiguration);
+
+        var error = Assert.ThrowsAsync<NotSupportedException>(() => publisher.Publish(new TestPublishData()))!;
+
+        error.Should().NotBeNull();
+        error.Message.Should().Be("No dispatch method found for threading mode -1.");
     }
 
     private static void AssertSubscribeThreadWorkers(
@@ -550,8 +577,8 @@ public class PublisherTests
         Assert.IsTrue(enumeratedWorkers.All(t => t.ReceivedPublishedEvents));
 
         controlCheckSubscriber
-            .Verify(c => 
-                    c.Receive(It.IsAny<PublishEvent<TestPublishData>>()), 
+            .Verify(c =>
+                    c.Receive(It.IsAny<PublishEvent<TestPublishData>>()),
                 Times.Exactly(totalPublishes));
 
         foreach (var threadWorker in enumeratedWorkers)
@@ -573,15 +600,15 @@ public class PublisherTests
             && publishEvent.Data.Value1 == publishedData.Value1
             && publishEvent.Data.Value2 == publishedData.Value2;
 
-        Assert.IsTrue(receivedEvents.Count >= worker.NumberOfPublishes);
+        receivedEvents.Should().HaveCountGreaterThanOrEqualTo(worker.NumberOfPublishes);
 
         foreach (var data in sentData)
         {
-            Assert.IsNotNull(receivedEvents.SingleOrDefault(r => controlCheckValidateFunction(r, data)));
+            receivedEvents.SingleOrDefault(r => controlCheckValidateFunction(r, data)).Should().NotBeNull();
 
             controlCheckSubscriber
                 .Verify(c => c.Receive(It.Is<PublishEvent<TestPublishData>>(
-                        publishedEvent => controlCheckValidateFunction(publishedEvent, data))), 
+                        publishedEvent => controlCheckValidateFunction(publishedEvent, data))),
                     Times.Once);
         }
     }

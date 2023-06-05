@@ -1,62 +1,86 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Tenjin.Extensions;
 
+/// <summary>
+/// A collection of extension methods for the Object class.
+/// </summary>
 public static class ObjectExtensions
 {
     public const string DefaultHeadingUnderline = "=";
 
+    /// <summary>
+    /// Determines if two object instances do not equal one another.
+    /// </summary>
     public static bool DoesNotEqual<TObject>(this TObject? left, TObject? right)
     {
         return !Equals(left, right);
     }
 
+    /// <summary>
+    /// Determines if an object instance equals all object instances provided.
+    /// </summary>
     public static bool EqualsAll(this object? root, params object?[] objects)
     {
-        return objects.All(obj => Equals(root, obj));
+        return Array.TrueForAll(objects, obj => Equals(root, obj));
     }
 
+    /// <summary>
+    /// Determines if an object instance equals any of the object instances provided.
+    /// </summary>
     public static bool EqualsAny(this object? root, params object?[] objects)
     {
-        return objects.Any(obj => Equals(root, obj));
+        return Array.Exists(objects, obj => Equals(root, obj));
     }
 
+    /// <summary>
+    /// Determines if an object instance does not equal all object instances provided.
+    /// </summary>
     public static bool DoesNotEqualAll(this object? root, params object?[] objects)
     {
-        return objects.All(obj => !Equals(root, obj));
+        return Array.TrueForAll(objects, obj => !Equals(root, obj));
     }
 
+    /// <summary>
+    /// Determines if an object instance does not equal any object instances provided.
+    /// </summary>
     public static bool DoesNotEqualAny(this object? root, params object?[] objects)
     {
-        return objects.Any(obj => !Equals(root, obj));
+        return Array.Exists(objects, obj => !Equals(root, obj));
     }
 
-    /*
-     * This methods exists because the C# compiler does not allow the following code:
-     *
-     * someData.Select(data => () => SomeMethodThatReturnsATask());
-     *
-     * The C# compiler complains that it cannot determine the return type efficiently.
-     *
-     * Therefore, the following code does work:
-     *
-     * someData.Select(data => new Func<Task>(() => SomeMethodThatReturnsATask());
-     *
-     * However, the Resharper, and the C# compiler warns that the explicit cast is redundant and can be dropped.
-     * To circumvent this, the method exists to just cast, the code () => SomeMethodThatReturnsATask() to a Func<Task> type.
-     */
+    /// <summary>
+    /// Casts an object to a simple Func with a Task return type.
+    /// </summary>
+    /// <remarks>
+    /// This methods exists because the C# compiler does not allow the following code:
+    ///     someData.Select(data => () => SomeMethodThatReturnsATask());
+    /// 
+    /// The C# compiler complains that it cannot determine the return type efficiently.
+    /// 
+    /// Therefore, the following code does work:
+    ///     someData.Select(data => new Func<Task>(() => SomeMethodThatReturnsATask());
+    ///     
+    /// However, some static analysis tools such as Resharper, and the C# compiler warns that the explicit cast is redundant and can be dropped.
+    /// To circumvent this, the method exists to cast, the code() => SomeMethodThatReturnsATask() to a Func<Task> type.
+    /// </remarks>
     public static Func<Task> ToFunctionTask(this object _, Func<Task> function)
     {
         return function;
     }
 
+    /// <summary>
+    /// An extension method that output the object to the Console instance with a new line terminator.
+    /// </summary>
     public static void WriteLines(this object? _, int numberOfWriteLines = 1)
     {
         InternalWriteLines(numberOfWriteLines);
     }
 
+    /// <summary>
+    /// An extension method that output an IFormattable to the Console instance with a specified format and a new line terminator.
+    /// </summary>
     public static void Write(
         this IFormattable? root,
         string? format = null,
@@ -67,6 +91,19 @@ public static class ObjectExtensions
         Console.Write(output);
     }
 
+    /// <summary>
+    /// An extension method that output an Object to the Console instance with a specified format without a new line terminator.
+    /// </summary>
+    public static void Write(this object? root)
+    {
+        var output = root?.ToString() ?? string.Empty;
+
+        Console.Write(output);
+    }
+
+    /// <summary>
+    /// An extension method that output an IFormattable to the Console instance with a specified format, IFormatProvider and a new line terminator.
+    /// </summary>
     public static void WriteLine(
         this IFormattable? root,
         string? format = null,
@@ -78,13 +115,9 @@ public static class ObjectExtensions
         InternalWriteLine(output, writeLineAppends);
     }
 
-    public static void Write(this object? root)
-    {
-        var output = root?.ToString() ?? string.Empty;
-
-        Console.Write(output);
-    }
-
+    /// <summary>
+    /// An extension method that output an Object to the Console instance with a specified format.
+    /// </summary>
     public static void WriteLine(
         this object? root,
         int? writeLineAppends = null)
@@ -94,6 +127,9 @@ public static class ObjectExtensions
         InternalWriteLine(output, writeLineAppends);
     }
 
+    /// <summary>
+    /// An extension method that output an Object to the Console instance as a heading with a heading underlining character.
+    /// </summary>
     public static void WriteHeading(
         this object? root,
         string? headingUnderline,
@@ -107,6 +143,9 @@ public static class ObjectExtensions
         InternalWriteHeading(output, underline, writeLineAppends);
     }
 
+    /// <summary>
+    /// An extension method that output an IFormattable to the Console instance as a heading with a heading underlining character, specified format and IFormatProvider.
+    /// </summary>
     public static void WriteHeading(
         this IFormattable? root,
         string? format = null,

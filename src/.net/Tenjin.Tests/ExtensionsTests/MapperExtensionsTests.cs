@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using FluentAssertions;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
 using Tenjin.Extensions;
 using Tenjin.Implementations.Mappers;
 using Tenjin.Interfaces.Mappers;
@@ -18,7 +19,7 @@ public class MapperExtensionsTests
         var unaryMapper = GetLeftToRightMapper();
         var result = unaryMapper.MapNullable(null);
 
-        Assert.IsNull(result);
+        result.Should().BeNull();
     }
 
     [Test]
@@ -27,7 +28,7 @@ public class MapperExtensionsTests
         var unaryMapper = GetLeftToRightMapper();
         var result = unaryMapper.MapCollection(null);
 
-        Assert.IsEmpty(result);
+        result.Should().BeEmpty();
     }
 
     [Test]
@@ -41,16 +42,16 @@ public class MapperExtensionsTests
         };
         var result = unaryMapper.MapCollection(input).ToList();
 
-        Assert.AreEqual(2, result.Count);
+        result.Count.Should().Be(2);
 
         var result1 = result[0];
         var result2 = result[1];
 
-        Assert.AreEqual(1, result1.Property1);
-        Assert.AreEqual(2, result2.Property1);
+        result1.Property1.Should().Be(1);
+        result2.Property1.Should().Be(2);
 
-        Assert.AreEqual("test-1", result1.Property2);
-        Assert.AreEqual("test-2", result2.Property2);
+        result1.Property2.Should().Be("test-1");
+        result2.Property2.Should().Be("test-2");
     }
 
     [Test]
@@ -60,8 +61,8 @@ public class MapperExtensionsTests
         var rightDestination = mapper.MapNullable((LeftModel?)null);
         var leftDestination = mapper.MapNullable((RightModel?)null);
 
-        Assert.IsNull(rightDestination);
-        Assert.IsNull(leftDestination);
+        rightDestination.Should().BeNull();
+        leftDestination.Should().BeNull();
     }
 
     [Test]
@@ -71,8 +72,8 @@ public class MapperExtensionsTests
         var rightResult = binaryMapper.MapCollection((IEnumerable<LeftModel>?)null);
         var leftResult = binaryMapper.MapCollection((IEnumerable<RightModel>?)null);
 
-        Assert.IsEmpty(leftResult);
-        Assert.IsEmpty(rightResult);
+        leftResult.Should().BeEmpty();
+        rightResult.Should().BeEmpty();
     }
 
     [Test]
@@ -92,28 +93,28 @@ public class MapperExtensionsTests
         var leftResult = binaryMapper.MapCollection(rightInput).ToList();
         var rightResult = binaryMapper.MapCollection(leftInput).ToList();
 
-        Assert.AreEqual(2, leftResult.Count);
-        Assert.AreEqual(2, rightResult.Count);
+        leftResult.Should().HaveCount(2);
+        rightResult.Should().HaveCount(2);
 
         var leftResult1 = leftResult[0];
         var leftResult2 = leftResult[1];
 
-        Assert.IsInstanceOf<LeftModel>(leftResult1);
-        Assert.IsInstanceOf<LeftModel>(leftResult2);
-        Assert.AreEqual(1, leftResult1.Property1);
-        Assert.AreEqual(2, leftResult2.Property1);
-        Assert.AreEqual("test-1", leftResult1.Property2);
-        Assert.AreEqual("test-2", leftResult2.Property2);
+        leftResult1.Should().BeOfType<LeftModel>();
+        leftResult2.Should().BeOfType<LeftModel>();
+        leftResult1.Property1.Should().Be(1);
+        leftResult2.Property1.Should().Be(2);
+        leftResult1.Property2.Should().Be("test-1");
+        leftResult2.Property2.Should().Be("test-2");
 
         var rightResult1 = rightResult[0];
         var rightResult2 = rightResult[1];
 
-        Assert.IsInstanceOf<RightModel>(rightResult1);
-        Assert.IsInstanceOf<RightModel>(rightResult2);
-        Assert.AreEqual(1, rightResult1.Property1);
-        Assert.AreEqual(2, rightResult2.Property1);
-        Assert.AreEqual("test-1", rightResult1.Property2);
-        Assert.AreEqual("test-2", rightResult2.Property2);
+        rightResult1.Should().BeOfType<RightModel>();
+        rightResult2.Should().BeOfType<RightModel>();
+        rightResult1.Property1.Should().Be(1);
+        rightResult2.Property1.Should().Be(2);
+        rightResult1.Property2.Should().Be("test-1");
+        rightResult2.Property2.Should().Be("test-2");
     }
 
     private static IUnaryMapper<LeftModel, RightModel> GetLeftToRightMapper()

@@ -4,8 +4,14 @@ using Tenjin.Interfaces.Mappers;
 
 namespace Tenjin.Extensions;
 
+/// <summary>
+/// A collection of extensions for IUnaryMapper and IBinaryMapper instances.
+/// </summary>
 public static class MapperExtensions
 {
+    /// <summary>
+    /// Attempts to map a nullable property between two IUnaryMapper instances.
+    /// </summary>
     public static TDestination? MapNullable<TSource, TDestination>(
         this IUnaryMapper<TSource, TDestination> mapper,
         TSource? source)
@@ -17,6 +23,9 @@ public static class MapperExtensions
             : mapper.Map(source);
     }
 
+    /// <summary>
+    /// Attempts to map a nullable property between two IBinaryMapper instances.
+    /// </summary>
     public static TLeft? MapNullable<TLeft, TRight>(
         this IBinaryMapper<TLeft, TRight> mapper,
         TRight? source)
@@ -28,6 +37,9 @@ public static class MapperExtensions
             : mapper.Map(source);
     }
 
+    /// <summary>
+    /// Attempts to map a nullable property between two IBinaryMapper instances.
+    /// </summary>
     public static TRight? MapNullable<TLeft, TRight>(
         this IBinaryMapper<TLeft, TRight> mapper,
         TLeft? source)
@@ -39,6 +51,9 @@ public static class MapperExtensions
             : mapper.Map(source);
     }
 
+    /// <summary>
+    /// Attempts to map a nullable collection between two IUnaryMapper instances.
+    /// </summary>
     public static IEnumerable<TDestination> MapCollection<TSource, TDestination>(
         this IUnaryMapper<TSource, TDestination> mapper,
         IEnumerable<TSource>? source)
@@ -49,6 +64,9 @@ public static class MapperExtensions
                ?? Enumerable.Empty<TDestination>();
     }
 
+    /// <summary>
+    /// Attempts to map a nullable collection between two IBinaryMapper instances.
+    /// </summary>
     public static IEnumerable<TLeft> MapCollection<TLeft, TRight>(
         this IBinaryMapper<TLeft, TRight> mapper,
         IEnumerable<TRight>? source)
@@ -59,6 +77,9 @@ public static class MapperExtensions
                ?? Enumerable.Empty<TLeft>();
     }
 
+    /// <summary>
+    /// Attempts to map a nullable collection between two IBinaryMapper instances.
+    /// </summary>
     public static IEnumerable<TRight> MapCollection<TLeft, TRight>(
         this IBinaryMapper<TLeft, TRight> mapper,
         IEnumerable<TLeft>? source)

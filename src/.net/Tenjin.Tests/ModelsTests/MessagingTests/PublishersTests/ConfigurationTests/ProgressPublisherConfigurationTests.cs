@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using FluentAssertions;
+using NUnit.Framework;
 using Tenjin.Enums.Messaging;
 using Tenjin.Models.Messaging.Publishers.Configuration;
 
@@ -12,7 +13,7 @@ public class ProgressPublisherConfigurationTests
     {
         var config = new ProgressPublisherConfiguration(10ul);
 
-        Assert.AreEqual(ProgressNotificationInterval.FixedInterval, config.Interval);
+        config.Interval.Should().Be(ProgressNotificationInterval.FixedInterval);
     }
 
     [Test]
@@ -20,7 +21,7 @@ public class ProgressPublisherConfigurationTests
     {
         var config = new ProgressPublisherConfiguration(10.0d);
 
-        Assert.AreEqual(ProgressNotificationInterval.PercentageInterval, config.Interval);
+        config.Interval.Should().Be(ProgressNotificationInterval.PercentageInterval);
     }
 
     [Test]
@@ -28,6 +29,6 @@ public class ProgressPublisherConfigurationTests
     {
         var config = new ProgressPublisherConfiguration();
 
-        Assert.AreEqual(ProgressNotificationInterval.None, config.Interval);
+        config.Interval.Should().Be(ProgressNotificationInterval.None);
     }
 }

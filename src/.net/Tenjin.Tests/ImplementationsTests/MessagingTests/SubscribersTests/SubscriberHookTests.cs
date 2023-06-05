@@ -1,9 +1,10 @@
-﻿using System;
+﻿using FluentAssertions;
+using Moq;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Moq;
-using NUnit.Framework;
 using Tenjin.Enums.Messaging;
 using Tenjin.Implementations.Messaging.Subscribers;
 using Tenjin.Interfaces.Messaging.Publishers;
@@ -26,7 +27,7 @@ public class SubscriberHookTests
         var expectedHashCode = parentObject.GetHashCode().ToString();
         var hook = new SubscriberHook<TestPublishData>(parentObject, GetEmptyFunction());
 
-        Assert.AreEqual(expectedHashCode, hook.Id);
+        expectedHashCode.Should().Be(hook.Id);
     }
 
     [Test]
@@ -49,8 +50,11 @@ public class SubscriberHookTests
 
         await hook.Subscribe(mockPublisher.Object);
 
-        Assert.ThrowsAsync<InvalidOperationException>(
-            () => hook.Subscribe(mockPublisher.Object));
+        var error = Assert.ThrowsAsync<InvalidOperationException>(
+            () => hook.Subscribe(mockPublisher.Object))!;
+
+        error.Should().NotBeNull();
+        error.Message.Should().Be("Subscriber hook already has a publisher.");
     }
 
     [TestCase(new[] { PublishEventType.Publish }, false, false, true, false, false)]
@@ -113,18 +117,25 @@ public class SubscriberHookTests
         AssertPublishedData(publishEvents, publishOnDisposed, PublishEventType.Disposing, hookTester.OnDisposeEvent);
     }
 
+    [Test]
+    public void Receive_WhenProvidingAnEventTypeThatIsNotSupported_ThrowsAnException()
+    {
+        var hook = GetSubscriberHook();
+        var publishEvent = new PublishEvent<TestPublishData>
+        {
+            Type = (PublishEventType)(-1)
+        };
+        var error = Assert.ThrowsAsync<NotSupportedException>(() => hook.Receive(publishEvent))!;
+
+        error.Should().NotBeNull();
+        error.Message.Should().Be($"No action relay for publish event type -1.");
+    }
+
     [TestCase(true)]
     [TestCase(false)]
     public async Task Dispose_WhenSubscribingAndInvokingTheDispose_ItInvokesTheDisposeOfThePublisherLock(bool disposeAsync)
     {
         await TestDisposeCall(true, disposeAsync, 1);
-    }
-
-    [TestCase(true)]
-    [TestCase(false)]
-    public async Task Dispose_WhenSubscribingAndInvokingTheDisposeMultipleTimes_ItInvokesTheDisposeOfThePublisherLockOnlyOnce(bool disposeAsync)
-    {
-        await TestDisposeCall(true, disposeAsync, 10);
     }
 
     [TestCase(true)]
@@ -166,7 +177,7 @@ public class SubscriberHookTests
 
         if (subscribe)
         {
-            mockLock.Verify(l => l.DisposeAsync(), Times.Once);
+            mockLock.Verify(l => l.Dispose(), Times.Once);
         }
 
         mockLock.VerifyNoOtherCalls();
@@ -182,12 +193,12 @@ public class SubscriberHookTests
         {
             var actualEvent = publishEvents.Single(p => p.Type == publishEventType);
 
-            Assert.IsNotNull(publishedEvent);
-            Assert.AreEqual(actualEvent, publishedEvent);
+            publishedEvent.Should().NotBeNull();
+            publishedEvent.Should().Be(actualEvent);
         }
         else
         {
-            Assert.IsNull(publishedEvent);
+            publishedEvent.Should().BeNull();
         }
     }
 

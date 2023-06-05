@@ -1,8 +1,9 @@
-﻿using System;
+﻿using FluentAssertions;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Tenjin.Exceptions.Diagnostics;
 using Tenjin.Extensions;
 using Tenjin.Implementations.Diagnostics;
@@ -19,9 +20,12 @@ public class DiagnosticsStopwatchTests
     {
         var stopwatch = GetStopwatch();
 
-        await stopwatch.Start();
+        await stopwatch.StartLap();
 
-        Assert.ThrowsAsync<DiagnosticsStopwatchException>(() => stopwatch.Start());
+        var error = Assert.ThrowsAsync<Exceptions.Diagnostics.DiagnosticsStopwatchLapException>(() => stopwatch.StartLap())!;
+
+        error.Should().NotBeNull();
+        error.Message.Should().Be("A lap is already running. Stop the current lap before starting a new lap.");
     }
 
     [TestCase(1)]
@@ -38,20 +42,20 @@ public class DiagnosticsStopwatchTests
         {
             var lapName = GetLapName(i);
 
-            await stopwatch.Start(lapName);
-            await stopwatch.Stop();
+            await stopwatch.StartLap(lapName);
+            await stopwatch.StopLap();
         }
 
         var laps = (await stopwatch.GetAllLaps()).ToList();
 
-        Assert.AreEqual(numberOfLaps, laps.Count);
+        laps.Count.Should().Be(numberOfLaps);
 
         for (var i = 0; i < laps.Count; i++)
         {
             var lap = laps[i];
 
-            Assert.AreEqual(GetLapName(i), lap.Name);
-            Assert.AreEqual(i + 1, lap.Order);
+            lap.Name.Should().Be(GetLapName(i));
+            lap.Order.Should().Be((uint)(i + 1));
         }
     }
 
@@ -60,7 +64,10 @@ public class DiagnosticsStopwatchTests
     {
         var stopwatch = GetStopwatch();
 
-        Assert.ThrowsAsync<DiagnosticsStopwatchException>(() => stopwatch.Stop());
+        var error = Assert.ThrowsAsync<Exceptions.Diagnostics.DiagnosticsStopwatchLapException>(() => stopwatch.StopLap())!;
+
+        error.Should().NotBeNull();
+        error.Message.Should().Be("Stopwatch is not running. Start the stopwatch before ending a new lap.");
     }
 
     [Test]
@@ -68,9 +75,12 @@ public class DiagnosticsStopwatchTests
     {
         var stopwatch = GetStopwatch();
 
-        await stopwatch.Start();
+        await stopwatch.StartLap();
 
-        Assert.ThrowsAsync<DiagnosticsStopwatchException>(() => stopwatch.GetStatistics());
+        var error = Assert.ThrowsAsync<Exceptions.Diagnostics.DiagnosticsStopwatchLapException>(() => stopwatch.GetLapStatistics())!;
+
+        error.Should().NotBeNull();
+        error.Message.Should().Be("Stopwatch is running. Cannot calculate statistics while the stopwatch is still running.");
     }
 
     [Test]
@@ -78,7 +88,24 @@ public class DiagnosticsStopwatchTests
     {
         var stopwatch = GetStopwatch();
 
-        Assert.ThrowsAsync<DiagnosticsStopwatchException>(() => stopwatch.GetStatistics());
+        var error = Assert.ThrowsAsync<Exceptions.Diagnostics.DiagnosticsStopwatchLapException>(() => stopwatch.GetLapStatistics())!;
+
+        error.Should().NotBeNull();
+        error.Message.Should().Be("Stopwatch was never started. Cannot calculate statistics with no recorded laps.");
+    }
+
+
+    [Test]
+    public async Task GetAllLaps_WhenRunning_ThrowsAnException()
+    {
+        var stopwatch = GetStopwatch();
+
+        await stopwatch.StartLap();
+
+        var error = Assert.ThrowsAsync<DiagnosticsStopwatchLapException>(() => stopwatch.GetAllLaps())!;
+
+        error.Should().NotBeNull();
+        error.Message.Should().Be("Stopwatch is running. Cannot fetch all laps while the stopwatch is still running.");
     }
 
     [Test]
@@ -91,26 +118,27 @@ public class DiagnosticsStopwatchTests
 
         for (var i = 0; i < lapCount; i++)
         {
-            await stopwatch.Start();
-            await stopwatch.Stop();
+            await stopwatch.StartLap();
+            await stopwatch.StopLap();
         }
 
-        var statistics = await stopwatch.GetStatistics();
+        var statistics = await stopwatch.GetLapStatistics();
 
         // Fastest.
-        Assert.AreEqual(2, statistics.FastestLap.Order);
-        Assert.AreEqual(1.0, statistics.FastestLap.Timespan().TotalSeconds);
+        statistics.FastestLap.Order.Should().Be(2);
+        statistics.FastestLap.TimeSpan().TotalSeconds.Should().Be(1.0);
 
         // Slowest.
-        Assert.AreEqual(4, statistics.SlowestLap.Order);
-        Assert.AreEqual(60.0, statistics.SlowestLap.Timespan().TotalSeconds);
+        statistics.SlowestLap.Order.Should().Be(4);
+        statistics.SlowestLap.TimeSpan().TotalSeconds.Should().Be(60);
 
         // Other stats.
-        Assert.AreEqual(89.0, statistics.TotalTimespan.TotalSeconds);
-        Assert.AreEqual(17.8, statistics.AverageTimespan.TotalSeconds);
-        Assert.AreEqual(new DateTime(2000, 01, 01, 01, 00, 00), statistics.StartTimestamp);
-        Assert.AreEqual(new DateTime(2000, 01, 01, 01, 05, 03), statistics.EndTimestamp);
-        Assert.AreEqual(6, statistics.Order);
+        statistics.TotalTimespan.TotalSeconds.Should().Be(89.0);
+        statistics.AverageTimespan.TotalSeconds.Should().Be(17.8);
+
+        statistics.StartTimestamp.Should().Be(new DateTime(2000, 01, 01, 01, 00, 00));
+        statistics.EndTimestamp.Should().Be(new DateTime(2000, 01, 01, 01, 05, 03));
+        statistics.Order.Should().Be(6);
     }
 
     private static IEnumerable<DateTime> GetFixedTimestamps()
@@ -139,8 +167,8 @@ public class DiagnosticsStopwatchTests
         return $"Lap {index + 1}";
     }
 
-    private static IDiagnosticsStopwatch GetStopwatch(ISystemClockProvider? clockProvider = null)
+    private static IDiagnosticsLapStopwatch GetStopwatch(ISystemClockProvider? clockProvider = null)
     {
-        return new DiagnosticsStopwatch(clockProvider ?? new SystemClockProvider(true));
+        return new DiagnosticsLapStopwatch(clockProvider ?? new SystemClockProvider(true));
     }
 }
