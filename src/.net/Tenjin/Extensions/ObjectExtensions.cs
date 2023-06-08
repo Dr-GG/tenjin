@@ -60,10 +60,10 @@ public static class ObjectExtensions
     /// The C# compiler complains that it cannot determine the return type efficiently.
     /// 
     /// Therefore, the following code does work:
-    ///     someData.Select(data => new Func<Task>(() => SomeMethodThatReturnsATask());
+    ///     someData.Select(data => new Func&lt;Task&gt;(() => SomeMethodThatReturnsATask());
     ///     
     /// However, some static analysis tools such as Resharper, and the C# compiler warns that the explicit cast is redundant and can be dropped.
-    /// To circumvent this, the method exists to cast, the code() => SomeMethodThatReturnsATask() to a Func<Task> type.
+    /// To circumvent this, the method exists to cast, the code() => SomeMethodThatReturnsATask() to a Func&lt;Task&gt; type.
     /// </remarks>
     public static Func<Task> ToFunctionTask(this object _, Func<Task> function)
     {

@@ -128,7 +128,7 @@ public class SubscriberHookTests
         var error = Assert.ThrowsAsync<NotSupportedException>(() => hook.Receive(publishEvent))!;
 
         error.Should().NotBeNull();
-        error.Message.Should().Be($"No action relay for publish event type -1.");
+        error.Message.Should().Be("No action relay for publish event type -1.");
     }
 
     [TestCase(true)]

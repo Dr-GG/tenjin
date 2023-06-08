@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tenjin.Extensions;
-using Tenjin.Models.Enumerables;
+// ReSharper disable ConditionIsAlwaysTrueOrFalse
 
 namespace Tenjin.Tests.ExtensionsTests;
 
@@ -252,23 +252,25 @@ public class EnumerableExtensionsTests
         {
             context.Index.Should().Be(number - 1);
 
-            if (number == 1)
+            switch (number)
             {
-                context.IsFirst.Should().BeTrue();
-                context.IsLast.Should().BeFalse();
-                context.IsInBetween.Should().BeFalse();
-            }
-            else if (number == 5)
-            {
-                context.IsFirst.Should().BeFalse();
-                context.IsLast.Should().BeTrue();
-                context.IsInBetween.Should().BeFalse();
-            }
-            else
-            {
-                context.IsFirst.Should().BeFalse();
-                context.IsLast.Should().BeFalse();
-                context.IsInBetween.Should().BeTrue();
+                case 1:
+                    context.IsFirst.Should().BeTrue();
+                    context.IsLast.Should().BeFalse();
+                    context.IsInBetween.Should().BeFalse();
+                    break;
+
+                case 5:
+                    context.IsFirst.Should().BeFalse();
+                    context.IsLast.Should().BeTrue();
+                    context.IsInBetween.Should().BeFalse();
+                    break;
+
+                default:
+                    context.IsFirst.Should().BeFalse();
+                    context.IsLast.Should().BeFalse();
+                    context.IsInBetween.Should().BeTrue();
+                    break;
             }
         });
     }

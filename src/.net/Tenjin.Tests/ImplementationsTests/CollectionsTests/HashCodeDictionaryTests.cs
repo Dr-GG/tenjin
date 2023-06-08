@@ -322,7 +322,6 @@ public class HashCodeDictionaryTests
         for (var i = NonExistingModelsOffset; i < NumberOfNonExistingModels; i++)
         {
             var model = GetHashCodeModel(i);
-            var keyValuePair = new KeyValuePair<int, HashCodeModel>(model.GetHashCode(), model);
 
             dictionary.Remove(model.GetHashCode()).Should().BeFalse();
             dictionary.Contains(model).Should().BeFalse();
@@ -503,8 +502,8 @@ public class HashCodeDictionaryTests
             var result = dictionary.TryGetValue(model.GetHashCode(), out var dictionaryModel);
 
             result.Should().BeTrue();
-            dictionaryModel.Should().Be(model);
-            dictionaryModel.GetHashCode().Should().Be(model.GetHashCode());
+            dictionaryModel!.Should().Be(model);
+            dictionaryModel!.GetHashCode().Should().Be(model.GetHashCode());
         }
     }
 

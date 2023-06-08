@@ -13,7 +13,7 @@ public class DiagnosticsStopwatchLapException : TenjinException
     /// <summary>
     /// Creates a new instance.
     /// </summary>
-    public DiagnosticsStopwatchLapException() : base()
+    public DiagnosticsStopwatchLapException()
     { }
 
     /// <summary>

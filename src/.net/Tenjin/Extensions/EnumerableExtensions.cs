@@ -129,11 +129,12 @@ public static class EnumerableExtensions
     /// </summary>
     public static void ForLoopWithContext<T>(this IEnumerable<T> collection, Action<ForLoopContext, T> action)
     {
+        var enumeratedList = collection.ToList();
         var index = 0;
-        var lastIndex = collection.LastIndex();
+        var lastIndex = enumeratedList.LastIndex();
         var context = new ForLoopContext();
 
-        foreach (var item in collection)
+        foreach (var item in enumeratedList)
         {
             context.IsFirst = index == 0;
             context.IsLast = index == lastIndex;

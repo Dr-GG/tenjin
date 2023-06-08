@@ -82,7 +82,7 @@ public class PublisherTests
     {
         var publisher = GetPublisher(threadMode);
         var mockSubscribers = GetMockSubscribers(NumberOfTestSubscribers).ToArray();
-        var publisherLocks = await publisher.Subscribe(mockSubscribers.Select(m => m.Object).ToArray());
+        var publisherLocks = (await publisher.Subscribe(mockSubscribers.Select(m => m.Object).ToArray())).ToList();
 
         GetDefaultPublishData(out var testData_1, out var testData_2, out var testData_3);
 
@@ -548,7 +548,7 @@ public class PublisherTests
     }
 
     [Test]
-    public void Publish_WhenAnInvlidThreadingConfigurationModeWasProvided_ThrowsAnError()
+    public void Publish_WhenAnInvalidThreadingConfigurationModeWasProvided_ThrowsAnError()
     {
         var publisher = GetPublisher(PublisherThreadMode.Multi);
         var invalidConfiguration = new PublisherConfiguration

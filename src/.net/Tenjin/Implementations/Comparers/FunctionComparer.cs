@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Tenjin.Implementations.Comparers;
 
 /// <summary>
-/// An IComparer and IComparer<TValue> implementation that uses functions as callbacks.
+/// An IComparer and IComparer&lt;TValue&gt; implementation that uses functions as callbacks.
 /// </summary>
 public class FunctionComparer<TValue> : IComparer, IComparer<TValue>
 {
@@ -34,10 +34,11 @@ public class FunctionComparer<TValue> : IComparer, IComparer<TValue>
 
         return result ?? _functionComparer(x!, y!);
     }
-
-    /// <inheritdoc />
+    
     private static int? PreCompare(object? x, object? y)
     {
+        // If statements read easier.
+        // ReSharper disable once ConvertIfStatementToSwitchStatement
         if (x == null && y == null)
         {
             return 0;

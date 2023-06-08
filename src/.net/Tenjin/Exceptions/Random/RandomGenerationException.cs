@@ -13,7 +13,7 @@ public class RandomGenerationException : TenjinException
     /// <summary>
     /// Creates a new instance.
     /// </summary>
-    public RandomGenerationException() : base()
+    public RandomGenerationException()
     { }
 
     /// <summary>

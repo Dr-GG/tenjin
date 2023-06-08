@@ -273,7 +273,7 @@ public class ListExtensionsTests
     [Test]
     public void InsertRange_WhenRootCollectionIsNotNullAndNewCollectionIsNull_DoesNothing()
     {
-        IList<int> collection = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        IList<int> collection = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
         collection.InsertRange(1, null);
 
@@ -283,7 +283,7 @@ public class ListExtensionsTests
     [Test]
     public void InsertRange_WhenRootCollectionIsNotNullAndNewCollectionIsNotNull_ReturnsTheInputCollection()
     {
-        IList<int> collection = new List<int>() { 1, 5, 8 };
+        IList<int> collection = new List<int> { 1, 5, 8 };
         IList<int> expected = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
         collection.InsertRange(1, new[] { 2, 3, 4 });

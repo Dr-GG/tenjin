@@ -13,7 +13,7 @@ public class PublisherException : TenjinException
     /// <summary>
     /// Creates a new instance.
     /// </summary>
-    public PublisherException() : base()
+    public PublisherException()
     { }
 
     /// <summary>
