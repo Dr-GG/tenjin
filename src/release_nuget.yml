@@ -1,18 +1,5 @@
 trigger:
-  batch: true
-  branches:
-    include:
-      - master
-      - develop
-      - release/*
-      - hotfix/*
-      - feature/*
-  
-pr:
-  branches:
-    include:
-    - bug-fix/*
-    - feature/*
+  none
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -29,7 +16,6 @@ jobs:
     
     - task: DotNetCoreCLI@2
       displayName: Package NuGet library
-      condition: and(succeeded())
       inputs:
         command: pack
         packagesToPack: '$(nugetProjectPath)'
@@ -42,7 +28,6 @@ jobs:
     - task: NuGetCommand@2
       displayName: Publish NuGet to nuget.org
       continueOnError: true
-      condition: and(succeeded())
       inputs:
         command: 'push'
         packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;'
