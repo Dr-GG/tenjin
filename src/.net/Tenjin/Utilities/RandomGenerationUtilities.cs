@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Cryptography;
 using System.Text;
 using Tenjin.Exceptions.Random;
 using Tenjin.Extensions;
@@ -79,8 +78,7 @@ public static class RandomGenerationUtilities
             return parameters.Length.Value;
         }
 
-        if (parameters.MinimumLength.HasValue
-            && parameters.MaximumLength.HasValue)
+        if (parameters is {MinimumLength: not null, MaximumLength: not null})
         {
             return (uint)random.Next(
                 (int)parameters.MinimumLength.Value,
@@ -108,25 +106,21 @@ public static class RandomGenerationUtilities
         if (parameters.MinimumDouble == null
             && parameters.MaximumDouble != null
             ||
-            parameters.MinimumDouble != null
-            && parameters.MaximumDouble == null)
+            parameters is {MinimumDouble: not null, MaximumDouble: null})
         {
             throw new RandomGenerationException(
                 "When specifying minimum or maximum double, then both minimum and maximum double must be set.");
         }
 
-        if (parameters.MinimumDouble.HasValue
-            && parameters.MaximumDouble.HasValue
-            && parameters.MinimumDouble > parameters.MaximumDouble)
+        switch (parameters)
         {
-            throw new RandomGenerationException("Minimum double cannot be greater than maximum double.");
-        }
+            case {MinimumDouble: not null, MaximumDouble: not null} 
+            when parameters.MinimumDouble > parameters.MaximumDouble:
+                throw new RandomGenerationException("Minimum double cannot be greater than maximum double.");
 
-        if (parameters.MinimumDouble.HasValue
-            && parameters.MaximumDouble.HasValue
-            && parameters.MinimumDouble.Value.ToleranceEquals(parameters.MaximumDouble.Value))
-        {
-            throw new RandomGenerationException("Minimum and maximum double cannot be of the same value.");
+            case {MinimumDouble: not null, MaximumDouble: not null} 
+            when parameters.MinimumDouble.Value.ToleranceEquals(parameters.MaximumDouble.Value):
+                throw new RandomGenerationException("Minimum and maximum double cannot be of the same value.");
         }
     }
 
@@ -135,25 +129,20 @@ public static class RandomGenerationUtilities
         if (parameters.MinimumInt32 == null
             && parameters.MaximumInt32 != null
             ||
-            parameters.MinimumInt32 != null
-            && parameters.MaximumInt32 == null)
+            parameters is {MinimumInt32: not null, MaximumInt32: null})
         {
             throw new RandomGenerationException(
                 "When specifying minimum or maximum Int32, then both minimum and maximum Int32 must be set.");
         }
 
-        if (parameters.MinimumInt32.HasValue
-            && parameters.MaximumInt32.HasValue
-            && parameters.MinimumInt32 > parameters.MaximumInt32)
+        switch (parameters)
         {
-            throw new RandomGenerationException("Minimum Int32 cannot be greater than maximum Int32.");
-        }
-
-        if (parameters.MinimumInt32.HasValue
-            && parameters.MaximumInt32.HasValue
-            && parameters.MinimumInt32.Value == parameters.MaximumInt32.Value)
-        {
-            throw new RandomGenerationException("Minimum and maximum Int32 cannot be of the same value.");
+            case {MinimumInt32: not null, MaximumInt32: not null} 
+            when parameters.MinimumInt32 > parameters.MaximumInt32:
+                throw new RandomGenerationException("Minimum Int32 cannot be greater than maximum Int32.");
+            case {MinimumInt32: not null, MaximumInt32: not null} 
+            when parameters.MinimumInt32.Value == parameters.MaximumInt32.Value:
+                throw new RandomGenerationException("Minimum and maximum Int32 cannot be of the same value.");
         }
     }
 

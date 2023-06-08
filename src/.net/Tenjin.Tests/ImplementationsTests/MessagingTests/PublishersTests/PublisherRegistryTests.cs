@@ -229,7 +229,7 @@ public class PublisherRegistryTests
 
             gotPublisher.Should().BeTrue();
             publisher.Should().NotBeNull();
-            ((IDiscoverablePublisher<TKey, TestPublishData>)publisher).Id.Should().Be(id);
+            ((IDiscoverablePublisher<TKey, TestPublishData>)publisher!).Id.Should().Be(id);
         }
     }
 

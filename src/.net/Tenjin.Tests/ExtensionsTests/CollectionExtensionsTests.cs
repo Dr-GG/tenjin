@@ -17,7 +17,7 @@ public class CollectionExtensionsTests
     [Test]
     public void AddRange_WhenRootCollectionIsNotNullAndNewCollectionIsNull_DoesNothing()
     {
-        ICollection<int> collection = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        ICollection<int> collection = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
         collection.AddRange(null);
 
@@ -27,8 +27,8 @@ public class CollectionExtensionsTests
     [Test]
     public void AddRange_WhenRootCollectionIsNotNullAndNewCollectionIsNotNull_ReturnsTheInputCollection()
     {
-        ICollection<int> collection = new List<int>() { 1, 2, 3, 4, 5 };
-        ICollection<int> input = new List<int>() { 6, 7, 8, 9, 10 };
+        ICollection<int> collection = new List<int> { 1, 2, 3, 4, 5 };
+        ICollection<int> input = new List<int> { 6, 7, 8, 9, 10 };
         ICollection<int> expected = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
         collection.AddRange(input);
@@ -45,7 +45,7 @@ public class CollectionExtensionsTests
     [Test]
     public void RemoveRange_WhenRootCollectionIsNotNullAndNewCollectionIsNull_DoesNothing()
     {
-        ICollection<int> collection = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        ICollection<int> collection = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
         collection.RemoveRange(null);
 
@@ -55,8 +55,8 @@ public class CollectionExtensionsTests
     [Test]
     public void RemoveRange_WhenRootCollectionIsNotNullAndNewCollectionIsNotNull_ReturnsTheInputCollection()
     {
-        var collection = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-        var input = new List<int>() { 6, 7, 8, 9, 10 };
+        var collection = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        var input = new List<int> { 6, 7, 8, 9, 10 };
         var expected = new[] { 1, 2, 3, 4, 5 };
 
         collection.RemoveRange(input);

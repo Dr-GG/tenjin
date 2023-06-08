@@ -12,7 +12,7 @@ namespace Tenjin.Extensions;
 public static class TaskExtensions
 {
     /// <summary>
-    /// Runs a collection of Func<Task> instances in parallel.
+    /// Runs a collection of Func&lt;Task&gt; instances in parallel.
     /// </summary>
     public static void RunParallel(
         this IEnumerable<Func<Task>> tasks,

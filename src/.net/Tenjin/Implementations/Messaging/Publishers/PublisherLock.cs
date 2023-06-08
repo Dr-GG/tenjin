@@ -6,7 +6,7 @@ using Tenjin.Interfaces.Messaging.Subscribers;
 namespace Tenjin.Implementations.Messaging.Publishers;
 
 /// <summary>
-/// The default implementation of the IPublisherLock interface that provides automated unsubscriptions.
+/// The default implementation of the IPublisherLock interface that provides automated un-subscriptions.
 /// </summary>
 public class PublisherLock<TData> : IPublisherLock
 {

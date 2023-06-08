@@ -18,7 +18,7 @@ public static class MathExtensions
     public const double DefaultDoubleTolerance = 0.000000001;
 
     /// <summary>
-    /// Determines if two float intances are equal to one another using a tolerance level.
+    /// Determines if two float instances are equal to one another using a tolerance level.
     /// </summary>
     public static bool ToleranceEquals(this float left, float right, float tolerance = DefaultSingleTolerance)
     {
@@ -26,7 +26,7 @@ public static class MathExtensions
     }
 
     /// <summary>
-    /// Determines if two double intances are equal to one another using a tolerance level.
+    /// Determines if two double instances are equal to one another using a tolerance level.
     /// </summary>
     public static bool ToleranceEquals(this double left, double right, double tolerance = DefaultDoubleTolerance)
     {
@@ -34,7 +34,7 @@ public static class MathExtensions
     }
 
     /// <summary>
-    /// Determines if two double intances are not equal to one another using a tolerance level.
+    /// Determines if two double instances are not equal to one another using a tolerance level.
     /// </summary>
     public static bool NoToleranceEquals(this double left, double right, double tolerance = DefaultDoubleTolerance)
     {
@@ -42,7 +42,7 @@ public static class MathExtensions
     }
 
     /// <summary>
-    /// Determines if two float intances are not equal to one another using a tolerance level.
+    /// Determines if two float instances are not equal to one another using a tolerance level.
     /// </summary>
     public static bool NoToleranceEquals(this float left, float right, float tolerance = DefaultSingleTolerance)
     {
