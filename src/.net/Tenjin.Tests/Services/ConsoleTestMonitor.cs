@@ -39,6 +39,7 @@ public class ConsoleTestMonitor : IDisposable
 
         _disposed = true;
 
+        GC.SuppressFinalize(this);
         Console.SetOut(_originalConsoleStream);
     }
 }
