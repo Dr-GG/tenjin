@@ -7,24 +7,17 @@ namespace Tenjin.Implementations.Comparers;
 /// <summary>
 /// An IComparer and IComparer&lt;TValue&gt; implementation that uses functions as callbacks.
 /// </summary>
-public class FunctionComparer<TValue> : IComparer, IComparer<TValue>
+/// <remarks>
+/// Creates a new instance.
+/// </remarks>
+public class FunctionComparer<TValue>(Func<TValue, TValue, int> functionComparer) : IComparer, IComparer<TValue>
 {
-    private readonly Func<TValue, TValue, int> _functionComparer;
-
-    /// <summary>
-    /// Creates a new instance.
-    /// </summary>
-    public FunctionComparer(Func<TValue, TValue, int> functionComparer)
-    {
-        _functionComparer = functionComparer;
-    }
-
     /// <inheritdoc />
     public int Compare(object? x, object? y)
     {
         var result = PreCompare(x, y);
 
-        return result ?? _functionComparer((TValue)x!, (TValue)y!);
+        return result ?? functionComparer((TValue)x!, (TValue)y!);
     }
 
     /// <inheritdoc />
@@ -32,21 +25,15 @@ public class FunctionComparer<TValue> : IComparer, IComparer<TValue>
     {
         var result = PreCompare(x, y);
 
-        return result ?? _functionComparer(x!, y!);
+        return result ?? functionComparer(x!, y!);
     }
-    
+
     private static int? PreCompare(object? x, object? y)
     {
-        // If statements read easier.
-        // ReSharper disable once ConvertIfStatementToSwitchStatement
-        if (x == null && y == null)
+        switch (x)
         {
-            return 0;
-        }
-
-        if (x == null)
-        {
-            return -1;
+            case null when y == null: return 0;
+            case null: return -1;
         }
 
         if (y == null)

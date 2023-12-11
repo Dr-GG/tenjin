@@ -18,7 +18,7 @@ using Tenjin.Tests.Utilities;
 
 namespace Tenjin.Tests.ImplementationsTests.MessagingTests.PublishersTests.ProgressTests;
 
-public class DefaultProgressPublisherTests
+public class ProgressPublisherTests
 {
     private const int TestInitialPublishTotal = 22433;
     private const int TestTotal = 100;
@@ -41,7 +41,6 @@ public class DefaultProgressPublisherTests
         {
             Interval = (ProgressNotificationInterval)(-1)
         };
-
         var error = Assert.Throws<NotSupportedException>(() => publisher.Configure(configuration))!;
 
         error.Should().NotBeNull();
@@ -56,7 +55,6 @@ public class DefaultProgressPublisherTests
         {
             Interval = ProgressNotificationInterval.FixedInterval
         };
-
         var error = Assert.Throws<PublisherException>(() => publisher.Configure(configuration))!;
 
         error.Should().NotBeNull();
@@ -80,7 +78,6 @@ public class DefaultProgressPublisherTests
         {
             Interval = ProgressNotificationInterval.PercentageInterval
         };
-
         var error = Assert.Throws<PublisherException>(() => publisher.Configure(configuration))!;
 
         error.Should().NotBeNull();
@@ -401,7 +398,8 @@ public class DefaultProgressPublisherTests
         var threadCountId = new Dictionary<int, int>();
 
         mockSubscriber
-            .Setup(m => m.Receive(It.IsAny<PublishEvent<ProgressEvent>>()))
+            .Setup(m =>
+                       m.Receive(It.IsAny<PublishEvent<ProgressEvent>>()))
             .Callback((PublishEvent<ProgressEvent> progressEvent) =>
             {
                 lock (rootLock)
@@ -424,11 +422,11 @@ public class DefaultProgressPublisherTests
             .Select(e => e.Data!)
             .ToList();
 
-        Assert.AreEqual(NumberOfThreadProgressPublishers, tickEvents.Count);
+        tickEvents.Should().HaveCount(NumberOfThreadProgressPublishers);
 
         for (var i = 0; i < NumberOfThreadProgressPublishers; i++)
         {
-            Assert.AreEqual(i + 1, currentValues[i]!.Current);
+            currentValues[i]!.Current.Should().Be((ulong)(i + 1));
         }
     }
 
@@ -478,6 +476,6 @@ public class DefaultProgressPublisherTests
 
     private static IProgressPublisher<ProgressEvent> GetProgressPublisher()
     {
-        return new DefaultProgressPublisher();
+        return new ProgressPublisher();
     }
 }

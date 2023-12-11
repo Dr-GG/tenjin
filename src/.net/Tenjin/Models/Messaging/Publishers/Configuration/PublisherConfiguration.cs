@@ -1,7 +1,7 @@
 ﻿namespace Tenjin.Models.Messaging.Publishers.Configuration;
 
 /// <summary>
-/// The configuration structure to be used for IPuiblisher instances.
+/// The configuration structure to be used for IPublisher instances.
 /// </summary>
 public record PublisherConfiguration
 {

@@ -37,8 +37,8 @@ public class MapperExtensionsTests
         var unaryMapper = GetLeftToRightMapper();
         var input = new[]
         {
-            new LeftModel {Property1 = 1, Property2 = "test-1"},
-            new LeftModel {Property1 = 2, Property2 = "test-2"}
+            new LeftModel { Property1 = 1, Property2 = "test-1" },
+            new LeftModel { Property1 = 2, Property2 = "test-2" }
         };
         var result = unaryMapper.MapCollection(input).ToList();
 
@@ -82,13 +82,13 @@ public class MapperExtensionsTests
         var binaryMapper = GetBinaryMapper();
         var leftInput = new[]
         {
-            new LeftModel {Property1 = 1, Property2 = "test-1"},
-            new LeftModel {Property1 = 2, Property2 = "test-2"}
+            new LeftModel { Property1 = 1, Property2 = "test-1" },
+            new LeftModel { Property1 = 2, Property2 = "test-2" }
         };
         var rightInput = new[]
         {
-            new RightModel {Property1 = 1, Property2 = "test-1"},
-            new RightModel {Property1 = 2, Property2 = "test-2"}
+            new RightModel { Property1 = 1, Property2 = "test-1" },
+            new RightModel { Property1 = 2, Property2 = "test-2" }
         };
         var leftResult = binaryMapper.MapCollection(rightInput).ToList();
         var rightResult = binaryMapper.MapCollection(leftInput).ToList();

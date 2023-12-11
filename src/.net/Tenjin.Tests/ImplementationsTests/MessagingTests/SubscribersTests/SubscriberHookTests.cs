@@ -98,14 +98,15 @@ public class SubscriberHookTests
             hookTester.OnNextAction,
             hasOnDispose ? hookTester.OnDisposeAction : null,
             hasOnError ? hookTester.OnErrorAction : null);
-        var publishEvents = publishEventTypes.Select(
-            type =>
-                new PublishEvent<TestPublishData>
+        var publishEvents = publishEventTypes
+           .Select(
+                type => new PublishEvent<TestPublishData>
                 {
                     Type = type,
                     Id = Guid.NewGuid(),
                     Data = MessagingUtilities.GetRandomTestPublishData()
-                }).ToList();
+                })
+           .ToList();
 
         foreach (var publishEvent in publishEvents)
         {
@@ -133,23 +134,23 @@ public class SubscriberHookTests
 
     [TestCase(true)]
     [TestCase(false)]
-    public async Task Dispose_WhenSubscribingAndInvokingTheDispose_ItInvokesTheDisposeOfThePublisherLock(bool disposeAsync)
+    public Task Dispose_WhenSubscribingAndInvokingTheDispose_ItInvokesTheDisposeOfThePublisherLock(bool disposeAsync)
     {
-        await TestDisposeCall(true, disposeAsync, 1);
+        return TestDisposeCall(true, disposeAsync, 1);
     }
 
     [TestCase(true)]
     [TestCase(false)]
-    public async Task Dispose_WhenNotSubscribingAndInvokingTheDispose_ItDoesNotInvokeAnythingOfTheLockAndStillWorks(bool disposeAsync)
+    public Task Dispose_WhenNotSubscribingAndInvokingTheDispose_ItDoesNotInvokeAnythingOfTheLockAndStillWorks(bool disposeAsync)
     {
-        await TestDisposeCall(false, disposeAsync, 1);
+        return TestDisposeCall(false, disposeAsync, 1);
     }
 
     [TestCase(true)]
     [TestCase(false)]
-    public async Task Dispose_WhenNotSubscribingAndInvokingTheDisposeMultipleTimes_ItDoesNotInvokeAnythingOfTheLockAndStillWorks(bool disposeAsync)
+    public Task Dispose_WhenNotSubscribingAndInvokingTheDisposeMultipleTimes_ItDoesNotInvokeAnythingOfTheLockAndStillWorks(bool disposeAsync)
     {
-        await TestDisposeCall(false, disposeAsync, 10);
+        return TestDisposeCall(false, disposeAsync, 10);
     }
 
     private static async Task TestDisposeCall(bool subscribe, bool disposeAsync, int numberOfDisposeInvokes)
@@ -225,7 +226,6 @@ public class SubscriberHookTests
 
     private static SubscriberHook<TestPublishData> GetSubscriberHook(
         Func<PublishEvent<TestPublishData>, Task>? onNextAction = null,
-
         Func<PublishEvent<TestPublishData>, Task>? onDisposeAction = null,
         Func<PublishEvent<TestPublishData>, Task>? onErrorAction = null)
     {

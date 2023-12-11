@@ -13,8 +13,10 @@ public static class ListExtensions
     /// <summary>
     /// Binary inserts an item into an IList instance.
     /// </summary>
-    public static void BinaryInsert<T>(this IList<T>? collection,
-        T item, Func<T, T, int> comparerAction,
+    public static void BinaryInsert<T>(
+        this IList<T>? collection,
+        T item,
+        Func<T, T, int> comparerAction,
         bool addIfFound = false)
     {
         var comparer = new FunctionComparer<T>(comparerAction);
@@ -25,8 +27,10 @@ public static class ListExtensions
     /// <summary>
     /// Binary inserts an item into an IList instance.
     /// </summary>
-    public static void BinaryInsert<T>(this IList<T>? collection,
-        T item, bool addIfFound = false)
+    public static void BinaryInsert<T>(
+        this IList<T>? collection,
+        T item,
+        bool addIfFound = false)
     {
         BinaryInsert(collection, item, Comparer<T>.Default, addIfFound);
     }
@@ -34,8 +38,11 @@ public static class ListExtensions
     /// <summary>
     /// Binary inserts an item into an IList instance.
     /// </summary>
-    public static void BinaryInsert<T>(this IList<T>? collection,
-        T item, IComparer<T> comparer, bool addIfFound = false)
+    public static void BinaryInsert<T>(
+        this IList<T>? collection,
+        T item,
+        IComparer<T> comparer,
+        bool addIfFound = false)
     {
         if (collection == null)
         {
@@ -58,7 +65,10 @@ public static class ListExtensions
     /// <summary>
     /// Inserts a range of items into an IList instance.
     /// </summary>
-    public static void InsertRange<T>(this IList<T>? collection, int index, IEnumerable<T>? items)
+    public static void InsertRange<T>(
+        this IList<T>? collection,
+        int index,
+        IEnumerable<T>? items)
     {
         if (collection == null || items == null)
         {

@@ -6,7 +6,7 @@
 public record RandomGenerationParameters
 {
     /// <summary>
-    /// The seed to be used. 
+    /// The seed to be used.
     /// </summary>
     /// <remarks>
     /// When this value is not set, it will use a random seed.
