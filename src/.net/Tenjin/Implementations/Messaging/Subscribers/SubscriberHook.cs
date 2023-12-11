@@ -10,13 +10,13 @@ namespace Tenjin.Implementations.Messaging.Subscribers;
 /// <summary>
 /// The default implementation of the ISubscriberHook interface.
 /// </summary>
-public class SubscriberHook<TData> : ISubscriberHook<TData>
+public class SubscriberHook<TData>(
+    string id,
+    Func<PublishEvent<TData>, Task> onNextAction,
+    Func<PublishEvent<TData>, Task>? onDisposeAction = null,
+    Func<PublishEvent<TData>, Task>? onErrorAction = null) : ISubscriberHook<TData>
 {
     private IPublisherLock? _lock;
-
-    private readonly Func<PublishEvent<TData>, Task> _onNextAction;
-    private readonly Func<PublishEvent<TData>, Task>? _onDisposeAction;
-    private readonly Func<PublishEvent<TData>, Task>? _onErrorAction;
 
     /// <summary>
     /// Creates a new instance with the appropriate callbacks/hooks.
@@ -28,27 +28,12 @@ public class SubscriberHook<TData> : ISubscriberHook<TData>
         Func<PublishEvent<TData>, Task>? onErrorAction = null) :
         this(
             parent.GetHashCode().ToString(),
-            onNextAction, onDisposeAction, onErrorAction
-        )
+            onNextAction, onDisposeAction, onErrorAction)
+    // ReSharper disable once BadEmptyBracesLineBreaks
     { }
 
-    /// <summary>
-    /// Creates a new instance with the appropriate callbacks/hooks.
-    /// </summary>
-    public SubscriberHook(
-        string id,
-        Func<PublishEvent<TData>, Task> onNextAction,
-        Func<PublishEvent<TData>, Task>? onDisposeAction = null,
-        Func<PublishEvent<TData>, Task>? onErrorAction = null)
-    {
-        Id = id;
-        _onNextAction = onNextAction;
-        _onDisposeAction = onDisposeAction;
-        _onErrorAction = onErrorAction;
-    }
-
     /// <inheritdoc />
-    public string Id { get; }
+    public string Id { get; } = id;
 
     public async Task<ISubscriberHook<TData>> Subscribe(IPublisher<TData> publisher)
     {
@@ -63,26 +48,15 @@ public class SubscriberHook<TData> : ISubscriberHook<TData>
     }
 
     /// <inheritdoc />
-    public async Task Receive(PublishEvent<TData> publishEvent)
+    public Task Receive(PublishEvent<TData> publishEvent)
     {
-        switch (publishEvent.Type)
+        return publishEvent.Type switch
         {
-            case PublishEventType.Publish:
-                await ExecuteAction(publishEvent, _onNextAction);
-                break;
-
-            case PublishEventType.Disposing:
-                await ExecuteAction(publishEvent, _onDisposeAction);
-                break;
-
-            case PublishEventType.Error:
-                await ExecuteAction(publishEvent, _onErrorAction);
-                break;
-
-            default:
-                throw new NotSupportedException(
-                    $"No action relay for publish event type {publishEvent.Type}.");
-        }
+            PublishEventType.Publish => ExecuteAction(publishEvent, onNextAction),
+            PublishEventType.Disposing => ExecuteAction(publishEvent, onDisposeAction),
+            PublishEventType.Error => ExecuteAction(publishEvent, onErrorAction),
+            _ => throw new NotSupportedException($"No action relay for publish event type {publishEvent.Type}.")
+        };
     }
 
     /// <inheritdoc />

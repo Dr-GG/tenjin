@@ -14,7 +14,7 @@ public class RandomGenerationUtilitiesTests
     private const int DefaultSeed = 10;
     private const int Iterations = 5000;
 
-    private static readonly RandomGenerationParameters DefaultRandomGenerationParameters = new()
+    private static readonly RandomGenerationParameters TestRandomGenerationParameters = new()
     {
         // ReSharper disable once StringLiteralTypo
         AllowedRandomCharacters = "abcd012345",
@@ -45,7 +45,7 @@ public class RandomGenerationUtilitiesTests
     public void GenerateRandomString_WithGivenAFixedLength_GeneratesRandomStringsWithFixedLength(uint length)
     {
         var randomList = new List<string>();
-        var parameters = DefaultRandomGenerationParameters with
+        var parameters = TestRandomGenerationParameters with
         {
             MaximumLength = null,
             MinimumLength = null,
@@ -84,7 +84,7 @@ public class RandomGenerationUtilitiesTests
     public void GenerateRandomString_WithGivenAFixedLengthAndTheSameSeed_GeneratesTheExactSameValue(uint length, int seed)
     {
         var randomList = new List<string>();
-        var parameters = DefaultRandomGenerationParameters with
+        var parameters = TestRandomGenerationParameters with
         {
             Seed = seed,
             MaximumLength = null,
@@ -117,7 +117,7 @@ public class RandomGenerationUtilitiesTests
 
         for (var i = 0; i < Iterations; i++)
         {
-            var parameters = DefaultRandomGenerationParameters with
+            var parameters = TestRandomGenerationParameters with
             {
                 Random = new System.Random(DefaultSeed),
                 MaximumLength = null,
@@ -157,7 +157,7 @@ public class RandomGenerationUtilitiesTests
         uint maximumLength)
     {
         var randomList = new List<string>();
-        var parameters = DefaultRandomGenerationParameters with
+        var parameters = TestRandomGenerationParameters with
         {
             MinimumLength = minimumLength,
             MaximumLength = maximumLength
@@ -198,7 +198,7 @@ public class RandomGenerationUtilitiesTests
         int seed)
     {
         var randomList = new List<string>();
-        var parameters = DefaultRandomGenerationParameters with
+        var parameters = TestRandomGenerationParameters with
         {
             Seed = seed,
             MinimumLength = minimumLength,
@@ -243,7 +243,7 @@ public class RandomGenerationUtilitiesTests
 
         for (var i = 0; i < Iterations; i++)
         {
-            var parameters = DefaultRandomGenerationParameters with
+            var parameters = TestRandomGenerationParameters with
             {
                 Random = new System.Random(DefaultSeed),
                 MinimumLength = minimumLength,
@@ -258,11 +258,10 @@ public class RandomGenerationUtilitiesTests
         randomList.Distinct().Should().HaveCount(1);
     }
 
-    [TestCase(null)]
     [TestCase("")]
-    public void GenerateRandomString_WhenAllowedRandomCharactersIsNullOrEmpty_ThrowsAnError(string? characters)
+    public void GenerateRandomString_WhenAllowedRandomCharactersIsNullOrEmpty_ThrowsAnError(string characters)
     {
-        var parameters = DefaultRandomGenerationParameters with
+        var parameters = TestRandomGenerationParameters with
         {
             AllowedRandomCharacters = characters
         };
@@ -276,7 +275,7 @@ public class RandomGenerationUtilitiesTests
     [Test]
     public void GenerateRandomString_WhenNoLengthIsSpecified_ThrowsAnError()
     {
-        var parameters = DefaultRandomGenerationParameters with
+        var parameters = TestRandomGenerationParameters with
         {
             MinimumLength = null,
             MaximumLength = null,
@@ -296,7 +295,7 @@ public class RandomGenerationUtilitiesTests
         uint? minimumLength,
         uint? maximumLength)
     {
-        var parameters = DefaultRandomGenerationParameters with
+        var parameters = TestRandomGenerationParameters with
         {
             MinimumLength = minimumLength,
             MaximumLength = maximumLength,
@@ -315,7 +314,7 @@ public class RandomGenerationUtilitiesTests
         uint? minimumLength,
         uint? maximumLength)
     {
-        var parameters = DefaultRandomGenerationParameters with
+        var parameters = TestRandomGenerationParameters with
         {
             MinimumLength = minimumLength,
             MaximumLength = maximumLength,
@@ -331,7 +330,7 @@ public class RandomGenerationUtilitiesTests
     [Test]
     public void GenerateRandomString_WhenMinimumLengthIsLargerThanMaximumLength_ThrowsAnError()
     {
-        var parameters = DefaultRandomGenerationParameters with
+        var parameters = TestRandomGenerationParameters with
         {
             MinimumLength = 10,
             MaximumLength = 5,
@@ -348,7 +347,7 @@ public class RandomGenerationUtilitiesTests
     [TestCase(null, 1)]
     public void GenerateRandomDouble_WhenMinimumOrMaximumIsNullAndTheOtherNot_ThrowsAnError(double? minimum, double? maximum)
     {
-        var parameters = DefaultRandomGenerationParameters with
+        var parameters = TestRandomGenerationParameters with
         {
             MinimumDouble = minimum,
             MaximumDouble = maximum
@@ -363,7 +362,7 @@ public class RandomGenerationUtilitiesTests
     [Test]
     public void GenerateRandomDouble_WhenMinimumIsLargerThanMaximum_ThrowsAnError()
     {
-        var parameters = DefaultRandomGenerationParameters with
+        var parameters = TestRandomGenerationParameters with
         {
             MinimumDouble = 10,
             MaximumDouble = 5
@@ -378,7 +377,7 @@ public class RandomGenerationUtilitiesTests
     [Test]
     public void GenerateRandomDouble_WhenMinimumEqualsThanMaximum_ThrowsAnError()
     {
-        var parameters = DefaultRandomGenerationParameters with
+        var parameters = TestRandomGenerationParameters with
         {
             MinimumDouble = 10,
             MaximumDouble = 10
@@ -411,7 +410,7 @@ public class RandomGenerationUtilitiesTests
     public void GenerateRandomDouble_WithMinimumAndMaximum_GeneratesValidDouble(double minimum, double maximum)
     {
         var randomList = new List<double>();
-        var parameters = DefaultRandomGenerationParameters with
+        var parameters = TestRandomGenerationParameters with
         {
             MinimumDouble = minimum,
             MaximumDouble = maximum
@@ -449,7 +448,7 @@ public class RandomGenerationUtilitiesTests
         int seed)
     {
         var randomList = new List<double>();
-        var parameters = DefaultRandomGenerationParameters with
+        var parameters = TestRandomGenerationParameters with
         {
             Seed = seed,
             MinimumDouble = minimum,
@@ -490,7 +489,7 @@ public class RandomGenerationUtilitiesTests
 
         for (var i = 0; i < Iterations; i++)
         {
-            var parameters = DefaultRandomGenerationParameters with
+            var parameters = TestRandomGenerationParameters with
             {
                 Random = new System.Random(DefaultSeed),
                 MinimumDouble = minimum,
@@ -510,7 +509,7 @@ public class RandomGenerationUtilitiesTests
 
         for (var i = 0; i < Iterations; i++)
         {
-            randomList.Add(AssertRandomDouble(DefaultRandomGenerationParameters, 0, 1));
+            randomList.Add(AssertRandomDouble(TestRandomGenerationParameters, 0, 1));
         }
 
         randomList.Distinct().Should().HaveCountLessThanOrEqualTo(Iterations);
@@ -561,7 +560,7 @@ public class RandomGenerationUtilitiesTests
     public void GenerateRandomDouble_SpecifyingNoMinimumOrMaximumWithAFixedSeed_GeneratesBetween0And1WithTheSameValues(int seed)
     {
         var randomList = new List<double>();
-        var parameters = DefaultRandomGenerationParameters with
+        var parameters = TestRandomGenerationParameters with
         {
             Seed = seed
         };
@@ -581,7 +580,7 @@ public class RandomGenerationUtilitiesTests
 
         for (var i = 0; i < Iterations; i++)
         {
-            var parameters = DefaultRandomGenerationParameters with
+            var parameters = TestRandomGenerationParameters with
             {
                 Random = new System.Random(DefaultSeed)
             };
@@ -596,7 +595,7 @@ public class RandomGenerationUtilitiesTests
     [TestCase(null, 1)]
     public void GenerateRandomInt32_WhenMinimumOrMaximumIsNullAndTheOtherNot_ThrowsAnError(int? minimum, int? maximum)
     {
-        var parameters = DefaultRandomGenerationParameters with
+        var parameters = TestRandomGenerationParameters with
         {
             MinimumInt32 = minimum,
             MaximumInt32 = maximum
@@ -611,7 +610,7 @@ public class RandomGenerationUtilitiesTests
     [Test]
     public void GenerateRandomInt32_WhenMinimumIsLargerThanMaximum_ThrowsAnError()
     {
-        var parameters = DefaultRandomGenerationParameters with
+        var parameters = TestRandomGenerationParameters with
         {
             MinimumInt32 = 10,
             MaximumInt32 = 5
@@ -626,7 +625,7 @@ public class RandomGenerationUtilitiesTests
     [Test]
     public void GenerateRandomInt32_WhenMinimumEqualsThanMaximum_ThrowsAnError()
     {
-        var parameters = DefaultRandomGenerationParameters with
+        var parameters = TestRandomGenerationParameters with
         {
             MinimumInt32 = 10,
             MaximumInt32 = 10
@@ -654,7 +653,7 @@ public class RandomGenerationUtilitiesTests
     public void GenerateRandomInt32_WithMinimumAndMaximum_GeneratesValidInt32(int minimum, int maximum)
     {
         var randomList = new List<double>();
-        var parameters = DefaultRandomGenerationParameters with
+        var parameters = TestRandomGenerationParameters with
         {
             MinimumInt32 = minimum,
             MaximumInt32 = maximum
@@ -687,7 +686,7 @@ public class RandomGenerationUtilitiesTests
         int seed)
     {
         var randomList = new List<double>();
-        var parameters = DefaultRandomGenerationParameters with
+        var parameters = TestRandomGenerationParameters with
         {
             Seed = seed,
             MinimumInt32 = minimum,
@@ -723,7 +722,7 @@ public class RandomGenerationUtilitiesTests
 
         for (var i = 0; i < Iterations; i++)
         {
-            var parameters = DefaultRandomGenerationParameters with
+            var parameters = TestRandomGenerationParameters with
             {
                 Random = new System.Random(DefaultSeed),
                 MinimumInt32 = minimum,
@@ -743,7 +742,7 @@ public class RandomGenerationUtilitiesTests
 
         for (var i = 0; i < Iterations; i++)
         {
-            randomList.Add(AssertRandomInt32(DefaultRandomGenerationParameters, int.MinValue, int.MaxValue));
+            randomList.Add(AssertRandomInt32(TestRandomGenerationParameters, int.MinValue, int.MaxValue));
         }
 
         randomList.Distinct().Should().HaveCountLessThanOrEqualTo(Iterations);
@@ -794,7 +793,7 @@ public class RandomGenerationUtilitiesTests
     public void GenerateRandomInt32_SpecifyingNoMinimumOrMaximumWithAFixedSeed_GeneratesBetweenMinInt32AndMaxInt32WithTheSameValues(int seed)
     {
         var randomList = new List<double>();
-        var parameters = DefaultRandomGenerationParameters with
+        var parameters = TestRandomGenerationParameters with
         {
             Seed = seed
         };
@@ -814,7 +813,7 @@ public class RandomGenerationUtilitiesTests
 
         for (var i = 0; i < Iterations; i++)
         {
-            var parameters = DefaultRandomGenerationParameters with
+            var parameters = TestRandomGenerationParameters with
             {
                 Random = new System.Random(DefaultSeed)
             };
@@ -863,7 +862,7 @@ public class RandomGenerationUtilitiesTests
 
         random
             .ToCharArray()
-            .All(c => DefaultRandomGenerationParameters
+            .All(c => TestRandomGenerationParameters
                 .AllowedRandomCharacters
                     .ToCharArray()
                     .Contains(c))

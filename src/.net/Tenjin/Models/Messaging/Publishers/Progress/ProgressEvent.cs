@@ -8,14 +8,12 @@ public record ProgressEvent
     /// <summary>
     /// Creates a new instance.
     /// </summary>
-    public ProgressEvent()
-    { }
+    public ProgressEvent() { }
 
     /// <summary>
     /// Creates a new instance with a set total.
     /// </summary>
-    public ProgressEvent(ulong total) : this(0, total)
-    { }
+    public ProgressEvent(ulong total) : this(0, total) { }
 
     /// <summary>
     /// Creates a new instance with a new current and total.

@@ -1,0 +1,37 @@
+﻿[*.cs]
+
+# IDE0290: Use primary constructor
+dotnet_diagnostic.IDE0290.severity = error
+
+# IDE0290: Use primary constructor
+csharp_style_prefer_primary_constructors = true
+
+# Default severity for analyzer diagnostics with category 'Style'
+dotnet_analyzer_diagnostic.category-Style.severity = error
+
+# Default severity for all analyzer diagnostics
+dotnet_analyzer_diagnostic.severity = none
+
+# Default severity for analyzer diagnostics with category 'Roslynator'
+dotnet_analyzer_diagnostic.category-Roslynator.severity = none
+
+# IDE0160: Convert to block scoped namespace
+csharp_style_namespace_declarations = file_scoped
+
+# IDE0008: Use explicit type
+dotnet_diagnostic.IDE0008.severity = none
+
+# CA1859: Use concrete types when possible for improved performance
+dotnet_diagnostic.CA1859.severity = none
+
+# IDE0058: Expression value is never used
+dotnet_diagnostic.IDE0058.severity = none
+
+# IDE0048: Add parentheses for clarity
+dotnet_diagnostic.IDE0048.severity = none
+
+# IDE0046: Convert to conditional expression
+dotnet_diagnostic.IDE0046.severity = none
+
+# IDE0010: Add missing cases
+dotnet_diagnostic.IDE0010.severity = none

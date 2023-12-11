@@ -21,8 +21,8 @@ public class DictionaryExtensionsTests
     {
         var dictionary = new Dictionary<string, string>
         {
-            {ExistingTestKey1, "value1"},
-            {ExistingTestKey2, "value2"}
+            { ExistingTestKey1, "value1" },
+            { ExistingTestKey2, "value2" }
         };
 
         expectedValue.Should().Be(dictionary.DoesNotContainKey(key));

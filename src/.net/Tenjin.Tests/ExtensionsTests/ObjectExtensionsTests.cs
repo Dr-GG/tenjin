@@ -1316,26 +1316,26 @@ public class ObjectExtensionsTests
     }
 
     [TestCase(null)]
-    public void WriteLine_WhenWritingFromANullObject_LogsAnEmptyStringToTheConsole(object? root)
+    public void ConsoleWriteLine_WhenWritingFromANullObject_LogsAnEmptyStringToTheConsole(object? root)
     {
-        AssertWriteLine(root, string.Empty);
+        AssertConsoleWriteLine(root, string.Empty);
     }
 
     [TestCase(null)]
-    public void Write_WhenWritingFromANullObject_LogsAnEmptyStringToTheConsole(object? root)
+    public void ConsoleWrite_WhenWritingFromANullObject_LogsAnEmptyStringToTheConsole(object? root)
     {
-        AssertWrite(root, string.Empty);
+        AssertConsoleWrite(root, string.Empty);
     }
 
     [TestCase(null, null)]
     [TestCase(null, "-")]
     [TestCase(null, "++")]
     [TestCase(null, "___")]
-    public void WriteHeading_WhenWritingFromANullObject_LogsAnEmptyStringToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingFromANullObject_LogsAnEmptyStringToTheConsole(
         object? root,
         string? headingUnderline)
     {
-        AssertWriteHeading(root, string.Empty, headingUnderline);
+        AssertConsoleWriteHeading(root, string.Empty, headingUnderline);
     }
 
     [TestCase(null, 0)]
@@ -1343,11 +1343,11 @@ public class ObjectExtensionsTests
     [TestCase(null, 2)]
     [TestCase(null, 3)]
     [TestCase(null, 4)]
-    public void WriteLines_WhenWritingFromANullObject_LogsEmptyLinesToTheConsole(
+    public void ConsoleWriteLines_WhenWritingFromANullObject_LogsEmptyLinesToTheConsole(
         object? root,
         int numberOfLineAppends)
     {
-        AssertWriteLines(root, numberOfLineAppends);
+        AssertConsoleWriteLines(root, numberOfLineAppends);
     }
 
     [TestCase(null, null, 0)]
@@ -1370,33 +1370,33 @@ public class ObjectExtensionsTests
     [TestCase(null, "___", 2)]
     [TestCase(null, "___", 3)]
     [TestCase(null, "___", 4)]
-    public void WriteHeading_WhenWritingFromANullObject_LogsEmptyLinesToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingFromANullObject_LogsEmptyLinesToTheConsole(
         object? root,
         string? headingUnderline,
         int numberOfLineAppends)
     {
-        AssertWriteHeadingWithLineAppends(root, string.Empty, headingUnderline, numberOfLineAppends);
+        AssertConsoleWriteHeadingWithLineAppends(root, string.Empty, headingUnderline, numberOfLineAppends);
     }
 
     [TestCase("Test a string", "Test a string")]
     [TestCase(1, "1")]
     [TestCase(true, "True")]
     [TestCase(false, "False")]
-    public void WriteLine_WhenWritingFromANonNullObject_LogsTheExpectedValueToTheConsole(object root, string expectedValue)
+    public void ConsoleWriteLine_WhenWritingFromANonNullObject_LogsTheExpectedValueToTheConsole(object root, string expectedValue)
     {
-        AssertWriteLine(root, expectedValue);
+        AssertConsoleWriteLine(root, expectedValue);
     }
 
     [TestCase("Test a string", "Test a string", 0)]
     [TestCase(1, "1", 1)]
     [TestCase(true, "True", 2)]
     [TestCase(false, "False", 3)]
-    public void WriteLine_WhenWritingFromANonNullObjectWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingFromANonNullObjectWithLineAppends_LogsTheExpectedValueToTheConsole(
         object root,
         string expectedValue,
         int numberOfLineAppends)
     {
-        AssertWriteLineWithLineAppends(root, expectedValue, numberOfLineAppends);
+        AssertConsoleWriteLineWithLineAppends(root, expectedValue, numberOfLineAppends);
     }
 
     [TestCase("Test a string", "Test a string", null)]
@@ -1415,12 +1415,12 @@ public class ObjectExtensionsTests
     [TestCase(1, "1", "___")]
     [TestCase(true, "True", "___")]
     [TestCase(false, "False", "___")]
-    public void WriteHeading_WhenWritingFromANonNullObject_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingFromANonNullObject_LogsTheExpectedValueToTheConsole(
         object root,
         string expectedValue,
         string? headingUnderline)
     {
-        AssertWriteHeading(root, expectedValue, headingUnderline);
+        AssertConsoleWriteHeading(root, expectedValue, headingUnderline);
     }
 
     [TestCase("Test a string", "Test a string", null, 0)]
@@ -1471,22 +1471,22 @@ public class ObjectExtensionsTests
     [TestCase(false, "False", "___", 0)]
     [TestCase(false, "False", "___", 1)]
     [TestCase(false, "False", "___", 2)]
-    public void WriteHeading_WhenWritingFromANonNullObjectWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingFromANonNullObjectWithLineAppends_LogsTheExpectedValueToTheConsole(
         object root,
         string expectedValue,
         string? headingUnderline,
         int numberOfLineAppends)
     {
-        AssertWriteHeadingWithLineAppends(root, expectedValue, headingUnderline, numberOfLineAppends);
+        AssertConsoleWriteHeadingWithLineAppends(root, expectedValue, headingUnderline, numberOfLineAppends);
     }
 
     [TestCase("Test a string", "Test a string")]
     [TestCase(1, "1")]
     [TestCase(true, "True")]
     [TestCase(false, "False")]
-    public void Write_WhenWritingFromANonNullObject_LogsTheExpectedValueToTheConsole(object root, string expectedValue)
+    public void ConsoleWrite_WhenWritingFromANonNullObject_LogsTheExpectedValueToTheConsole(object root, string expectedValue)
     {
-        AssertWrite(root, expectedValue);
+        AssertConsoleWrite(root, expectedValue);
     }
 
     [TestCase("Test a string", 0)]
@@ -1495,33 +1495,33 @@ public class ObjectExtensionsTests
     [TestCase(1.0f, 3)]
     [TestCase(true, 4)]
     [TestCase(false, 5)]
-    public void WriteLines_WhenWritingFromANonNullObject_LogsTheExpectedValueToTheConsole(object root, int numberOfWriteLines)
+    public void ConsoleWriteLines_WhenWritingFromANonNullObject_LogsTheExpectedValueToTheConsole(object root, int numberOfWriteLines)
     {
-        AssertWriteLines(root, numberOfWriteLines);
+        AssertConsoleWriteLines(root, numberOfWriteLines);
     }
 
     [TestCase("Name X")]
     [TestCase("X Name")]
     [TestCase("Tenjin")]
-    public void WriteLine_WhenWritingFromACustomObject_LogsTheExpectedValueToTheConsole(string name)
+    public void ConsoleWriteLine_WhenWritingFromACustomObject_LogsTheExpectedValueToTheConsole(string name)
     {
         var customObject = new ConsoleObject(name);
         var expectedValue = ConsoleObject.GetOutputText(name);
 
-        AssertWriteLine(customObject, expectedValue);
+        AssertConsoleWriteLine(customObject, expectedValue);
     }
 
     [TestCase("Name X", 0)]
     [TestCase("X Name", 1)]
     [TestCase("Tenjin", 2)]
-    public void WriteLine_WhenWritingFromACustomObjectWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingFromACustomObjectWithLineAppends_LogsTheExpectedValueToTheConsole(
         string name,
         int numberOfLineAppends)
     {
         var customObject = new ConsoleObject(name);
         var expectedValue = ConsoleObject.GetOutputText(name);
 
-        AssertWriteLineWithLineAppends(customObject, expectedValue, numberOfLineAppends);
+        AssertConsoleWriteLineWithLineAppends(customObject, expectedValue, numberOfLineAppends);
     }
 
     [TestCase("Name X", null)]
@@ -1536,12 +1536,12 @@ public class ObjectExtensionsTests
     [TestCase("Name X", "___")]
     [TestCase("X Name", "___")]
     [TestCase("Tenjin", "___")]
-    public void WriteHeading_WhenWritingFromACustomObject_LogsTheExpectedValueToTheConsole(string name, string? headingUnderline)
+    public void ConsoleWriteHeading_WhenWritingFromACustomObject_LogsTheExpectedValueToTheConsole(string name, string? headingUnderline)
     {
         var customObject = new ConsoleObject(name);
         var expectedValue = ConsoleObject.GetOutputText(name);
 
-        AssertWriteHeading(customObject, expectedValue);
+        AssertConsoleWriteHeading(customObject, expectedValue, headingUnderline);
     }
 
     [TestCase("Name X", 0, null)]
@@ -1556,7 +1556,7 @@ public class ObjectExtensionsTests
     [TestCase("Name X", 0, "___")]
     [TestCase("X Name", 1, "___")]
     [TestCase("Tenjin", 2, "___")]
-    public void WriteHeading_WhenWritingFromACustomObjectWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingFromACustomObjectWithLineAppends_LogsTheExpectedValueToTheConsole(
         string name,
         int numberOfLineAppends,
         string? headingUnderline)
@@ -1564,39 +1564,39 @@ public class ObjectExtensionsTests
         var customObject = new ConsoleObject(name);
         var expectedValue = ConsoleObject.GetOutputText(name);
 
-        AssertWriteHeadingWithLineAppends(customObject, expectedValue, headingUnderline, numberOfLineAppends);
+        AssertConsoleWriteHeadingWithLineAppends(customObject, expectedValue, headingUnderline, numberOfLineAppends);
     }
 
     [TestCase("Name X")]
     [TestCase("X Name")]
     [TestCase("Tenjin")]
-    public void Write_WhenWritingFromACustomObject_LogsTheExpectedValueToTheConsole(string name)
+    public void ConsoleWrite_WhenWritingFromACustomObject_LogsTheExpectedValueToTheConsole(string name)
     {
         var customObject = new ConsoleObject(name);
         var expectedValue = ConsoleObject.GetOutputText(name);
 
-        AssertWrite(customObject, expectedValue);
+        AssertConsoleWrite(customObject, expectedValue);
     }
 
     [Test]
-    public void WriteLine_WhenWritingNullableFormattableObjects_LogsAnEmptyString()
+    public void ConsoleWriteLine_WhenWritingNullableFormattableObjects_LogsAnEmptyString()
     {
-        AssertWriteLineWithFormat(null, "bogus-format-string", null, string.Empty);
+        AssertConsoleWriteLineWithFormat(null, "bogus-format-string", null, string.Empty);
     }
 
     [TestCase(null)]
     [TestCase("-")]
     [TestCase("==")]
     [TestCase("___")]
-    public void WriteHeading_WhenWritingNullableFormattableObjects_LogsAnEmptyString(string? headerUnderline)
+    public void ConsoleWriteHeading_WhenWritingNullableFormattableObjects_LogsAnEmptyString(string? headerUnderline)
     {
-        AssertWriteHeadingWithFormat(null, null, null, string.Empty, headerUnderline);
+        AssertConsoleWriteHeadingWithFormat(null, null, null, string.Empty, headerUnderline);
     }
 
     [Test]
-    public void Write_WhenWritingNullableFormattableObjects_LogsAnEmptyString()
+    public void ConsoleWrite_WhenWritingNullableFormattableObjects_LogsAnEmptyString()
     {
-        AssertWriteWithFormat(null, "bogus-format-string", null, string.Empty);
+        AssertConsoleWriteWithFormat(null, "bogus-format-string", null, string.Empty);
     }
 
     [TestCase("2000-01-01")]
@@ -1604,12 +1604,12 @@ public class ObjectExtensionsTests
     [TestCase("2005-02-10")]
     [TestCase("2010-10-10")]
     [TestCase("2020-12-31")]
-    public void WriteLine_WhenWritingDateTimeWithFormatString_LogsTheExpectedValueToTheConsole(string value)
+    public void ConsoleWriteLine_WhenWritingDateTimeWithFormatString_LogsTheExpectedValueToTheConsole(string value)
     {
         var dateTime = DateTime.ParseExact(value, DateTimeWriteLineInputFormat, null);
         var expectedValue = dateTime.ToString(DateTimeWriteLineOutputFormat);
 
-        AssertWriteLineWithFormat(dateTime, DateTimeWriteLineOutputFormat, null, expectedValue);
+        AssertConsoleWriteLineWithFormat(dateTime, DateTimeWriteLineOutputFormat, null, expectedValue);
     }
 
     [TestCase("2000-01-01", 0)]
@@ -1617,14 +1617,14 @@ public class ObjectExtensionsTests
     [TestCase("2005-02-10", 2)]
     [TestCase("2010-10-10", 3)]
     [TestCase("2020-12-31", 4)]
-    public void WriteLine_WhenWritingDateTimeWithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingDateTimeWithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
         string value,
         int numberOfLineAppends)
     {
         var dateTime = DateTime.ParseExact(value, DateTimeWriteLineInputFormat, null);
         var expectedValue = dateTime.ToString(DateTimeWriteLineOutputFormat);
 
-        AssertWriteLineWithFormatWithLineAppends(
+        AssertConsoleWriteLineWithFormatWithLineAppends(
             dateTime, numberOfLineAppends, DateTimeWriteLineOutputFormat, null, expectedValue);
     }
 
@@ -1648,12 +1648,12 @@ public class ObjectExtensionsTests
     [TestCase("2005-02-10", "___")]
     [TestCase("2010-10-10", "___")]
     [TestCase("2020-12-31", "___")]
-    public void WriteHeading_WhenWritingDateTimeWithFormatString_LogsTheExpectedValueToTheConsole(string value, string? headingUnderline)
+    public void ConsoleWriteHeading_WhenWritingDateTimeWithFormatString_LogsTheExpectedValueToTheConsole(string value, string? headingUnderline)
     {
         var dateTime = DateTime.ParseExact(value, DateTimeWriteLineInputFormat, null);
         var expectedValue = dateTime.ToString(DateTimeWriteLineOutputFormat);
 
-        AssertWriteHeadingWithFormat(dateTime, DateTimeWriteLineOutputFormat, null, expectedValue, headingUnderline);
+        AssertConsoleWriteHeadingWithFormat(dateTime, DateTimeWriteLineOutputFormat, null, expectedValue, headingUnderline);
     }
 
     [TestCase("2000-01-01", 0, null)]
@@ -1676,7 +1676,7 @@ public class ObjectExtensionsTests
     [TestCase("2005-02-10", 2, "___")]
     [TestCase("2010-10-10", 3, "___")]
     [TestCase("2020-12-31", 4, "___")]
-    public void WriteHeading_WhenWritingDateTimeWithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingDateTimeWithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
         string value,
         int numberOfLineAppends,
         string? headingUnderline)
@@ -1684,7 +1684,7 @@ public class ObjectExtensionsTests
         var dateTime = DateTime.ParseExact(value, DateTimeWriteLineInputFormat, null);
         var expectedValue = dateTime.ToString(DateTimeWriteLineOutputFormat);
 
-        AssertWriteHeadingWithFormatWithLineAppends(
+        AssertConsoleWriteHeadingWithFormatWithLineAppends(
             dateTime, numberOfLineAppends, DateTimeWriteLineOutputFormat, null, expectedValue, headingUnderline);
     }
 
@@ -1693,29 +1693,29 @@ public class ObjectExtensionsTests
     [TestCase("2005-02-10")]
     [TestCase("2010-10-10")]
     [TestCase("2020-12-31")]
-    public void Write_WhenWritingDateTimeWithFormatString_LogsTheExpectedValueToTheConsole(string value)
+    public void ConsoleWrite_WhenWritingDateTimeWithFormatString_LogsTheExpectedValueToTheConsole(string value)
     {
         var dateTime = DateTime.ParseExact(value, DateTimeWriteLineInputFormat, null);
         var expectedValue = dateTime.ToString(DateTimeWriteLineOutputFormat);
 
-        AssertWriteWithFormat(dateTime, DateTimeWriteLineOutputFormat, null, expectedValue);
+        AssertConsoleWriteWithFormat(dateTime, DateTimeWriteLineOutputFormat, null, expectedValue);
     }
 
     [TestCase((ushort)255, "X", "FF")]
     [TestCase((ushort)255, "x", "ff")]
-    public void WriteLine_WhenWritingUInt16WithFormatString_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingUInt16WithFormatString_LogsTheExpectedValueToTheConsole(
         ushort value,
         string? format,
         string expectedResult)
     {
-        AssertWriteLineWithFormat(value, format, null, expectedResult);
+        AssertConsoleWriteLineWithFormat(value, format, null, expectedResult);
     }
 
     [TestCase((ushort)100, "C", "en-ZA", "R100,00")]
     [TestCase((ushort)100, "F", "en-US", "100.000")]
     [TestCase((ushort)100, "E", "nl-NL", "1,000000E+002")]
     [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %")]
-    public void WriteLine_WhenWritingUInt16WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingUInt16WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         ushort value,
         string? format,
         string culture,
@@ -1723,24 +1723,24 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteLineWithFormat(value, format, formatProvider, expectedResult);
+        AssertConsoleWriteLineWithFormat(value, format, formatProvider, expectedResult);
     }
 
     [TestCase((uint)255, "X", "FF")]
     [TestCase((uint)255, "x", "ff")]
-    public void WriteLine_WhenWritingUInt32WithFormatString_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingUInt32WithFormatString_LogsTheExpectedValueToTheConsole(
         uint value,
         string? format,
         string expectedResult)
     {
-        AssertWriteLineWithFormat(value, format, null, expectedResult);
+        AssertConsoleWriteLineWithFormat(value, format, null, expectedResult);
     }
 
     [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00")]
     [TestCase((uint)1000000, "F", "en-US", "1000000.000")]
     [TestCase((uint)1000000, "E", "nl-NL", "1,000000E+006")]
     [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %")]
-    public void WriteLine_WhenWritingUInt32WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingUInt32WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         uint value,
         string? format,
         string culture,
@@ -1748,24 +1748,24 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteLineWithFormat(value, format, formatProvider, expectedResult);
+        AssertConsoleWriteLineWithFormat(value, format, formatProvider, expectedResult);
     }
 
     [TestCase((ulong)255, "X", "FF")]
     [TestCase((ulong)255, "x", "ff")]
-    public void WriteLine_WhenWritingUInt64WithFormatString_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingUInt64WithFormatString_LogsTheExpectedValueToTheConsole(
         ulong value,
         string? format,
         string expectedResult)
     {
-        AssertWriteLineWithFormat(value, format, null, expectedResult);
+        AssertConsoleWriteLineWithFormat(value, format, null, expectedResult);
     }
 
     [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00")]
     [TestCase((ulong)100000000, "F", "en-US", "100000000.000")]
     [TestCase((ulong)100000000, "E", "nl-NL", "1,000000E+008")]
     [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %")]
-    public void WriteLine_WhenWritingUInt64WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingUInt64WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         ulong value,
         string? format,
         string culture,
@@ -1773,24 +1773,24 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteLineWithFormat(value, format, formatProvider, expectedResult);
+        AssertConsoleWriteLineWithFormat(value, format, formatProvider, expectedResult);
     }
 
     [TestCase(255, "X", "FF")]
     [TestCase(255, "x", "ff")]
-    public void WriteLine_WhenWritingInt16WithFormatString_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingInt16WithFormatString_LogsTheExpectedValueToTheConsole(
         short value,
         string? format,
         string expectedResult)
     {
-        AssertWriteLineWithFormat(value, format, null, expectedResult);
+        AssertConsoleWriteLineWithFormat(value, format, null, expectedResult);
     }
 
     [TestCase(100, "C", "en-ZA", "R100,00")]
     [TestCase(100, "F", "en-US", "100.000")]
     [TestCase(100, "E", "nl-NL", "1,000000E+002")]
     [TestCase(100, "P", "fr-FR", "10 000,000 %")]
-    public void WriteLine_WhenWritingInt16WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingInt16WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         short value,
         string? format,
         string culture,
@@ -1798,24 +1798,24 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteLineWithFormat(value, format, formatProvider, expectedResult);
+        AssertConsoleWriteLineWithFormat(value, format, formatProvider, expectedResult);
     }
 
     [TestCase(255, "X", "FF")]
     [TestCase(255, "x", "ff")]
-    public void WriteLine_WhenWritingInt32WithFormatString_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingInt32WithFormatString_LogsTheExpectedValueToTheConsole(
         int value,
         string? format,
         string expectedResult)
     {
-        AssertWriteLineWithFormat(value, format, null, expectedResult);
+        AssertConsoleWriteLineWithFormat(value, format, null, expectedResult);
     }
 
     [TestCase(1000000, "C", "en-ZA", "R1 000 000,00")]
     [TestCase(1000000, "F", "en-US", "1000000.000")]
     [TestCase(1000000, "E", "nl-NL", "1,000000E+006")]
     [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %")]
-    public void WriteLine_WhenWritingInt32WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingInt32WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         int value,
         string? format,
         string culture,
@@ -1823,24 +1823,24 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteLineWithFormat(value, format, formatProvider, expectedResult);
+        AssertConsoleWriteLineWithFormat(value, format, formatProvider, expectedResult);
     }
 
     [TestCase(255, "X", "FF")]
     [TestCase(255, "x", "ff")]
-    public void WriteLine_WhenWritingInt64WithFormatString_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingInt64WithFormatString_LogsTheExpectedValueToTheConsole(
         long value,
         string? format,
         string expectedResult)
     {
-        AssertWriteLineWithFormat(value, format, null, expectedResult);
+        AssertConsoleWriteLineWithFormat(value, format, null, expectedResult);
     }
 
     [TestCase(100000000, "C", "en-ZA", "R100 000 000,00")]
     [TestCase(100000000, "F", "en-US", "100000000.000")]
     [TestCase(100000000, "E", "nl-NL", "1,000000E+008")]
     [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %")]
-    public void WriteLine_WhenWritingInt64WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingInt64WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         long value,
         string? format,
         string culture,
@@ -1848,14 +1848,14 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteLineWithFormat(value, format, formatProvider, expectedResult);
+        AssertConsoleWriteLineWithFormat(value, format, formatProvider, expectedResult);
     }
 
     [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00")]
     [TestCase(100000000.334f, "F", "en-US", "100000000.000")]
     [TestCase(100000000.334f, "E", "nl-NL", "1,000000E+008")]
     [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %")]
-    public void WriteLine_WhenWritingFloatWithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingFloatWithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         float value,
         string? format,
         string culture,
@@ -1863,14 +1863,14 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteLineWithFormat(value, format, formatProvider, expectedResult);
+        AssertConsoleWriteLineWithFormat(value, format, formatProvider, expectedResult);
     }
 
     [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33")]
     [TestCase(100000000.334, "F", "en-US", "100000000.334")]
     [TestCase(100000000.334, "E", "nl-NL", "1,000000E+008")]
     [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %")]
-    public void WriteLine_WhenWritingDoubleWithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingDoubleWithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         double value,
         string? format,
         string culture,
@@ -1878,25 +1878,25 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteLineWithFormat(value, format, formatProvider, expectedResult);
+        AssertConsoleWriteLineWithFormat(value, format, formatProvider, expectedResult);
     }
 
     [TestCase((ushort)255, "X", "FF", 0)]
     [TestCase((ushort)255, "x", "ff", 1)]
-    public void WriteLine_WhenWritingUInt16WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingUInt16WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
         ushort value,
         string? format,
         string expectedResult,
         int numberOfLineAppends)
     {
-        AssertWriteLineWithFormatWithLineAppends(value, numberOfLineAppends, format, null, expectedResult);
+        AssertConsoleWriteLineWithFormatWithLineAppends(value, numberOfLineAppends, format, null, expectedResult);
     }
 
     [TestCase((ushort)100, "C", "en-ZA", "R100,00", 0)]
     [TestCase((ushort)100, "F", "en-US", "100.000", 1)]
     [TestCase((ushort)100, "E", "nl-NL", "1,000000E+002", 2)]
     [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %", 3)]
-    public void WriteLine_WhenWritingUInt16WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingUInt16WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
         ushort value,
         string? format,
         string culture,
@@ -1905,26 +1905,26 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteLineWithFormatWithLineAppends(
+        AssertConsoleWriteLineWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult);
     }
 
     [TestCase((uint)255, "X", "FF", 0)]
     [TestCase((uint)255, "x", "ff", 1)]
-    public void WriteLine_WhenWritingUInt32WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingUInt32WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
         uint value,
         string? format,
         string expectedResult,
         int numberOfLineAppends)
     {
-        AssertWriteLineWithFormatWithLineAppends(value, numberOfLineAppends, format, null, expectedResult);
+        AssertConsoleWriteLineWithFormatWithLineAppends(value, numberOfLineAppends, format, null, expectedResult);
     }
 
     [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00", 0)]
     [TestCase((uint)1000000, "F", "en-US", "1000000.000", 1)]
     [TestCase((uint)1000000, "E", "nl-NL", "1,000000E+006", 2)]
     [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %", 3)]
-    public void WriteLine_WhenWritingUInt32WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingUInt32WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
         uint value,
         string? format,
         string culture,
@@ -1933,26 +1933,26 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteLineWithFormatWithLineAppends(
+        AssertConsoleWriteLineWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult);
     }
 
     [TestCase((ulong)255, "X", "FF", 0)]
     [TestCase((ulong)255, "x", "ff", 1)]
-    public void WriteLine_WhenWritingUInt64WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingUInt64WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
         ulong value,
         string? format,
         string expectedResult,
         int numberOfLineAppends)
     {
-        AssertWriteLineWithFormatWithLineAppends(value, numberOfLineAppends, format, null, expectedResult);
+        AssertConsoleWriteLineWithFormatWithLineAppends(value, numberOfLineAppends, format, null, expectedResult);
     }
 
     [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00", 0)]
     [TestCase((ulong)100000000, "F", "en-US", "100000000.000", 1)]
     [TestCase((ulong)100000000, "E", "nl-NL", "1,000000E+008", 2)]
     [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %", 3)]
-    public void WriteLine_WhenWritingUInt64WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingUInt64WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
         ulong value,
         string? format,
         string culture,
@@ -1961,26 +1961,26 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteLineWithFormatWithLineAppends(
+        AssertConsoleWriteLineWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult);
     }
 
     [TestCase(255, "X", "FF", 0)]
     [TestCase(255, "x", "ff", 1)]
-    public void WriteLine_WhenWritingInt16WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingInt16WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
         short value,
         string? format,
         string expectedResult,
         int numberOfLineAppends)
     {
-        AssertWriteLineWithFormatWithLineAppends(value, numberOfLineAppends, format, null, expectedResult);
+        AssertConsoleWriteLineWithFormatWithLineAppends(value, numberOfLineAppends, format, null, expectedResult);
     }
 
     [TestCase(100, "C", "en-ZA", "R100,00", 0)]
     [TestCase(100, "F", "en-US", "100.000", 1)]
     [TestCase(100, "E", "nl-NL", "1,000000E+002", 2)]
     [TestCase(100, "P", "fr-FR", "10 000,000 %", 3)]
-    public void WriteLine_WhenWritingInt16WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingInt16WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
         short value,
         string? format,
         string culture,
@@ -1989,26 +1989,26 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteLineWithFormatWithLineAppends(
+        AssertConsoleWriteLineWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult);
     }
 
     [TestCase(255, "X", "FF", 0)]
     [TestCase(255, "x", "ff", 1)]
-    public void WriteLine_WhenWritingInt32WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingInt32WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
         int value,
         string? format,
         string expectedResult,
         int numberOfLineAppends)
     {
-        AssertWriteLineWithFormatWithLineAppends(value, numberOfLineAppends, format, null, expectedResult);
+        AssertConsoleWriteLineWithFormatWithLineAppends(value, numberOfLineAppends, format, null, expectedResult);
     }
 
     [TestCase(1000000, "C", "en-ZA", "R1 000 000,00", 0)]
     [TestCase(1000000, "F", "en-US", "1000000.000", 1)]
     [TestCase(1000000, "E", "nl-NL", "1,000000E+006", 2)]
     [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %", 3)]
-    public void WriteLine_WhenWritingInt32WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingInt32WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
         int value,
         string? format,
         string culture,
@@ -2017,26 +2017,26 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteLineWithFormatWithLineAppends(
+        AssertConsoleWriteLineWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult);
     }
 
     [TestCase(255, "X", "FF", 0)]
     [TestCase(255, "x", "ff", 1)]
-    public void WriteLine_WhenWritingInt64WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingInt64WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
         long value,
         string? format,
         string expectedResult,
         int numberOfLineAppends)
     {
-        AssertWriteLineWithFormatWithLineAppends(value, numberOfLineAppends, format, null, expectedResult);
+        AssertConsoleWriteLineWithFormatWithLineAppends(value, numberOfLineAppends, format, null, expectedResult);
     }
 
     [TestCase(100000000, "C", "en-ZA", "R100 000 000,00", 0)]
     [TestCase(100000000, "F", "en-US", "100000000.000", 1)]
     [TestCase(100000000, "E", "nl-NL", "1,000000E+008", 2)]
     [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %", 3)]
-    public void WriteLine_WhenWritingInt64WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingInt64WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
         long value,
         string? format,
         string culture,
@@ -2045,7 +2045,7 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteLineWithFormatWithLineAppends(
+        AssertConsoleWriteLineWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult);
     }
 
@@ -2053,7 +2053,7 @@ public class ObjectExtensionsTests
     [TestCase(100000000.334f, "F", "en-US", "100000000.000", 1)]
     [TestCase(100000000.334f, "E", "nl-NL", "1,000000E+008", 2)]
     [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %", 3)]
-    public void WriteLine_WhenWritingFloatWithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingFloatWithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
         float value,
         string? format,
         string culture,
@@ -2062,7 +2062,7 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteLineWithFormatWithLineAppends(
+        AssertConsoleWriteLineWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult);
     }
 
@@ -2070,7 +2070,7 @@ public class ObjectExtensionsTests
     [TestCase(100000000.334, "F", "en-US", "100000000.334", 1)]
     [TestCase(100000000.334, "E", "nl-NL", "1,000000E+008", 2)]
     [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %", 3)]
-    public void WriteLine_WhenWritingDoubleWithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteLine_WhenWritingDoubleWithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
         double value,
         string? format,
         string culture,
@@ -2079,7 +2079,7 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteLineWithFormatWithLineAppends(
+        AssertConsoleWriteLineWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult);
     }
 
@@ -2091,13 +2091,13 @@ public class ObjectExtensionsTests
     [TestCase((ushort)255, "x", "ff", "++")]
     [TestCase((ushort)255, "X", "FF", "___")]
     [TestCase((ushort)255, "x", "ff", "___")]
-    public void WriteHeading_WhenWritingUInt16WithFormatString_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingUInt16WithFormatString_LogsTheExpectedValueToTheConsole(
         ushort value,
         string? format,
         string expectedResult,
         string? headingUnderline)
     {
-        AssertWriteHeadingWithFormat(value, format, null, expectedResult, headingUnderline);
+        AssertConsoleWriteHeadingWithFormat(value, format, null, expectedResult, headingUnderline);
     }
 
     [TestCase((ushort)100, "C", "en-ZA", "R100,00", null)]
@@ -2116,7 +2116,7 @@ public class ObjectExtensionsTests
     [TestCase((ushort)100, "F", "en-US", "100.000", "___")]
     [TestCase((ushort)100, "E", "nl-NL", "1,000000E+002", "___")]
     [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %", "___")]
-    public void WriteHeading_WhenWritingUInt16WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingUInt16WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         ushort value,
         string? format,
         string culture,
@@ -2125,7 +2125,7 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
+        AssertConsoleWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
     }
 
     [TestCase((uint)255, "X", "FF", null)]
@@ -2136,13 +2136,13 @@ public class ObjectExtensionsTests
     [TestCase((uint)255, "x", "ff", "++")]
     [TestCase((uint)255, "X", "FF", "___")]
     [TestCase((uint)255, "x", "ff", "___")]
-    public void WriteHeading_WhenWritingUInt32WithFormatString_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingUInt32WithFormatString_LogsTheExpectedValueToTheConsole(
         uint value,
         string? format,
         string expectedResult,
         string? headingUnderline)
     {
-        AssertWriteHeadingWithFormat(value, format, null, expectedResult);
+        AssertConsoleWriteHeadingWithFormat(value, format, null, expectedResult, headingUnderline);
     }
 
     [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00", null)]
@@ -2161,7 +2161,7 @@ public class ObjectExtensionsTests
     [TestCase((uint)1000000, "F", "en-US", "1000000.000", "___")]
     [TestCase((uint)1000000, "E", "nl-NL", "1,000000E+006", "___")]
     [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %", "___")]
-    public void WriteHeading_WhenWritingUInt32WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingUInt32WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         uint value,
         string? format,
         string culture,
@@ -2170,7 +2170,7 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
+        AssertConsoleWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
     }
 
     [TestCase((ulong)255, "X", "FF", null)]
@@ -2181,13 +2181,13 @@ public class ObjectExtensionsTests
     [TestCase((ulong)255, "x", "ff", "++")]
     [TestCase((ulong)255, "X", "FF", "___")]
     [TestCase((ulong)255, "x", "ff", "___")]
-    public void WriteHeading_WhenWritingUInt64WithFormatString_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingUInt64WithFormatString_LogsTheExpectedValueToTheConsole(
         ulong value,
         string? format,
         string expectedResult,
         string? headingUnderline)
     {
-        AssertWriteHeadingWithFormat(value, format, null, expectedResult);
+        AssertConsoleWriteHeadingWithFormat(value, format, null, expectedResult, headingUnderline);
     }
 
     [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00", null)]
@@ -2206,7 +2206,7 @@ public class ObjectExtensionsTests
     [TestCase((ulong)100000000, "F", "en-US", "100000000.000", "___")]
     [TestCase((ulong)100000000, "E", "nl-NL", "1,000000E+008", "___")]
     [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %", "___")]
-    public void WriteHeading_WhenWritingUInt64WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingUInt64WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         ulong value,
         string? format,
         string culture,
@@ -2215,7 +2215,7 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
+        AssertConsoleWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
     }
 
     [TestCase(255, "X", "FF", null)]
@@ -2226,13 +2226,13 @@ public class ObjectExtensionsTests
     [TestCase(255, "x", "ff", "++")]
     [TestCase(255, "X", "FF", "___")]
     [TestCase(255, "x", "ff", "___")]
-    public void WriteHeading_WhenWritingInt16WithFormatString_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingInt16WithFormatString_LogsTheExpectedValueToTheConsole(
         short value,
         string? format,
         string expectedResult,
         string? headingUnderline)
     {
-        AssertWriteHeadingWithFormat(value, format, null, expectedResult, headingUnderline);
+        AssertConsoleWriteHeadingWithFormat(value, format, null, expectedResult, headingUnderline);
     }
 
     [TestCase(100, "C", "en-ZA", "R100,00", null)]
@@ -2251,7 +2251,7 @@ public class ObjectExtensionsTests
     [TestCase(100, "F", "en-US", "100.000", "___")]
     [TestCase(100, "E", "nl-NL", "1,000000E+002", "___")]
     [TestCase(100, "P", "fr-FR", "10 000,000 %", "___")]
-    public void WriteHeading_WhenWritingInt16WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingInt16WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         short value,
         string? format,
         string culture,
@@ -2260,7 +2260,7 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
+        AssertConsoleWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
     }
 
     [TestCase(255, "X", "FF", null)]
@@ -2271,13 +2271,13 @@ public class ObjectExtensionsTests
     [TestCase(255, "x", "ff", "++")]
     [TestCase(255, "X", "FF", "___")]
     [TestCase(255, "x", "ff", "___")]
-    public void WriteHeading_WhenWritingInt32WithFormatString_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingInt32WithFormatString_LogsTheExpectedValueToTheConsole(
         int value,
         string? format,
         string expectedResult,
         string? headingUnderline)
     {
-        AssertWriteHeadingWithFormat(value, format, null, expectedResult, headingUnderline);
+        AssertConsoleWriteHeadingWithFormat(value, format, null, expectedResult, headingUnderline);
     }
 
     [TestCase(1000000, "C", "en-ZA", "R1 000 000,00", null)]
@@ -2296,7 +2296,7 @@ public class ObjectExtensionsTests
     [TestCase(1000000, "F", "en-US", "1000000.000", "___")]
     [TestCase(1000000, "E", "nl-NL", "1,000000E+006", "___")]
     [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %", "___")]
-    public void WriteHeading_WhenWritingInt32WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingInt32WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         int value,
         string? format,
         string culture,
@@ -2305,7 +2305,7 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
+        AssertConsoleWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
     }
 
     [TestCase(255, "X", "FF", null)]
@@ -2316,13 +2316,13 @@ public class ObjectExtensionsTests
     [TestCase(255, "x", "ff", "++")]
     [TestCase(255, "X", "FF", "___")]
     [TestCase(255, "x", "ff", "___")]
-    public void WriteHeading_WhenWritingInt64WithFormatString_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingInt64WithFormatString_LogsTheExpectedValueToTheConsole(
         long value,
         string? format,
         string expectedResult,
         string? headingUnderline)
     {
-        AssertWriteHeadingWithFormat(value, format, null, expectedResult, headingUnderline);
+        AssertConsoleWriteHeadingWithFormat(value, format, null, expectedResult, headingUnderline);
     }
 
     [TestCase(100000000, "C", "en-ZA", "R100 000 000,00", null)]
@@ -2341,7 +2341,7 @@ public class ObjectExtensionsTests
     [TestCase(100000000, "F", "en-US", "100000000.000", "___")]
     [TestCase(100000000, "E", "nl-NL", "1,000000E+008", "___")]
     [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %", "___")]
-    public void WriteHeading_WhenWritingInt64WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingInt64WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         long value,
         string? format,
         string culture,
@@ -2350,7 +2350,7 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
+        AssertConsoleWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
     }
 
     [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00", null)]
@@ -2369,7 +2369,7 @@ public class ObjectExtensionsTests
     [TestCase(100000000.334f, "F", "en-US", "100000000.000", "___")]
     [TestCase(100000000.334f, "E", "nl-NL", "1,000000E+008", "___")]
     [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %", "___")]
-    public void WriteHeading_WhenWritingFloatWithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingFloatWithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         float value,
         string? format,
         string culture,
@@ -2378,7 +2378,7 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
+        AssertConsoleWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
     }
 
     [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33", null)]
@@ -2397,7 +2397,7 @@ public class ObjectExtensionsTests
     [TestCase(100000000.334, "F", "en-US", "100000000.334", "___")]
     [TestCase(100000000.334, "E", "nl-NL", "1,000000E+008", "___")]
     [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %", "___")]
-    public void WriteHeading_WhenWritingDoubleWithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingDoubleWithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         double value,
         string? format,
         string culture,
@@ -2406,7 +2406,7 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
+        AssertConsoleWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
     }
 
     [TestCase((ushort)255, "X", "FF", 0, null)]
@@ -2417,14 +2417,14 @@ public class ObjectExtensionsTests
     [TestCase((ushort)255, "x", "ff", 1, "++")]
     [TestCase((ushort)255, "X", "FF", 0, "___")]
     [TestCase((ushort)255, "x", "ff", 1, "___")]
-    public void WriteHeading_WhenWritingUInt16WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingUInt16WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
         ushort value,
         string? format,
         string expectedResult,
         int numberOfLineAppends,
         string? headingUnderline)
     {
-        AssertWriteHeadingWithFormatWithLineAppends(
+        AssertConsoleWriteHeadingWithFormatWithLineAppends(
             value, numberOfLineAppends, format, null, expectedResult, headingUnderline);
     }
 
@@ -2444,7 +2444,7 @@ public class ObjectExtensionsTests
     [TestCase((ushort)100, "F", "en-US", "100.000", 1, "___")]
     [TestCase((ushort)100, "E", "nl-NL", "1,000000E+002", 2, "___")]
     [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %", 3, "___")]
-    public void WriteHeading_WhenWritingUInt16WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingUInt16WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
         ushort value,
         string? format,
         string culture,
@@ -2454,7 +2454,7 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteHeadingWithFormatWithLineAppends(
+        AssertConsoleWriteHeadingWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult, headingUnderline);
     }
 
@@ -2466,14 +2466,14 @@ public class ObjectExtensionsTests
     [TestCase((uint)255, "x", "ff", 1, "++")]
     [TestCase((uint)255, "X", "FF", 0, "___")]
     [TestCase((uint)255, "x", "ff", 1, "___")]
-    public void WriteHeading_WhenWritingUInt32WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingUInt32WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
         uint value,
         string? format,
         string expectedResult,
         int numberOfLineAppends,
         string? headingUnderline)
     {
-        AssertWriteHeadingWithFormatWithLineAppends(
+        AssertConsoleWriteHeadingWithFormatWithLineAppends(
             value, numberOfLineAppends, format, null, expectedResult, headingUnderline);
     }
 
@@ -2493,7 +2493,7 @@ public class ObjectExtensionsTests
     [TestCase((uint)1000000, "F", "en-US", "1000000.000", 1, "___")]
     [TestCase((uint)1000000, "E", "nl-NL", "1,000000E+006", 2, "___")]
     [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %", 3, "___")]
-    public void WriteHeading_WhenWritingUInt32WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingUInt32WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
         uint value,
         string? format,
         string culture,
@@ -2503,7 +2503,7 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteHeadingWithFormatWithLineAppends(
+        AssertConsoleWriteHeadingWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult, headingUnderline);
     }
 
@@ -2515,14 +2515,14 @@ public class ObjectExtensionsTests
     [TestCase((ulong)255, "x", "ff", 1, "++")]
     [TestCase((ulong)255, "X", "FF", 0, "___")]
     [TestCase((ulong)255, "x", "ff", 1, "___")]
-    public void WriteHeading_WhenWritingUInt64WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingUInt64WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
         ulong value,
         string? format,
         string expectedResult,
         int numberOfLineAppends,
         string? headingUnderline)
     {
-        AssertWriteHeadingWithFormatWithLineAppends(
+        AssertConsoleWriteHeadingWithFormatWithLineAppends(
             value, numberOfLineAppends, format, null, expectedResult, headingUnderline);
     }
 
@@ -2542,7 +2542,7 @@ public class ObjectExtensionsTests
     [TestCase((ulong)100000000, "F", "en-US", "100000000.000", 1, "___")]
     [TestCase((ulong)100000000, "E", "nl-NL", "1,000000E+008", 2, "___")]
     [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %", 3, "___")]
-    public void WriteHeading_WhenWritingUInt64WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingUInt64WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
         ulong value,
         string? format,
         string culture,
@@ -2552,7 +2552,7 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteHeadingWithFormatWithLineAppends(
+        AssertConsoleWriteHeadingWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult, headingUnderline);
     }
 
@@ -2564,14 +2564,14 @@ public class ObjectExtensionsTests
     [TestCase(255, "x", "ff", 1, "++")]
     [TestCase(255, "X", "FF", 0, "___")]
     [TestCase(255, "x", "ff", 1, "___")]
-    public void WriteHeading_WhenWritingInt16WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingInt16WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
         short value,
         string? format,
         string expectedResult,
         int numberOfLineAppends,
         string? headingUnderline)
     {
-        AssertWriteHeadingWithFormatWithLineAppends(
+        AssertConsoleWriteHeadingWithFormatWithLineAppends(
             value, numberOfLineAppends, format, null, expectedResult, headingUnderline);
     }
 
@@ -2591,7 +2591,7 @@ public class ObjectExtensionsTests
     [TestCase(100, "F", "en-US", "100.000", 1, "___")]
     [TestCase(100, "E", "nl-NL", "1,000000E+002", 2, "___")]
     [TestCase(100, "P", "fr-FR", "10 000,000 %", 3, "___")]
-    public void WriteHeading_WhenWritingInt16WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingInt16WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
         short value,
         string? format,
         string culture,
@@ -2601,7 +2601,7 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteHeadingWithFormatWithLineAppends(
+        AssertConsoleWriteHeadingWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult, headingUnderline);
     }
 
@@ -2613,14 +2613,14 @@ public class ObjectExtensionsTests
     [TestCase(255, "x", "ff", 1, "++")]
     [TestCase(255, "X", "FF", 0, "___")]
     [TestCase(255, "x", "ff", 1, "___")]
-    public void WriteHeading_WhenWritingInt32WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingInt32WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
         int value,
         string? format,
         string expectedResult,
         int numberOfLineAppends,
         string? headingUnderline)
     {
-        AssertWriteHeadingWithFormatWithLineAppends(
+        AssertConsoleWriteHeadingWithFormatWithLineAppends(
             value, numberOfLineAppends, format, null, expectedResult, headingUnderline);
     }
 
@@ -2640,7 +2640,7 @@ public class ObjectExtensionsTests
     [TestCase(1000000, "F", "en-US", "1000000.000", 1, "___")]
     [TestCase(1000000, "E", "nl-NL", "1,000000E+006", 2, "___")]
     [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %", 3, "___")]
-    public void WriteHeading_WhenWritingInt32WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingInt32WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
         int value,
         string? format,
         string culture,
@@ -2650,7 +2650,7 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteHeadingWithFormatWithLineAppends(
+        AssertConsoleWriteHeadingWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult, headingUnderline);
     }
 
@@ -2662,14 +2662,14 @@ public class ObjectExtensionsTests
     [TestCase(255, "x", "ff", 1, "++")]
     [TestCase(255, "X", "FF", 0, "___")]
     [TestCase(255, "x", "ff", 1, "___")]
-    public void WriteHeading_WhenWritingInt64WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingInt64WithFormatStringWithLineAppends_LogsTheExpectedValueToTheConsole(
         long value,
         string? format,
         string expectedResult,
         int numberOfLineAppends,
         string? headingUnderline)
     {
-        AssertWriteHeadingWithFormatWithLineAppends(
+        AssertConsoleWriteHeadingWithFormatWithLineAppends(
             value, numberOfLineAppends, format, null, expectedResult, headingUnderline);
     }
 
@@ -2689,7 +2689,7 @@ public class ObjectExtensionsTests
     [TestCase(100000000, "F", "en-US", "100000000.000", 1, "___")]
     [TestCase(100000000, "E", "nl-NL", "1,000000E+008", 2, "___")]
     [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %", 3, "___")]
-    public void WriteHeading_WhenWritingInt64WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingInt64WithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
         long value,
         string? format,
         string culture,
@@ -2699,7 +2699,7 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteHeadingWithFormatWithLineAppends(
+        AssertConsoleWriteHeadingWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult, headingUnderline);
     }
 
@@ -2719,7 +2719,7 @@ public class ObjectExtensionsTests
     [TestCase(100000000.334f, "F", "en-US", "100000000.000", 1, "___")]
     [TestCase(100000000.334f, "E", "nl-NL", "1,000000E+008", 2, "___")]
     [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %", 3, "___")]
-    public void WriteHeading_WhenWritingFloatWithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingFloatWithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
         float value,
         string? format,
         string culture,
@@ -2729,7 +2729,7 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteHeadingWithFormatWithLineAppends(
+        AssertConsoleWriteHeadingWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult, headingUnderline);
     }
 
@@ -2749,7 +2749,7 @@ public class ObjectExtensionsTests
     [TestCase(100000000.334, "F", "en-US", "100000000.334", 1, "___")]
     [TestCase(100000000.334, "E", "nl-NL", "1,000000E+008", 2, "___")]
     [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %", 3, "___")]
-    public void WriteHeading_WhenWritingDoubleWithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWriteHeading_WhenWritingDoubleWithFormatStringAndFormatProviderWithLineAppends_LogsTheExpectedValueToTheConsole(
         double value,
         string? format,
         string culture,
@@ -2759,25 +2759,25 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteHeadingWithFormatWithLineAppends(
+        AssertConsoleWriteHeadingWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult, headingUnderline);
     }
 
     [TestCase((ushort)255, "X", "FF")]
     [TestCase((ushort)255, "x", "ff")]
-    public void Write_WhenWritingUInt16WithFormatString_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWrite_WhenWritingUInt16WithFormatString_LogsTheExpectedValueToTheConsole(
         ushort value,
         string? format,
         string expectedResult)
     {
-        AssertWriteWithFormat(value, format, null, expectedResult);
+        AssertConsoleWriteWithFormat(value, format, null, expectedResult);
     }
 
     [TestCase((ushort)100, "C", "en-ZA", "R100,00")]
     [TestCase((ushort)100, "F", "en-US", "100.000")]
     [TestCase((ushort)100, "E", "nl-NL", "1,000000E+002")]
     [TestCase((ushort)100, "P", "fr-FR", "10 000,000 %")]
-    public void Write_WhenWritingUInt16WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWrite_WhenWritingUInt16WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         ushort value,
         string? format,
         string culture,
@@ -2785,24 +2785,24 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteWithFormat(value, format, formatProvider, expectedResult);
+        AssertConsoleWriteWithFormat(value, format, formatProvider, expectedResult);
     }
 
     [TestCase((uint)255, "X", "FF")]
     [TestCase((uint)255, "x", "ff")]
-    public void Write_WhenWritingUInt32WithFormatString_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWrite_WhenWritingUInt32WithFormatString_LogsTheExpectedValueToTheConsole(
         uint value,
         string? format,
         string expectedResult)
     {
-        AssertWriteWithFormat(value, format, null, expectedResult);
+        AssertConsoleWriteWithFormat(value, format, null, expectedResult);
     }
 
     [TestCase((uint)1000000, "C", "en-ZA", "R1 000 000,00")]
     [TestCase((uint)1000000, "F", "en-US", "1000000.000")]
     [TestCase((uint)1000000, "E", "nl-NL", "1,000000E+006")]
     [TestCase((uint)1000000, "P", "fr-FR", "100 000 000,000 %")]
-    public void Write_WhenWritingUInt32WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWrite_WhenWritingUInt32WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         uint value,
         string? format,
         string culture,
@@ -2810,24 +2810,24 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteWithFormat(value, format, formatProvider, expectedResult);
+        AssertConsoleWriteWithFormat(value, format, formatProvider, expectedResult);
     }
 
     [TestCase((ulong)255, "X", "FF")]
     [TestCase((ulong)255, "x", "ff")]
-    public void Write_WhenWritingUInt64WithFormatString_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWrite_WhenWritingUInt64WithFormatString_LogsTheExpectedValueToTheConsole(
         ulong value,
         string? format,
         string expectedResult)
     {
-        AssertWriteWithFormat(value, format, null, expectedResult);
+        AssertConsoleWriteWithFormat(value, format, null, expectedResult);
     }
 
     [TestCase((ulong)100000000, "C", "en-ZA", "R100 000 000,00")]
     [TestCase((ulong)100000000, "F", "en-US", "100000000.000")]
     [TestCase((ulong)100000000, "E", "nl-NL", "1,000000E+008")]
     [TestCase((ulong)100000000, "P", "fr-FR", "10 000 000 000,000 %")]
-    public void Write_WhenWritingUInt64WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWrite_WhenWritingUInt64WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         ulong value,
         string? format,
         string culture,
@@ -2835,24 +2835,24 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteWithFormat(value, format, formatProvider, expectedResult);
+        AssertConsoleWriteWithFormat(value, format, formatProvider, expectedResult);
     }
 
     [TestCase(255, "X", "FF")]
     [TestCase(255, "x", "ff")]
-    public void Write_WhenWritingInt16WithFormatString_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWrite_WhenWritingInt16WithFormatString_LogsTheExpectedValueToTheConsole(
         short value,
         string? format,
         string expectedResult)
     {
-        AssertWriteWithFormat(value, format, null, expectedResult);
+        AssertConsoleWriteWithFormat(value, format, null, expectedResult);
     }
 
     [TestCase(100, "C", "en-ZA", "R100,00")]
     [TestCase(100, "F", "en-US", "100.000")]
     [TestCase(100, "E", "nl-NL", "1,000000E+002")]
     [TestCase(100, "P", "fr-FR", "10 000,000 %")]
-    public void Write_WhenWritingInt16WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWrite_WhenWritingInt16WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         short value,
         string? format,
         string culture,
@@ -2860,24 +2860,24 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteWithFormat(value, format, formatProvider, expectedResult);
+        AssertConsoleWriteWithFormat(value, format, formatProvider, expectedResult);
     }
 
     [TestCase(255, "X", "FF")]
     [TestCase(255, "x", "ff")]
-    public void Write_WhenWritingInt32WithFormatString_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWrite_WhenWritingInt32WithFormatString_LogsTheExpectedValueToTheConsole(
         int value,
         string? format,
         string expectedResult)
     {
-        AssertWriteWithFormat(value, format, null, expectedResult);
+        AssertConsoleWriteWithFormat(value, format, null, expectedResult);
     }
 
     [TestCase(1000000, "C", "en-ZA", "R1 000 000,00")]
     [TestCase(1000000, "F", "en-US", "1000000.000")]
     [TestCase(1000000, "E", "nl-NL", "1,000000E+006")]
     [TestCase(1000000, "P", "fr-FR", "100 000 000,000 %")]
-    public void Write_WhenWritingInt32WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWrite_WhenWritingInt32WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         int value,
         string? format,
         string culture,
@@ -2885,24 +2885,24 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteWithFormat(value, format, formatProvider, expectedResult);
+        AssertConsoleWriteWithFormat(value, format, formatProvider, expectedResult);
     }
 
     [TestCase(255, "X", "FF")]
     [TestCase(255, "x", "ff")]
-    public void Write_WhenWritingInt64WithFormatString_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWrite_WhenWritingInt64WithFormatString_LogsTheExpectedValueToTheConsole(
         long value,
         string? format,
         string expectedResult)
     {
-        AssertWriteWithFormat(value, format, null, expectedResult);
+        AssertConsoleWriteWithFormat(value, format, null, expectedResult);
     }
 
     [TestCase(100000000, "C", "en-ZA", "R100 000 000,00")]
     [TestCase(100000000, "F", "en-US", "100000000.000")]
     [TestCase(100000000, "E", "nl-NL", "1,000000E+008")]
     [TestCase(100000000, "P", "fr-FR", "10 000 000 000,000 %")]
-    public void Write_WhenWritingInt64WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWrite_WhenWritingInt64WithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         long value,
         string? format,
         string culture,
@@ -2910,14 +2910,14 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteWithFormat(value, format, formatProvider, expectedResult);
+        AssertConsoleWriteWithFormat(value, format, formatProvider, expectedResult);
     }
 
     [TestCase(100000000.334f, "C", "en-ZA", "R100 000 000,00")]
     [TestCase(100000000.334f, "F", "en-US", "100000000.000")]
     [TestCase(100000000.334f, "E", "nl-NL", "1,000000E+008")]
     [TestCase(100000000.334f, "P", "fr-FR", "10 000 000 000,000 %")]
-    public void Write_WhenWritingFloatWithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWrite_WhenWritingFloatWithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         float value,
         string? format,
         string culture,
@@ -2925,14 +2925,14 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteWithFormat(value, format, formatProvider, expectedResult);
+        AssertConsoleWriteWithFormat(value, format, formatProvider, expectedResult);
     }
 
     [TestCase(100000000.334, "C", "en-ZA", "R100 000 000,33")]
     [TestCase(100000000.334, "F", "en-US", "100000000.334")]
     [TestCase(100000000.334, "E", "nl-NL", "1,000000E+008")]
     [TestCase(100000000.334, "P", "fr-FR", "10 000 000 033,400 %")]
-    public void Write_WhenWritingDoubleWithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
+    public void ConsoleWrite_WhenWritingDoubleWithFormatStringAndFormatProvider_LogsTheExpectedValueToTheConsole(
         double value,
         string? format,
         string culture,
@@ -2940,7 +2940,7 @@ public class ObjectExtensionsTests
     {
         var formatProvider = CultureInfo.GetCultureInfo(culture, true);
 
-        AssertWriteWithFormat(value, format, formatProvider, expectedResult);
+        AssertConsoleWriteWithFormat(value, format, formatProvider, expectedResult);
     }
 
     [Test]
@@ -2996,7 +2996,7 @@ public class ObjectExtensionsTests
         checkDigit.Should().Be(NumberOfTaskThreads);
     }
 
-    private static void AssertWriteWithFormat(
+    private static void AssertConsoleWriteWithFormat(
         IFormattable? root,
         string? format,
         IFormatProvider? formatProvider,
@@ -3004,12 +3004,12 @@ public class ObjectExtensionsTests
     {
         using var monitor = new ConsoleTestMonitor();
 
-        root.Write(format, formatProvider);
+        root.ConsoleWrite(format, formatProvider);
 
         AssertValues(expectedValue, monitor.GetOutputText());
     }
 
-    private static void AssertWriteLines(
+    private static void AssertConsoleWriteLines(
         object? root,
         int numberOfWriteLines)
     {
@@ -3021,90 +3021,90 @@ public class ObjectExtensionsTests
             testValue.Append(Environment.NewLine);
         }
 
-        root.WriteLines(numberOfWriteLines);
+        root.ConsoleWriteLines(numberOfWriteLines);
 
         AssertValues(testValue.ToString(), monitor.GetOutputText());
     }
 
-    private static void AssertWrite(
+    private static void AssertConsoleWrite(
         object? root,
         string expectedValue)
     {
         using var monitor = new ConsoleTestMonitor();
 
-        root.Write();
+        root.ConsoleWrite();
 
         AssertValues(expectedValue, monitor.GetOutputText());
     }
 
-    private static void AssertWriteLine(
+    private static void AssertConsoleWriteLine(
         object? root,
         string expectedValue)
     {
-        GlobalAssertWriteLine(expectedValue, null, () => root.WriteLine());
+        GlobalAssertConsoleWriteLine(expectedValue, null, () => root.ConsoleWriteLine());
     }
 
-    private static void AssertWriteLineWithLineAppends(
+    private static void AssertConsoleWriteLineWithLineAppends(
         object? root,
         string expectedValue,
         int numberOfLineAppends)
     {
-        GlobalAssertWriteLine(expectedValue, numberOfLineAppends, () =>
-            root.WriteLine(numberOfLineAppends));
+        GlobalAssertConsoleWriteLine(expectedValue, numberOfLineAppends, () =>
+            root.ConsoleWriteLine(numberOfLineAppends));
     }
 
-    private static void AssertWriteLineWithFormat(
+    private static void AssertConsoleWriteLineWithFormat(
         IFormattable? root,
         string? format,
         IFormatProvider? formatProvider,
         string expectedValue)
     {
-        GlobalAssertWriteLine(expectedValue, null, () =>
-            root.WriteLine(format, formatProvider));
+        GlobalAssertConsoleWriteLine(expectedValue, null, () =>
+            root.ConsoleWriteLine(format, formatProvider));
     }
 
-    private static void AssertWriteLineWithFormatWithLineAppends(
+    private static void AssertConsoleWriteLineWithFormatWithLineAppends(
         IFormattable? root,
         int numberOfLineAppends,
         string? format,
         IFormatProvider? formatProvider,
         string expectedValue)
     {
-        GlobalAssertWriteLine(expectedValue, numberOfLineAppends, () =>
-            root.WriteLine(format, formatProvider, numberOfLineAppends));
+        GlobalAssertConsoleWriteLine(expectedValue, numberOfLineAppends, () =>
+            root.ConsoleWriteLine(format, formatProvider, numberOfLineAppends));
     }
 
-    private static void AssertWriteHeading(
+    private static void AssertConsoleWriteHeading(
         object? root,
         string expectedValue,
         string? headingUnderline = null)
     {
-        GlobalAssertWriteHeading(expectedValue, null, headingUnderline, () =>
-            root.WriteHeading(headingUnderline));
+        GlobalAssertConsoleWriteHeading(expectedValue, null, headingUnderline, () =>
+            root.ConsoleWriteHeading(headingUnderline));
     }
 
-    private static void AssertWriteHeadingWithLineAppends(
+    private static void AssertConsoleWriteHeadingWithLineAppends(
         object? root,
         string expectedValue,
         string? headingUnderline,
         int numberOfLineAppends)
     {
-        GlobalAssertWriteHeading(expectedValue, numberOfLineAppends, headingUnderline, () =>
-            root.WriteHeading(headingUnderline, numberOfLineAppends));
+        GlobalAssertConsoleWriteHeading(expectedValue, numberOfLineAppends, headingUnderline, () =>
+            root.ConsoleWriteHeading(headingUnderline, numberOfLineAppends));
     }
 
-    private static void AssertWriteHeadingWithFormat(
+    private static void AssertConsoleWriteHeadingWithFormat(
         IFormattable? root,
         string? format,
         IFormatProvider? formatProvider,
         string expectedValue,
         string? headingUnderline = null)
     {
-        GlobalAssertWriteHeading(expectedValue, null, headingUnderline, () =>
-            root.WriteHeading(format, formatProvider, headingUnderline));
+        GlobalAssertConsoleWriteHeading(expectedValue, null, headingUnderline, () =>
+            root.ConsoleWriteHeading(format, formatProvider, headingUnderline));
     }
 
-    private static void AssertWriteHeadingWithFormatWithLineAppends(
+    private static void AssertConsoleWriteHeadingWithFormatWithLineAppends(
         IFormattable? root,
         int numberOfLineAppends,
         string? format,
@@ -3112,11 +3112,11 @@ public class ObjectExtensionsTests
         string expectedValue,
         string? headingUnderline = null)
     {
-        GlobalAssertWriteHeading(expectedValue, numberOfLineAppends, headingUnderline, () =>
-            root.WriteHeading(format, formatProvider, headingUnderline, numberOfLineAppends));
+        GlobalAssertConsoleWriteHeading(expectedValue, numberOfLineAppends, headingUnderline, () =>
+            root.ConsoleWriteHeading(format, formatProvider, headingUnderline, numberOfLineAppends));
     }
 
-    private static void GlobalAssertWriteLine(
+    private static void GlobalAssertConsoleWriteLine(
         string expectedValue,
         int? numberOfLineAppends,
         Action writeToRoot)
@@ -3137,7 +3137,7 @@ public class ObjectExtensionsTests
         AssertValues(testValue.ToString(), monitor.GetOutputText());
     }
 
-    private static void GlobalAssertWriteHeading(
+    private static void GlobalAssertConsoleWriteHeading(
         string expectedValue,
         int? numberOfLineAppends,
         string? headingUnderline,
@@ -3146,7 +3146,7 @@ public class ObjectExtensionsTests
         using var monitor = new ConsoleTestMonitor();
         var testValue = new StringBuilder($"{expectedValue}{Environment.NewLine}");
         var underline = headingUnderline.IsNullOrEmpty()
-            ? ObjectExtensions.DefaultHeadingUnderline
+            ? ObjectExtensions.HeadingUnderline
             : headingUnderline;
 
         if (expectedValue.IsNotNullOrEmpty())
@@ -3178,8 +3178,8 @@ public class ObjectExtensionsTests
          * It would seem some Windows installations give different white space characters.
          * For example, Windows 11 professional gives fr-FR white spaces as (UTF-8):
          *
-         * 1. \xc2\xa0 - NO-BREAK SPACE
-         * 2. \xe2\x80\xaf	NARROW NO-BREAK SPACE
+         * 1. \xc2\xa0      - NO-BREAK SPACE
+         * 2. \xe2\x80\xaf  - NARROW NO-BREAK SPACE
          *
          * Therefore, to compensate for such differences, the code below replaces it with a normal space.
          */

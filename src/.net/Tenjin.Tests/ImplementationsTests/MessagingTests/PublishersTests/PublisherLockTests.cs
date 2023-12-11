@@ -14,9 +14,9 @@ public class PublisherLockTests
 {
     [TestCase(true)]
     [TestCase(false)]
-    public async Task Dispose_WhenCalled_ItInvokesThePublishUnsubscribe(bool invokeAsync)
+    public Task Dispose_WhenCalled_ItInvokesThePublishUnsubscribe(bool invokeAsync)
     {
-        await TestPublisherCall(invokeAsync, 1);
+        return TestPublisherCall(invokeAsync, 1);
     }
 
     private static async Task TestPublisherCall(bool invokeAsync, int numberOfDisposeInvokes)

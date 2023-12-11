@@ -46,13 +46,13 @@ public class PublisherTests
         var mockSubscriber = GetMockSubscriber();
         var publisherLock = await publisher.Subscribe(mockSubscriber.Object);
 
-        GetDefaultPublishData(out var testData_1, out var testData_2, out var testData_3);
+        GetDefaultPublishData(out var testData1, out var testData2, out var testData3);
 
-        await PublishDefaultData(publisher, testData_1, testData_2, testData_3);
+        await PublishDefaultData(publisher, testData1, testData2, testData3);
 
         publisherLock.Should().NotBeNull();
 
-        AssertDefaultPublishEvents(publisher, testData_1, testData_2, testData_3, 1, mockSubscriber);
+        AssertDefaultPublishEvents(publisher, testData1, testData2, testData3, 1, mockSubscriber);
     }
 
     [TestCase(PublisherThreadMode.Multi)]
@@ -68,11 +68,11 @@ public class PublisherTests
             await publisher.Subscribe(mockSubscriber.Object);
         }
 
-        GetDefaultPublishData(out var testData_1, out var testData_2, out var testData_3);
+        GetDefaultPublishData(out var testData1, out var testData2, out var testData3);
 
-        await PublishDefaultData(publisher, testData_1, testData_2, testData_3);
+        await PublishDefaultData(publisher, testData1, testData2, testData3);
 
-        AssertDefaultPublishEvents(publisher, testData_1, testData_2, testData_3, 1, mockSubscriber);
+        AssertDefaultPublishEvents(publisher, testData1, testData2, testData3, 1, mockSubscriber);
     }
 
     [TestCase(PublisherThreadMode.Multi)]
@@ -84,13 +84,13 @@ public class PublisherTests
         var mockSubscribers = GetMockSubscribers(NumberOfTestSubscribers).ToArray();
         var publisherLocks = (await publisher.Subscribe(mockSubscribers.Select(m => m.Object).ToArray())).ToList();
 
-        GetDefaultPublishData(out var testData_1, out var testData_2, out var testData_3);
+        GetDefaultPublishData(out var testData1, out var testData2, out var testData3);
 
-        await PublishDefaultData(publisher, testData_1, testData_2, testData_3);
+        await PublishDefaultData(publisher, testData1, testData2, testData3);
 
         publisherLocks.Should().NotBeNull();
         publisherLocks.Should().HaveCount(mockSubscribers.Length);
-        AssertDefaultPublishEvents(publisher, testData_1, testData_2, testData_3, 1, mockSubscribers);
+        AssertDefaultPublishEvents(publisher, testData1, testData2, testData3, 1, mockSubscribers);
     }
 
     [TestCase(PublisherThreadMode.Multi)]
@@ -110,9 +110,11 @@ public class PublisherTests
         }
 
         locks.Should().HaveCount(NumberOfTestRepetitionMethodCalls);
-        Assert.IsTrue(locks
+        locks
             .All(outerLock => locks
-                .Count(innerLock => outerLock != innerLock) == NumberOfTestRepetitionMethodCalls - 1));
+                .Count(innerLock => outerLock != innerLock) == NumberOfTestRepetitionMethodCalls - 1)
+            .Should()
+            .BeTrue();
     }
 
     [TestCase(PublisherThreadMode.Multi)]
@@ -128,11 +130,11 @@ public class PublisherTests
         await publisher.Subscribe(mockToRemoveSubscriber.Object);
         await publisher.Unsubscribe(mockToRemoveSubscriber.Object);
 
-        GetDefaultPublishData(out var testData_1, out var testData_2, out var testData_3);
+        GetDefaultPublishData(out var testData1, out var testData2, out var testData3);
 
-        await PublishDefaultData(publisher, testData_1, testData_2, testData_3);
+        await PublishDefaultData(publisher, testData1, testData2, testData3);
 
-        AssertDefaultPublishEvents(publisher, testData_1, testData_2, testData_3, 1, mockToReceiveSubscriber);
+        AssertDefaultPublishEvents(publisher, testData1, testData2, testData3, 1, mockToReceiveSubscriber);
         AssertNoCalls(mockToRemoveSubscriber);
     }
 
@@ -151,11 +153,11 @@ public class PublisherTests
         await publisher.Subscribe(toReceiveSubscribers);
         await publisher.Unsubscribe(toRemoveSubscribers);
 
-        GetDefaultPublishData(out var testData_1, out var testData_2, out var testData_3);
+        GetDefaultPublishData(out var testData1, out var testData2, out var testData3);
 
-        await PublishDefaultData(publisher, testData_1, testData_2, testData_3);
+        await PublishDefaultData(publisher, testData1, testData2, testData3);
 
-        AssertDefaultPublishEvents(publisher, testData_1, testData_2, testData_3, 1, mockToReceiveSubscribers);
+        AssertDefaultPublishEvents(publisher, testData1, testData2, testData3, 1, mockToReceiveSubscribers);
         AssertNoCalls(mockToRemoveSubscribers);
     }
 
@@ -176,11 +178,11 @@ public class PublisherTests
             await publisher.Unsubscribe(mockToRemoveSubscriber.Object);
         }
 
-        GetDefaultPublishData(out var testData_1, out var testData_2, out var testData_3);
+        GetDefaultPublishData(out var testData1, out var testData2, out var testData3);
 
-        await PublishDefaultData(publisher, testData_1, testData_2, testData_3);
+        await PublishDefaultData(publisher, testData1, testData2, testData3);
 
-        AssertDefaultPublishEvents(publisher, testData_1, testData_2, testData_3, 1, mockToReceiveSubscriber);
+        AssertDefaultPublishEvents(publisher, testData1, testData2, testData3, 1, mockToReceiveSubscriber);
         AssertNoCalls(mockToRemoveSubscriber);
     }
 
@@ -189,9 +191,9 @@ public class PublisherTests
     public void SubscribeAndPublish_WhenNoSubscribersExist_StillContinues(PublisherThreadMode threadMode)
     {
         var publisher = GetPublisher(threadMode);
-        var testData_1 = MessagingUtilities.GetRandomTestPublishData();
+        var testData1 = MessagingUtilities.GetRandomTestPublishData();
 
-        Assert.DoesNotThrowAsync(() => publisher.Publish(testData_1));
+        Assert.DoesNotThrowAsync(() => publisher.Publish(testData1));
     }
 
     [TestCase(PublisherThreadMode.Multi, false)]
@@ -290,16 +292,16 @@ public class PublisherTests
         var mockSubscriber = GetMockSubscriber();
         var publisherLock = await publisher.Subscribe(mockSubscriber.Object);
 
-        GetDefaultPublishData(out var testData_1, out var testData_2, out var testData_3);
+        GetDefaultPublishData(out var testData1, out var testData2, out var testData3);
 
-        await PublishDefaultData(publisher, testData_1, testData_2, testData_3);
+        await PublishDefaultData(publisher, testData1, testData2, testData3);
 
-        AssertDefaultPublishEvents(publisher, testData_1, testData_2, testData_3, 1, mockSubscriber);
+        AssertDefaultPublishEvents(publisher, testData1, testData2, testData3, 1, mockSubscriber);
 
         await publisherLock.DisposeAsync();
-        await PublishDefaultData(publisher, testData_1, testData_2, testData_3);
+        await PublishDefaultData(publisher, testData1, testData2, testData3);
 
-        AssertDefaultPublishEvents(publisher, testData_1, testData_2, testData_3, 1, mockSubscriber);
+        AssertDefaultPublishEvents(publisher, testData1, testData2, testData3, 1, mockSubscriber);
     }
 
     [TestCase(PublisherThreadMode.Multi)]
@@ -313,9 +315,9 @@ public class PublisherTests
 
         await publisherLock.DisposeAsync();
 
-        GetDefaultPublishData(out var testData_1, out var testData_2, out var testData_3);
+        GetDefaultPublishData(out var testData1, out var testData2, out var testData3);
 
-        await PublishDefaultData(publisher, testData_1, testData_2, testData_3);
+        await PublishDefaultData(publisher, testData1, testData2, testData3);
 
         AssertNoCalls(mockSubscriber);
     }
@@ -329,20 +331,20 @@ public class PublisherTests
         var subscribers = mockSubscribers.Select(m => m.Object).ToArray();
         var publisherLocks = await publisher.Subscribe(subscribers);
 
-        GetDefaultPublishData(out var testData_1, out var testData_2, out var testData_3);
+        GetDefaultPublishData(out var testData1, out var testData2, out var testData3);
 
-        await PublishDefaultData(publisher, testData_1, testData_2, testData_3);
+        await PublishDefaultData(publisher, testData1, testData2, testData3);
 
-        AssertDefaultPublishEvents(publisher, testData_1, testData_2, testData_3, 1, mockSubscribers);
+        AssertDefaultPublishEvents(publisher, testData1, testData2, testData3, 1, mockSubscribers);
 
         foreach (var publisherLock in publisherLocks)
         {
             await publisherLock.DisposeAsync();
         }
 
-        await PublishDefaultData(publisher, testData_1, testData_2, testData_3);
+        await PublishDefaultData(publisher, testData1, testData2, testData3);
 
-        AssertDefaultPublishEvents(publisher, testData_1, testData_2, testData_3, 1, mockSubscribers);
+        AssertDefaultPublishEvents(publisher, testData1, testData2, testData3, 1, mockSubscribers);
     }
 
     [TestCase(PublisherThreadMode.Multi)]
@@ -359,9 +361,9 @@ public class PublisherTests
             await publisherLock.DisposeAsync();
         }
 
-        GetDefaultPublishData(out var testData_1, out var testData_2, out var testData_3);
+        GetDefaultPublishData(out var testData1, out var testData2, out var testData3);
 
-        await PublishDefaultData(publisher, testData_1, testData_2, testData_3);
+        await PublishDefaultData(publisher, testData1, testData2, testData3);
 
         AssertNoCalls(mockSubscribers);
     }
@@ -379,23 +381,23 @@ public class PublisherTests
 
         var toRemovePublisherLocks = await publisher.Subscribe(toRemoveSubscribers);
 
-        GetDefaultPublishData(out var testData_1, out var testData_2, out var testData_3);
+        GetDefaultPublishData(out var testData1, out var testData2, out var testData3);
 
         await publisher.Subscribe(toReceiveSubscribers);
-        await PublishDefaultData(publisher, testData_1, testData_2, testData_3);
+        await PublishDefaultData(publisher, testData1, testData2, testData3);
 
-        AssertDefaultPublishEvents(publisher, testData_1, testData_2, testData_3, 1, mockToReceiveSubscribers);
-        AssertDefaultPublishEvents(publisher, testData_1, testData_2, testData_3, 1, mockToRemoveSubscribers);
+        AssertDefaultPublishEvents(publisher, testData1, testData2, testData3, 1, mockToReceiveSubscribers);
+        AssertDefaultPublishEvents(publisher, testData1, testData2, testData3, 1, mockToRemoveSubscribers);
 
         foreach (var publisherLock in toRemovePublisherLocks)
         {
             await publisherLock.DisposeAsync();
         }
 
-        await PublishDefaultData(publisher, testData_1, testData_2, testData_3);
+        await PublishDefaultData(publisher, testData1, testData2, testData3);
 
-        AssertDefaultPublishEvents(publisher, testData_1, testData_2, testData_3, 2, mockToReceiveSubscribers);
-        AssertDefaultPublishEvents(publisher, testData_1, testData_2, testData_3, 1, mockToRemoveSubscribers);
+        AssertDefaultPublishEvents(publisher, testData1, testData2, testData3, 2, mockToReceiveSubscribers);
+        AssertDefaultPublishEvents(publisher, testData1, testData2, testData3, 1, mockToRemoveSubscribers);
     }
 
     [TestCase(PublisherThreadMode.Multi)]
@@ -417,11 +419,11 @@ public class PublisherTests
             await publisherLock.DisposeAsync();
         }
 
-        GetDefaultPublishData(out var testData_1, out var testData_2, out var testData_3);
+        GetDefaultPublishData(out var testData1, out var testData2, out var testData3);
 
-        await PublishDefaultData(publisher, testData_1, testData_2, testData_3);
+        await PublishDefaultData(publisher, testData1, testData2, testData3);
 
-        AssertDefaultPublishEvents(publisher, testData_1, testData_2, testData_3, 1, mockToReceiveSubscribers);
+        AssertDefaultPublishEvents(publisher, testData1, testData2, testData3, 1, mockToReceiveSubscribers);
         AssertNoCalls(mockToRemoveSubscribers);
     }
 
@@ -434,20 +436,20 @@ public class PublisherTests
         var mockSubscriber = GetMockSubscriber();
         var publisherLock = await publisher.Subscribe(mockSubscriber.Object);
 
-        GetDefaultPublishData(out var testData_1, out var testData_2, out var testData_3);
+        GetDefaultPublishData(out var testData1, out var testData2, out var testData3);
 
-        await PublishDefaultData(publisher, testData_1, testData_2, testData_3);
+        await PublishDefaultData(publisher, testData1, testData2, testData3);
 
-        AssertDefaultPublishEvents(publisher, testData_1, testData_2, testData_3, 1, mockSubscriber);
+        AssertDefaultPublishEvents(publisher, testData1, testData2, testData3, 1, mockSubscriber);
 
         for (var i = 0; i < NumberOfTestRepetitionMethodCalls; i++)
         {
             await publisherLock.DisposeAsync();
         }
 
-        await PublishDefaultData(publisher, testData_1, testData_2, testData_3);
+        await PublishDefaultData(publisher, testData1, testData2, testData3);
 
-        AssertDefaultPublishEvents(publisher, testData_1, testData_2, testData_3, 1, mockSubscriber);
+        AssertDefaultPublishEvents(publisher, testData1, testData2, testData3, 1, mockSubscriber);
     }
 
     [TestCase(PublisherThreadMode.Multi, false)]
@@ -461,13 +463,13 @@ public class PublisherTests
         var publisher = GetPublisher(threadMode);
         var threadWorkers = GetSubscriberThreadWorkers(publisher, false, disposeUsingLock).ToList();
 
-        GetDefaultPublishData(out var testData_1, out var testData_2, out var testData_3);
+        GetDefaultPublishData(out var testData1, out var testData2, out var testData3);
 
         threadWorkers
             .Select(t => t.ToFunctionTask(t.Run))
             .RunParallel();
 
-        await PublishDefaultData(publisher, testData_1, testData_2, testData_3);
+        await PublishDefaultData(publisher, testData1, testData2, testData3);
 
         threadWorkers.All(t => t.ReceivedNoPublishedEvents).Should().BeTrue();
     }
@@ -503,11 +505,10 @@ public class PublisherTests
         var mockSubscribers = GetThreadSensitiveMockSubscribers(concurrencyLock, orderOfReceivedSubscribers, threadIdCounts).ToList();
         var subscribers = mockSubscribers.Select(m => m.Object).ToArray();
 
-
-        GetDefaultPublishData(out var testData_1, out var testData_2, out var testData_3);
+        GetDefaultPublishData(out var testData1, out var testData2, out var testData3);
 
         await publisher.Subscribe(subscribers);
-        await PublishDefaultData(publisher, testData_1, testData_2, testData_3);
+        await PublishDefaultData(publisher, testData1, testData2, testData3);
 
         // This test code ensures that the subscribers were called in sequence as expected on a single thread.
         for (var i = 0; i < NumberOfDefaultPublishEventsSent; i++)
@@ -518,7 +519,7 @@ public class PublisherTests
             {
                 var receivedSubscriber = orderOfReceivedSubscribers[orderIndexOffset++];
 
-                Assert.AreEqual(receivedSubscriber, subscriber);
+                subscriber.Should().Be(receivedSubscriber);
             }
         }
 
@@ -536,10 +537,10 @@ public class PublisherTests
         var mockSubscribers = GetThreadSensitiveMockSubscribers(concurrencyLock, orderOfReceivedSubscribers, threadIdCounts).ToList();
         var subscribers = mockSubscribers.Select(m => m.Object).ToArray();
 
-        GetDefaultPublishData(out var testData_1, out var testData_2, out var testData_3);
+        GetDefaultPublishData(out var testData1, out var testData2, out var testData3);
 
         await publisher.Subscribe(subscribers);
-        await PublishDefaultData(publisher, testData_1, testData_2, testData_3);
+        await PublishDefaultData(publisher, testData1, testData2, testData3);
 
         var threadCounts = threadIdCounts.Values.Sum();
 
@@ -574,7 +575,10 @@ public class PublisherTests
         var enumeratedWorkers = workers.ToList();
         var totalPublishes = enumeratedWorkers.Sum(w => w.NumberOfPublishes);
 
-        Assert.IsTrue(enumeratedWorkers.All(t => t.ReceivedPublishedEvents));
+        enumeratedWorkers
+           .All(t => t.ReceivedPublishedEvents)
+           .Should()
+           .BeTrue();
 
         controlCheckSubscriber
             .Verify(c =>
@@ -597,8 +601,8 @@ public class PublisherTests
                 PublishEvent<TestPublishData> publishEvent,
                 TestPublishData publishedData) =>
             publishEvent.Data != null
-            && publishEvent.Data.Value1 == publishedData.Value1
-            && publishEvent.Data.Value2 == publishedData.Value2;
+         && publishEvent.Data.Value1 == publishedData.Value1
+         && publishEvent.Data.Value2 == publishedData.Value2;
 
         receivedEvents.Should().HaveCountGreaterThanOrEqualTo(worker.NumberOfPublishes);
 
@@ -615,17 +619,17 @@ public class PublisherTests
 
     private static void AssertDefaultPublishEvents(
         IPublisher<TestPublishData> publisher,
-        TestPublishData testData_1,
-        TestPublishData testData_2,
-        TestPublishData testData_3,
+        TestPublishData testData1,
+        TestPublishData testData2,
+        TestPublishData testData3,
         int factor,
         params Mock<ISubscriber<TestPublishData>>[] mockSubscribers)
     {
         foreach (var mockSubscriber in mockSubscribers)
         {
-            AssertSubscriberPublishedCall(mockSubscriber, publisher, testData_1, 1 * factor);
-            AssertSubscriberPublishedCall(mockSubscriber, publisher, testData_2, 2 * factor);
-            AssertSubscriberPublishedCall(mockSubscriber, publisher, testData_3, 3 * factor);
+            AssertSubscriberPublishedCall(mockSubscriber, publisher, testData1, 1 * factor);
+            AssertSubscriberPublishedCall(mockSubscriber, publisher, testData2, 2 * factor);
+            AssertSubscriberPublishedCall(mockSubscriber, publisher, testData3, 3 * factor);
         }
     }
 
@@ -668,11 +672,11 @@ public class PublisherTests
         var now = DateTime.UtcNow;
         var validateFunction = (PublishEvent<TestPublishData> publishEvent) =>
             Equals(testData, publishEvent.Data)
-            && publishEvent.Type == eventType
-            && publishEvent.Id.DoesNotEqual(Guid.Empty)
-            && publishEvent.Source.Equals(publisher)
-            && publishEvent.CreateTimestamp <= now
-            && publishEvent.DispatchTimestamp >= publishEvent.CreateTimestamp;
+         && publishEvent.Type == eventType
+         && publishEvent.Id.DoesNotEqual(Guid.Empty)
+         && publishEvent.Source.Equals(publisher)
+         && publishEvent.CreateTimestamp <= now
+         && publishEvent.DispatchTimestamp >= publishEvent.CreateTimestamp;
 
         mockSubscriber.Verify(m => m.Receive(
                 It.Is<PublishEvent<TestPublishData>>(
@@ -745,27 +749,27 @@ public class PublisherTests
     }
 
     private static void GetDefaultPublishData(
-        out TestPublishData testData_1,
-        out TestPublishData testData_2,
-        out TestPublishData testData_3)
+        out TestPublishData testData1,
+        out TestPublishData testData2,
+        out TestPublishData testData3)
     {
-        testData_1 = MessagingUtilities.GetRandomTestPublishData();
-        testData_2 = MessagingUtilities.GetRandomTestPublishData();
-        testData_3 = MessagingUtilities.GetRandomTestPublishData();
+        testData1 = MessagingUtilities.GetRandomTestPublishData();
+        testData2 = MessagingUtilities.GetRandomTestPublishData();
+        testData3 = MessagingUtilities.GetRandomTestPublishData();
     }
 
     private static async Task PublishDefaultData(
         IPublisher<TestPublishData> publisher,
-        TestPublishData testData_1,
-        TestPublishData testData_2,
-        TestPublishData testData_3)
+        TestPublishData testData1,
+        TestPublishData testData2,
+        TestPublishData testData3)
     {
-        await publisher.Publish(testData_1);
-        await publisher.Publish(testData_2);
-        await publisher.Publish(testData_2);
-        await publisher.Publish(testData_3);
-        await publisher.Publish(testData_3);
-        await publisher.Publish(testData_3);
+        await publisher.Publish(testData1);
+        await publisher.Publish(testData2);
+        await publisher.Publish(testData2);
+        await publisher.Publish(testData3);
+        await publisher.Publish(testData3);
+        await publisher.Publish(testData3);
     }
 
     private static Mock<ISubscriber<TestPublishData>> GetMockSubscriber(int id = 1)

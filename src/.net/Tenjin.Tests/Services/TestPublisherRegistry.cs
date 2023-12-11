@@ -9,8 +9,8 @@ public class TestPublisherRegistry<TKey> : PublisherRegistry<TKey, TestPublishDa
     public TestPublisherRegistry(TestPublisherRegistryData<TKey> data)
     {
         var publishers = data.PublisherIds
-            .Select(id => new TestDiscoverablePublisher<TKey>(id))
-            .ToArray();
+                             .Select(static id => new TestDiscoverablePublisher<TKey>(id))
+                             .ToArray();
 
         Register(publishers);
     }

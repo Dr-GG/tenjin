@@ -23,8 +23,8 @@ public class SubscriberThreadWorker
     private int _publishOffset;
     private IPublisherLock? _publisherLock;
     private readonly object _root = new();
-    private readonly List<PublishEvent<TestPublishData>> _publishedEventsReceived = new();
-    private readonly List<TestPublishData> _publishedDataSent = new();
+    private readonly List<PublishEvent<TestPublishData>> _publishedEventsReceived = [];
+    private readonly List<TestPublishData> _publishedDataSent = [];
     private readonly IPublisher<TestPublishData> _publisher;
     private readonly SubscriberHook<TestPublishData> _hook;
 
