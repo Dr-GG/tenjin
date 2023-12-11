@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tenjin.Extensions;
+
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
 
 namespace Tenjin.Tests.ExtensionsTests;
@@ -183,7 +184,7 @@ public class EnumerableExtensionsTests
     {
         var output = new List<int>();
 
-        ((IEnumerable<int>?)null).ForEach(i => output.Add(i));
+        ((IEnumerable<int>?)null).ForEach(output.Add);
 
         output.Should().BeEmpty();
     }
@@ -223,7 +224,7 @@ public class EnumerableExtensionsTests
         var output = new List<int>();
         IEnumerable<int> input = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
-        input.ForEach(i => output.Add(i));
+        input.ForEach(output.Add);
 
         output.Should().BeEquivalentTo(input);
     }

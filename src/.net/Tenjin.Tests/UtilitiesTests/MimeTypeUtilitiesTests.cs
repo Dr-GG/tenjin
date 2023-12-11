@@ -4534,7 +4534,6 @@ public class MimeTypeUtilitiesTests
     [TestCase("VIDEO/X-SGI-MOVIE", ".movie")]
     [TestCase("x-conference/x-cooltalk", ".ice")]
     [TestCase("X-CONFERENCE/X-COOLTALK", ".ice")]
-
     public void GetFileExtension_WhenProvidingValues_ExpectsTheCorrectOutput(string input, string? output)
     {
         var result = MimeTypeUtilities.GetFileExtension(input);

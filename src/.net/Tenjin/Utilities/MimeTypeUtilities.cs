@@ -7,8 +7,7 @@ using Tenjin.Extensions;
 namespace Tenjin.Utilities;
 
 /// <summary>
-/// A collection of Mimetype utilities.
-/// </summary>
+/// A collection of Mimetype utilities. </summary>
 public static class MimeTypeUtilities
 {
     private const char FileExtensionDelimiter = '.';
@@ -904,6 +903,7 @@ public static class MimeTypeUtilities
 
     private static IDictionary<string, IEnumerable<string>> PopulateMimeTypeToFileExtensionsMap()
     {
+#pragma warning disable CA1861 // Avoid constant arrays as arguments
         return new Dictionary<string, IEnumerable<string>>
         {
             { "application/andrew-inset", new[] { ".ez" } },
@@ -1530,6 +1530,7 @@ public static class MimeTypeUtilities
             { "video/x-sgi-movie", new[] { ".movie" } },
             { "x-conference/x-cooltalk", new[] { ".ice" } }
         };
+#pragma warning restore CA1861 // Avoid constant arrays as arguments
     }
 
     #endregion

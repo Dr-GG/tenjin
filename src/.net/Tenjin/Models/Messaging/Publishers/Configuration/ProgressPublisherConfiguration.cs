@@ -10,13 +10,11 @@ public record ProgressPublisherConfiguration
     /// <summary>
     /// Creates a new instance.
     /// </summary>
-    public ProgressPublisherConfiguration()
-    { }
+    public ProgressPublisherConfiguration() { }
 
     /// <summary>
     /// Creates a new instance with a fixed interval.
     /// </summary>
-    /// <param name="fixedInterval"></param>
     public ProgressPublisherConfiguration(ulong fixedInterval)
     {
         Interval = ProgressNotificationInterval.FixedInterval;

@@ -8,20 +8,8 @@ namespace Tenjin.Implementations.Messaging.Publishers;
 /// <summary>
 /// The default implementation of the IPublisherLock interface that provides automated un-subscriptions.
 /// </summary>
-public class PublisherLock<TData> : IPublisherLock
+public class PublisherLock<TData>(IPublisher<TData> publisher, ISubscriber<TData> subscriber) : IPublisherLock
 {
-    private readonly IPublisher<TData> _publisher;
-    private readonly ISubscriber<TData> _subscriber;
-
-    /// <summary>
-    /// Creates a new instance.
-    /// </summary>
-    public PublisherLock(IPublisher<TData> publisher, ISubscriber<TData> subscriber)
-    {
-        _publisher = publisher;
-        _subscriber = subscriber;
-    }
-
     /// <inheritdoc />
     public void Dispose()
     {
@@ -42,6 +30,6 @@ public class PublisherLock<TData> : IPublisherLock
 
     protected virtual void Dispose(bool disposing)
     {
-        _publisher.Unsubscribe(_subscriber).GetAwaiter().GetResult();
+        publisher.Unsubscribe(subscriber).GetAwaiter().GetResult();
     }
 }

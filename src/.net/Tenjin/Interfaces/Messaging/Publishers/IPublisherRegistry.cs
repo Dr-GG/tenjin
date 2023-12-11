@@ -1,4 +1,6 @@
-﻿namespace Tenjin.Interfaces.Messaging.Publishers;
+﻿// ReSharper disable UnusedMemberInSuper.Global
+
+namespace Tenjin.Interfaces.Messaging.Publishers;
 
 /// <summary>
 /// An interface that provides a registry of IPublisher instances.

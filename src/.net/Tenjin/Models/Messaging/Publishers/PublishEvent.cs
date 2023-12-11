@@ -6,8 +6,7 @@ namespace Tenjin.Models.Messaging.Publishers;
 
 public record PublishEvent<TData>
 {
-    public PublishEvent()
-    { }
+    public PublishEvent() { }
 
     public PublishEvent(IPublisher<TData> source, TData data)
     {
@@ -29,10 +28,16 @@ public record PublishEvent<TData>
     }
 
     public PublishEventType Type { get; init; } = PublishEventType.Publish;
+
     public Guid Id { get; init; } = Guid.NewGuid();
+
     public DateTime CreateTimestamp { get; init; } = DateTime.UtcNow;
+
     public DateTime DispatchTimestamp { get; set; }
+
     public IPublisher<TData> Source { get; init; } = null!;
+
     public Exception? Error { get; init; }
+
     public TData? Data { get; init; }
 }

@@ -10,7 +10,7 @@ public record DiagnosticsStopwatchLap
     /// <summary>
     /// The zero-based index order of the lap.
     /// </summary>
-    public uint Order { get; init; } = 0;
+    public uint Order { get; init; }
 
     /// <summary>
     /// The name of the lap, if any.

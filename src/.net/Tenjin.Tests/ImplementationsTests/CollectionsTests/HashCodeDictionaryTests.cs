@@ -55,10 +55,7 @@ public class HashCodeDictionaryTests
         for (var i = NonExistingModelsOffset; i < NumberOfNonExistingModels; i++)
         {
             var compareModel = GetHashCodeModel(i);
-            var error = Assert.Throws<KeyNotFoundException>(() =>
-            {
-                var _ = dictionary[compareModel.GetHashCode()];
-            })!;
+            var error = Assert.Throws<KeyNotFoundException>(() => { _ = dictionary[compareModel.GetHashCode()]; })!;
 
             error.Should().NotBeNull();
             error.Message.Should().Be($"The given key '{compareModel.GetHashCode()}' was not present in the dictionary.");
@@ -88,10 +85,7 @@ public class HashCodeDictionaryTests
         for (var i = NonExistingModelsOffset; i < NumberOfNonExistingModels; i++)
         {
             var compareModel = GetHashCodeModel(i);
-            var error = Assert.Throws<KeyNotFoundException>(() =>
-            {
-                var _ = dictionary[compareModel.GetHashCode()];
-            })!;
+            var error = Assert.Throws<KeyNotFoundException>(() => _ = dictionary[compareModel.GetHashCode()])!;
 
             error.Should().NotBeNull();
             error.Message.Should().Be($"The given key '{compareModel.GetHashCode()}' was not present in the dictionary.");
@@ -104,7 +98,7 @@ public class HashCodeDictionaryTests
         var dictionary = GetDefaultDictionary();
         var keys = dictionary.Keys.ToList();
 
-        Assert.AreEqual(NumberOfModels, keys.Count);
+        keys.Should().HaveCount(NumberOfModels);
 
         for (var i = 0; i < keys.Count; i++)
         {
@@ -121,7 +115,7 @@ public class HashCodeDictionaryTests
         var dictionary = GetDefaultDictionary();
         var values = dictionary.Values.ToList();
 
-        Assert.AreEqual(NumberOfModels, values.Count);
+        values.Should().HaveCount(NumberOfModels);
 
         for (var i = 0; i < values.Count; i++)
         {
@@ -154,7 +148,7 @@ public class HashCodeDictionaryTests
             enumeratorCounter++;
         }
 
-        Assert.AreEqual(0, enumeratorCounter);
+        enumeratorCounter.Should().Be(0);
     }
 
     [TestCase]

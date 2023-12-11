@@ -43,7 +43,9 @@ public class StringExtensionsTests
     [TestCase("tenjin-tests", "TENJIN", false)]
     [TestCase("tEnJiN", "TeNjIn-tests", false)]
     public void EqualsOrdinalIgnoreCase_WhenGivenInput_MatchesExpectedOutput(
-        string? left, string? right, bool expectedOutput)
+        string? left,
+        string? right,
+        bool expectedOutput)
     {
         expectedOutput.Should().Be(left.EqualsOrdinalIgnoreCase(right));
         expectedOutput.Should().Be(right.EqualsOrdinalIgnoreCase(left));

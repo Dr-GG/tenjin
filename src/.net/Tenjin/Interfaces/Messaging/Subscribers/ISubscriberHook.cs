@@ -1,4 +1,6 @@
-﻿using System;
+﻿// ReSharper disable UnusedMemberInSuper.Global
+
+using System;
 using System.Threading.Tasks;
 using Tenjin.Interfaces.Messaging.Publishers;
 

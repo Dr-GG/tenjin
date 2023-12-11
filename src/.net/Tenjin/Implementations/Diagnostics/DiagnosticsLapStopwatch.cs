@@ -12,20 +12,10 @@ namespace Tenjin.Implementations.Diagnostics;
 /// <summary>
 /// The default implementation of the IDiagnosticsLapStopwatch instance.
 /// </summary>
-public class DiagnosticsLapStopwatch : IDiagnosticsLapStopwatch
+public class DiagnosticsLapStopwatch(ISystemClockProvider systemClockProvider) : IDiagnosticsLapStopwatch
 {
     private bool _running;
-
-    private readonly ISystemClockProvider _systemClockProvider;
     private readonly IList<DiagnosticsStopwatchLap> _laps = new List<DiagnosticsStopwatchLap>();
-
-    /// <summary>
-    /// Creates a new instance.
-    /// </summary>
-    public DiagnosticsLapStopwatch(ISystemClockProvider systemClockProvider)
-    {
-        _systemClockProvider = systemClockProvider;
-    }
 
     /// <inheritdoc />
     public Task StartLap(string? name = null)
@@ -40,7 +30,7 @@ public class DiagnosticsLapStopwatch : IDiagnosticsLapStopwatch
         {
             Name = name,
             Order = (uint)_laps.Count + 1u,
-            StartTimestamp = _systemClockProvider.Now()
+            StartTimestamp = systemClockProvider.Now()
         };
 
         _running = true;
@@ -60,7 +50,7 @@ public class DiagnosticsLapStopwatch : IDiagnosticsLapStopwatch
 
         var stoppedLap = _laps[_laps.LastIndex()] with
         {
-            EndTimestamp = _systemClockProvider.Now()
+            EndTimestamp = systemClockProvider.Now()
         };
 
         _laps[_laps.LastIndex()] = stoppedLap;
@@ -85,12 +75,13 @@ public class DiagnosticsLapStopwatch : IDiagnosticsLapStopwatch
         }
 
         var orderedTimes = _laps
-            .Select(l => new
-            {
-                Lap = l,
-                Timespan = l.TimeSpan()
-            })
-            .OrderBy(l => l.Timespan.TotalMilliseconds).ToArray();
+           .Select(l => new
+           {
+               Lap = l,
+               Timespan = l.TimeSpan()
+           })
+           .OrderBy(l => l.Timespan.TotalMilliseconds)
+           .ToArray();
         var firstLap = _laps[0];
         var lastLap = _laps[_laps.LastIndex()];
         var fastest = orderedTimes[0].Lap;

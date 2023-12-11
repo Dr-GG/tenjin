@@ -3,8 +3,9 @@
   <!-- The package icon for Tenjin was made by https://www.flaticon.com/authors/darius-dan from https://www.flaticon.com -->
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <LangVersion>12.0</LangVersion>
     <PackageId>Tenjin</PackageId>
     <Authors>Gerard Gouws</Authors>
     <Company>Tenjin Libraries</Company>
@@ -28,6 +29,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="tenjin.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
