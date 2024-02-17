@@ -572,7 +572,7 @@ public class PublisherTests
         Mock<ISubscriber<TestPublishData>> controlCheckSubscriber,
         IEnumerable<SubscriberThreadWorker> workers)
     {
-        var enumeratedWorkers = workers.ToList();
+        var enumeratedWorkers = workers.Enumerate();
         var totalPublishes = enumeratedWorkers.Sum(w => w.NumberOfPublishes);
 
         enumeratedWorkers

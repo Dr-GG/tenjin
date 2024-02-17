@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -11,6 +12,71 @@ namespace Tenjin.Extensions;
 /// </summary>
 public static class EnumerableExtensions
 {
+    /// <summary>
+    /// Returns an enumerated version of an IEnumerable as an ICollection.
+    /// </summary>
+    public static ICollection Enumerate(this IEnumerable collection)
+    {
+        if (collection is ICollection list)
+        {
+            return list;
+        }
+
+        return collection.Cast<object>().ToList();
+    }
+
+    /// <summary>
+    /// Returns an enumerated version of an IEnumerable as an ICollection.
+    /// </summary>
+    public static ICollection<T> Enumerate<T>(this IEnumerable<T> collection)
+    {
+        if (collection is ICollection<T> list)
+        {
+            return list;
+        }
+
+        return collection.ToList();
+    }
+
+    /// <summary>
+    /// Returns an enumerated version of an IEnumerable as an IList.
+    /// </summary>
+    public static IList EnumerateToList(this IEnumerable collection)
+    {
+        if (collection is IList list)
+        {
+            return list;
+        }
+
+        return collection.Cast<object>().ToList();
+    }
+
+    /// <summary>
+    /// Returns an enumerated version of an IEnumerable as an IList.
+    /// </summary>
+    public static IList<T> EnumerateToList<T>(this IEnumerable<T> collection)
+    {
+        if (collection is List<T> list)
+        {
+            return list;
+        }
+
+        return collection.ToList();
+    }
+
+    /// <summary>
+    /// Returns an enumerated version of an IEnumerable as an Array.
+    /// </summary>
+    public static T[] EnumerateToArray<T>(this IEnumerable<T> collection)
+    {
+        if (collection is T[] array)
+        {
+            return array;
+        }
+
+        return collection.ToArray();
+    }
+
     /// <summary>
     /// Determines if an IEnumerable is not empty.
     /// </summary>
@@ -59,7 +125,7 @@ public static class EnumerableExtensions
                 return new[] { collection };
         }
 
-        var list = collection.ToList();
+        var list = (List<T>)collection.EnumerateToList();
 
         if (list.Count == 0)
         {
@@ -129,12 +195,12 @@ public static class EnumerableExtensions
     /// </summary>
     public static void ForLoopWithContext<T>(this IEnumerable<T> collection, Action<ForLoopContext, T> action)
     {
-        var enumeratedList = collection.ToList();
+        var enumerated = collection.Enumerate();
         var index = 0;
-        var lastIndex = enumeratedList.LastIndex();
+        var lastIndex = enumerated.LastIndex();
         var context = new ForLoopContext();
 
-        foreach (var item in enumeratedList)
+        foreach (var item in enumerated)
         {
             context.IsFirst = index == 0;
             context.IsLast = index == lastIndex;

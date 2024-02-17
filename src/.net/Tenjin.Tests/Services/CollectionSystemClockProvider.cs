@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tenjin.Extensions;
 using Tenjin.Interfaces.Diagnostics;
 
 namespace Tenjin.Tests.Services;
@@ -11,9 +12,9 @@ public class CollectionSystemClockProvider(IEnumerable<DateTime> timestamps) : I
 
     public DateTime Now()
     {
-        var enumeratedTimestamps = timestamps.ToList();
+        var enumeratedTimestamps = timestamps.Enumerate();
         var index = _index++ % enumeratedTimestamps.Count;
 
-        return enumeratedTimestamps[index];
+        return enumeratedTimestamps.ElementAt(index);
     }
 }
