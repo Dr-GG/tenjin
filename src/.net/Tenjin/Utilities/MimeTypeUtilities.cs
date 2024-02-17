@@ -7,7 +7,8 @@ using Tenjin.Extensions;
 namespace Tenjin.Utilities;
 
 /// <summary>
-/// A collection of Mimetype utilities. </summary>
+/// A collection of Mimetype utilities.
+/// </summary>
 public static class MimeTypeUtilities
 {
     private const char FileExtensionDelimiter = '.';

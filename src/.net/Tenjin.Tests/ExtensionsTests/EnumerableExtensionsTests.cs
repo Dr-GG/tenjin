@@ -2,6 +2,7 @@
 using Moq;
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Tenjin.Extensions;
@@ -14,6 +15,116 @@ namespace Tenjin.Tests.ExtensionsTests;
 public class EnumerableExtensionsTests
 {
     private const int BatchListTestSize = 30;
+
+    [Test]
+    public void EnumerateGeneric_WhenProvidingAnIEnumerableThatIsAnICollection_ReturnsTheSameICollectionInstance()
+    {
+        var collection = new List<int> { 1, 2, 3 };
+        var result = collection.Enumerate();
+
+        result.Should().BeAssignableTo<ICollection<int>>();
+        result.Should().BeEquivalentTo(collection);
+        result.Should().BeSameAs(collection);
+    }
+
+    [Test]
+    public void EnumerateGeneric_WhenProvidingAnIEnumerableThatIsNotAnICollection_ReturnsANewICollectionInstance()
+    {
+        var collection = new List<int> { 1, 2, 3 }.AsQueryable();
+        var result = collection.Enumerate();
+
+        result.Should().BeAssignableTo<ICollection<int>>();
+        result.Should().BeEquivalentTo(collection);
+        result.Should().NotBeSameAs(collection);
+    }
+
+    [Test]
+    public void EnumerateToListGeneric_WhenProvidingAnIEnumerableThatIsAnIList_ReturnsTheSameIListInstance()
+    {
+        var list = new List<int> { 1, 2, 3 };
+        var result = list.EnumerateToList();
+
+        result.Should().BeAssignableTo<IList<int>>();
+        result.Should().BeEquivalentTo(list);
+        result.Should().BeSameAs(list);
+    }
+
+    [Test]
+    public void EnumerateToListGeneric_WhenProvidingAnIEnumerableThatIsNotAnIList_ReturnsANewIListInstance()
+    {
+        var list = new[] { 1, 2, 3 };
+        var result = list.EnumerateToList();
+
+        result.Should().BeAssignableTo<IList<int>>();
+        result.Should().BeEquivalentTo(list);
+        result.Should().NotBeSameAs(list);
+    }
+
+    [Test]
+    public void EnumerateToArray_WhenProvidingAnIEnumerableThatIsAnArray_ReturnsTheSameArrayInstance()
+    {
+        var array = new[] { 1, 2, 3 };
+        var result = array.EnumerateToArray();
+
+        result.Should().BeAssignableTo<int[]>();
+        result.Should().BeEquivalentTo(array);
+        result.Should().BeSameAs(array);
+    }
+
+    [Test]
+    public void EnumerateToArray_WhenProvidingAnIEnumerableThatIsNotAnArray_ReturnsANewArrayInstance()
+    {
+        var list = new List<int> { 1, 2, 3 };
+        var result = list.EnumerateToArray();
+
+        result.Should().BeAssignableTo<int[]>();
+        result.Should().BeEquivalentTo(list);
+        result.Should().NotBeSameAs(list);
+    }
+
+    [Test]
+    public void Enumerate_WhenProvidingAnIEnumerableThatIsAnICollection_ReturnsTheSameICollectionInstance()
+    {
+        IList collection = new[] { 1, 2, 3 };
+        var result = collection.Enumerate();
+
+        result.Should().BeAssignableTo<ICollection>();
+        result.Should().BeEquivalentTo(collection);
+        result.Should().BeSameAs(collection);
+    }
+
+    [Test]
+    public void Enumerate_WhenProvidingAnIEnumerableThatIsNotAnICollection_ReturnsANewICollectionInstance()
+    {
+        IQueryable collection = new List<int> { 1, 2, 3 }.AsQueryable();
+        var result = collection.Enumerate();
+
+        result.Should().BeAssignableTo<ICollection>();
+        result.Should().BeEquivalentTo(collection);
+        result.Should().NotBeSameAs(collection);
+    }
+
+    [Test]
+    public void EnumerateToList_WhenProvidingAnIEnumerableThatIsAnIList_ReturnsTheSameIListInstance()
+    {
+        IList list = new List<int> { 1, 2, 3 };
+        var result = list.EnumerateToList();
+
+        result.Should().BeAssignableTo<IList>();
+        result.Should().BeEquivalentTo(list);
+        result.Should().BeSameAs(list);
+    }
+
+    [Test]
+    public void EnumerateToList_WhenProvidingAnIEnumerableThatIsNotAnIList_ReturnsANewIListInstance()
+    {
+        IQueryable query = new List<int> { 1, 2, 3 }.AsQueryable();
+        var result = query.EnumerateToList();
+
+        result.Should().BeAssignableTo<IList>();
+        result.Should().BeEquivalentTo(query);
+        result.Should().NotBeSameAs(query);
+    }
 
     [Test]
     public void IsNotEmpty_WhenCollectionIsNull_ReturnsFalse()
