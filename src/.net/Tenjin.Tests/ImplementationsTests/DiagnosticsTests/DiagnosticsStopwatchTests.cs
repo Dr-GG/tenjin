@@ -64,7 +64,7 @@ public class DiagnosticsStopwatchTests
     {
         var stopwatch = GetStopwatch();
 
-        var error = Assert.ThrowsAsync<DiagnosticsStopwatchLapException>(() => stopwatch.StopLap())!;
+        var error = Assert.ThrowsAsync<DiagnosticsStopwatchLapException>(stopwatch.StopLap)!;
 
         error.Should().NotBeNull();
         error.Message.Should().Be("Stopwatch is not running. Start the stopwatch before ending a new lap.");
@@ -77,7 +77,7 @@ public class DiagnosticsStopwatchTests
 
         await stopwatch.StartLap();
 
-        var error = Assert.ThrowsAsync<DiagnosticsStopwatchLapException>(() => stopwatch.GetLapStatistics())!;
+        var error = Assert.ThrowsAsync<DiagnosticsStopwatchLapException>(stopwatch.GetLapStatistics)!;
 
         error.Should().NotBeNull();
         error.Message.Should().Be("Stopwatch is running. Cannot calculate statistics while the stopwatch is still running.");
@@ -88,7 +88,7 @@ public class DiagnosticsStopwatchTests
     {
         var stopwatch = GetStopwatch();
 
-        var error = Assert.ThrowsAsync<DiagnosticsStopwatchLapException>(() => stopwatch.GetLapStatistics())!;
+        var error = Assert.ThrowsAsync<DiagnosticsStopwatchLapException>(stopwatch.GetLapStatistics)!;
 
         error.Should().NotBeNull();
         error.Message.Should().Be("Stopwatch was never started. Cannot calculate statistics with no recorded laps.");
@@ -102,7 +102,7 @@ public class DiagnosticsStopwatchTests
 
         await stopwatch.StartLap();
 
-        var error = Assert.ThrowsAsync<DiagnosticsStopwatchLapException>(() => stopwatch.GetAllLaps())!;
+        var error = Assert.ThrowsAsync<DiagnosticsStopwatchLapException>(stopwatch.GetAllLaps)!;
 
         error.Should().NotBeNull();
         error.Message.Should().Be("Stopwatch is running. Cannot fetch all laps while the stopwatch is still running.");

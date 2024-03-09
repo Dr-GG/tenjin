@@ -8,3 +8,14 @@ public class TestDiscoverablePublisher<TKey>(TKey key) : Publisher<TestPublishDa
 {
     public TKey Id { get; } = key;
 }
+
+public class TestDiscoverablePublisherStringId01 : Publisher<TestPublishData>, IDiscoverablePublisher<string, TestPublishData>
+{
+    public string Id => "01";
+}
+
+public class TestDiscoverablePublisherStringId02 : Publisher<TestPublishData>, IDiscoverablePublisher<string, TestPublishData>
+{
+    public string Id => "02";
+}
+

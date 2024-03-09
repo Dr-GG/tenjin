@@ -1,10 +1,12 @@
-﻿using Tenjin.Enums.Messaging;
+﻿using System.Diagnostics.CodeAnalysis;
+using Tenjin.Enums.Messaging;
 
 namespace Tenjin.Models.Messaging.Publishers.Configuration;
 
 /// <summary>
 /// The configuration data structure used to configure the threading of an IPublisher instance.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PublisherThreadConfiguration
 {
     /// <summary>

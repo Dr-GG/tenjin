@@ -864,8 +864,8 @@ public class RandomGenerationUtilitiesTests
             .ToCharArray()
             .All(c => TestRandomGenerationParameters
                 .AllowedRandomCharacters
-                    .ToCharArray()
-                    .Contains(c))
+                .ToCharArray()
+                .Contains(c))
             .Should()
             .BeTrue();
 

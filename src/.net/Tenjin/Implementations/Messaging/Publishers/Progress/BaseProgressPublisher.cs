@@ -159,7 +159,7 @@ public abstract class BaseProgressPublisher<TProgressEvent> : Publisher<TProgres
 
             default:
                 throw new NotSupportedException(
-                    $"Interval {_configuration.Interval} not supported");
+                    $"Interval {_configuration.Interval} not supported.");
         }
     }
 

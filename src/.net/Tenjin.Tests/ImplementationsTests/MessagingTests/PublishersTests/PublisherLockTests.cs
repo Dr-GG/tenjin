@@ -9,7 +9,7 @@ using Tenjin.Tests.Utilities;
 
 namespace Tenjin.Tests.ImplementationsTests.MessagingTests.PublishersTests;
 
-[TestFixture]
+[TestFixture, Parallelizable(ParallelScope.Children)]
 public class PublisherLockTests
 {
     [TestCase(true)]

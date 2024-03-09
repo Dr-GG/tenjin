@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Tenjin.Enums.Messaging;
 using Tenjin.Interfaces.Messaging.Publishers;
 
 namespace Tenjin.Models.Messaging.Publishers;
 
+/// <summary>
+/// The event data structure used to publish events.
+/// </summary>
+[ExcludeFromCodeCoverage]
 public record PublishEvent<TData>
 {
     public PublishEvent() { }
