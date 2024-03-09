@@ -70,7 +70,7 @@ public class HashCodeDictionary<T> : IHashCodeDictionary<T> where T : notnull
     /// <inheritdoc />
     IEnumerator IEnumerable.GetEnumerator()
     {
-        return GetEnumerator();
+        return _dictionary.GetEnumerator();
     }
 
     /// <inheritdoc />

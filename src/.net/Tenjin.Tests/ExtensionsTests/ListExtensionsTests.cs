@@ -243,6 +243,12 @@ public class ListExtensionsTests
         AssertReversedBinaryInsertWithFunctionComparer(BinaryInsertStringList, toAddValue, addIfFound);
     }
 
+    [Test]
+    public void BinaryInsert_WhenCollectionIsNull_DoesNothing()
+    {
+        Assert.DoesNotThrow(() => ((List<int>?)null).BinaryInsert(1));
+    }
+
     private static void AssertReversedBinaryInsertWithFunctionComparer<T>(IEnumerable<T> items, T value, bool addWhenFound)
     {
         var itemsList = items.ToList();
@@ -265,9 +271,15 @@ public class ListExtensionsTests
     }
 
     [Test]
-    public void InsertRange_WhenRootCollectionIsNullAndNewCollectionIsNull_ReturnsAnEmptyArray()
+    public void InsertRange_WhenRootCollectionIsNull_ReturnsAnEmptyArray()
     {
         Assert.DoesNotThrow(() => ((IList<int>?)null).RemoveRange(null));
+    }
+
+    [Test]
+    public void InsertRange_WhenNewCollectionIsNull_ReturnsAnEmptyArray()
+    {
+        Assert.DoesNotThrow(() => new List<int>().RemoveRange(null));
     }
 
     [Test]

@@ -1,8 +1,11 @@
-﻿namespace Tenjin.Models.Messaging.Publishers.Configuration;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Tenjin.Models.Messaging.Publishers.Configuration;
 
 /// <summary>
 /// The configuration structure to be used for IPublisher instances.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PublisherConfiguration
 {
     /// <summary>

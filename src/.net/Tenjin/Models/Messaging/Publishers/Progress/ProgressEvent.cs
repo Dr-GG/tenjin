@@ -1,8 +1,11 @@
-﻿namespace Tenjin.Models.Messaging.Publishers.Progress;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Tenjin.Models.Messaging.Publishers.Progress;
 
 /// <summary>
 /// Depicts a progress event for the IProgressPublisher interface.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record ProgressEvent
 {
     /// <summary>

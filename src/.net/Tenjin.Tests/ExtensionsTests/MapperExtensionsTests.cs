@@ -3,7 +3,6 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using Tenjin.Extensions;
-using Tenjin.Implementations.Mappers;
 using Tenjin.Interfaces.Mappers;
 using Tenjin.Tests.Mappers;
 using Tenjin.Tests.Models.Mappers;
@@ -129,7 +128,6 @@ public class MapperExtensionsTests
 
     private static IBinaryMapper<LeftModel, RightModel> GetBinaryMapper()
     {
-        return new BinaryMapper<LeftModel, RightModel>(
-            GetLeftToRightMapper(), GetRightToLeftMapper());
+        return new BinaryLeftRightMapper(GetLeftToRightMapper(), GetRightToLeftMapper());
     }
 }

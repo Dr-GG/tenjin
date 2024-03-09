@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Tenjin.Models.Diagnostics;
 
 /// <summary>
 /// Depicts a collection of statistics regarding a collection DiagnosticsStopwatchLap instances.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record DiagnosticsStopwatchLapStatistics : DiagnosticsStopwatchLap
 {
     /// <summary>

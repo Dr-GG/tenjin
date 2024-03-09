@@ -18,6 +18,7 @@ using Tenjin.Tests.Utilities;
 
 namespace Tenjin.Tests.ImplementationsTests.MessagingTests.PublishersTests.ProgressTests;
 
+[TestFixture, Parallelizable(ParallelScope.Children)]
 public class ProgressPublisherTests
 {
     private const int TestInitialPublishTotal = 22433;

@@ -72,9 +72,9 @@ public static class MapperExtensions
         IEnumerable<TRight>? source)
     {
         return source?
-              .Select(mapper.Map)
+                   .Select(mapper.Map)
                    .ToList()
-               ?? Enumerable.Empty<TLeft>();
+            ?? Enumerable.Empty<TLeft>();
     }
 
     /// <summary>

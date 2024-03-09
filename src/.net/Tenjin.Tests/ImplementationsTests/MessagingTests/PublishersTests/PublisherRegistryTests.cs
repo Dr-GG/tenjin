@@ -7,7 +7,7 @@ using Tenjin.Tests.Services;
 
 namespace Tenjin.Tests.ImplementationsTests.MessagingTests.PublishersTests;
 
-[TestFixture]
+[TestFixture, Parallelizable(ParallelScope.Children)]
 public class PublisherRegistryTests
 {
     private enum TestPublisherType

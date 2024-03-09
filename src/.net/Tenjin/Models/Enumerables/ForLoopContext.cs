@@ -1,8 +1,11 @@
-﻿namespace Tenjin.Models.Enumerables;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Tenjin.Models.Enumerables;
 
 /// <summary>
 /// A record that provides context for a for loop.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record ForLoopContext
 {
     /// <summary>

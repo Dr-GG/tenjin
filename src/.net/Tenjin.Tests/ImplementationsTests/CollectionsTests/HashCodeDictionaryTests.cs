@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Tenjin.Implementations.Collections;
@@ -17,6 +18,26 @@ public class HashCodeDictionaryTests
     public const int NumberModelsToRemove = 776;
     public const int NonExistingModelsOffset = NumberOfModels + 1;
     public const int ModelsToRemoveOffset = 225;
+
+    [Test]
+    public void IsReadonly_WhenCalled_ReturnsFalse()
+    {
+        new HashCodeDictionary<HashCodeModel>().IsReadOnly.Should().BeFalse();
+    }
+
+    [Test]
+    public void GetIEnumerableEnumerator_WhenPopulatingTheDictionary_EnumeratesAsExpected()
+    {
+        var dictionary = (IEnumerable)GetDefaultDictionary();
+        var enumerator = dictionary.GetEnumerator();
+
+        while (enumerator.MoveNext())
+        {
+            var item = (KeyValuePair<int, HashCodeModel>)enumerator.Current!;
+
+            item.Key.Should().Be(item.Value.GetHashCode());
+        }
+    }
 
     [Test]
     public void GetEnumerator_WhenPopulatingTheDictionary_EnumeratesAsExpected()
@@ -65,7 +86,7 @@ public class HashCodeDictionaryTests
     [Test]
     public void ArrayIndexWithModel_WhenPopulatingTheDictionary_RetrievesTheObjectCorrectly()
     {
-        var dictionary = GetDefaultDictionary();
+        var dictionary = GetDefaultDictionary(true);
 
         for (var i = 0; i < NumberOfModels; i++)
         {
@@ -80,7 +101,7 @@ public class HashCodeDictionaryTests
     [Test]
     public void ArrayIndexWithModel_WhenPopulatingTheDictionaryAndUsingNonExistingModels_ThrowsKeyNotFoundException()
     {
-        var dictionary = GetDefaultDictionary();
+        var dictionary = GetDefaultDictionary(true);
 
         for (var i = NonExistingModelsOffset; i < NumberOfNonExistingModels; i++)
         {
@@ -151,7 +172,7 @@ public class HashCodeDictionaryTests
         enumeratorCounter.Should().Be(0);
     }
 
-    [TestCase]
+    [Test]
     public void ContainsKeyValuePair_WhenPopulatingTheDictionaryAndUsingExistingPairs_ReturnsTrue()
     {
         var dictionary = GetDefaultDictionary();
@@ -165,7 +186,7 @@ public class HashCodeDictionaryTests
         }
     }
 
-    [TestCase]
+    [Test]
     public void ContainsKeyValuePair_WhenPopulatingTheDictionaryAndUsingNonExistingPairs_ReturnsFalse()
     {
         var dictionary = GetDefaultDictionary();
@@ -179,7 +200,7 @@ public class HashCodeDictionaryTests
         }
     }
 
-    [TestCase]
+    [Test]
     public void ContainsKey_WhenPopulatingTheDictionaryAndUsingExistingKeys_ReturnsTrue()
     {
         var dictionary = GetDefaultDictionary();
@@ -192,7 +213,7 @@ public class HashCodeDictionaryTests
         }
     }
 
-    [TestCase]
+    [Test]
     public void ContainsKey_WhenPopulatingTheDictionaryAndUsingNonExistingKeys_ReturnsFalse()
     {
         var dictionary = GetDefaultDictionary();
@@ -205,7 +226,7 @@ public class HashCodeDictionaryTests
         }
     }
 
-    [TestCase]
+    [Test]
     public void ContainsItem_WhenPopulatingTheDictionaryAndUsingExistingItems_ReturnsTrue()
     {
         var dictionary = GetDefaultDictionary();
@@ -218,7 +239,7 @@ public class HashCodeDictionaryTests
         }
     }
 
-    [TestCase]
+    [Test]
     public void ContainsItem_WhenPopulatingTheDictionaryAndUsingNonExistingItems_ReturnsFalse()
     {
         var dictionary = GetDefaultDictionary();
@@ -231,7 +252,7 @@ public class HashCodeDictionaryTests
         }
     }
 
-    [TestCase]
+    [Test]
     public void CopyToKeyValuePairs_FromThePopulatedDictionary_PopulatesTheArrayCorrectly()
     {
         var dictionary = GetDefaultDictionary();
@@ -249,7 +270,7 @@ public class HashCodeDictionaryTests
         }
     }
 
-    [TestCase]
+    [Test]
     public void CopyToHashCodeDictionary_FromThePopulatedDictionary_PopulatesTheDestinationDictionaryCorrectly()
     {
         var source = GetDefaultDictionary();
@@ -539,13 +560,22 @@ public class HashCodeDictionaryTests
         };
     }
 
-    private static IHashCodeDictionary<HashCodeModel> GetDefaultDictionary()
+    private static IHashCodeDictionary<HashCodeModel> GetDefaultDictionary(bool useModelAsKey = false)
     {
         var result = new HashCodeDictionary<HashCodeModel>();
 
         for (var i = 0; i < NumberOfModels; i++)
         {
-            result.Add(GetHashCodeModel(i));
+            var model = GetHashCodeModel(i);
+
+            if (useModelAsKey)
+            {
+                result[model] = model;
+            }
+            else
+            {
+                result[model.GetHashCode()] = model;
+            }
         }
 
         return result;
