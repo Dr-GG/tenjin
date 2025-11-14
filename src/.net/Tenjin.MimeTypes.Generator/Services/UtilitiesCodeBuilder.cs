@@ -5,7 +5,7 @@ using Tenjin.MimeTypes.Generator.Models;
 
 namespace Tenjin.MimeTypes.Generator.Services;
 
-public class UtilitiesCodeBuilder
+public static class UtilitiesCodeBuilder
 {
     private const string DefaultFileExtensionsToMimeTypeMapFilename = "FileExtensionToMimeTypeMap.cs";
     private const string DefaultMimeTypeToFileExtensionsMapFilename = "MimeTypeToFileExtensionsMap.cs";
@@ -13,7 +13,7 @@ public class UtilitiesCodeBuilder
     private const string DefaultTestMimeTypeToFileExtensionTestCasesFilename = "TestMimeTypeToFileExtensionTestCases.cs";
     private const string DefaultTestMimeTypeToFileExtensionsTestCasesFilename = "TestMimeTypeToFileExtensionsTestCases.cs";
 
-    public async Task Build(
+    public static async Task Build(
         MimeTypeData data,
         string fileExtensionsToMimeTypeMapFilename = DefaultFileExtensionsToMimeTypeMapFilename,
         string mimeTypeToFileExtensionsMapFilename = DefaultMimeTypeToFileExtensionsMapFilename,

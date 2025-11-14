@@ -143,8 +143,8 @@ public class DiagnosticsStopwatchTests
 
     private static IEnumerable<DateTime> GetFixedTimestamps()
     {
-        return new[]
-        {
+        return
+        [
             new DateTime(2000, 01, 01, 01, 00, 00),
             new DateTime(2000, 01, 01, 01, 00, 10), // Lap 01 = 10 Seconds.
 
@@ -159,7 +159,7 @@ public class DiagnosticsStopwatchTests
 
             new DateTime(2000, 01, 01, 01, 05, 00),
             new DateTime(2000, 01, 01, 01, 05, 03) // Lap 05 = 03 seconds.
-        };
+        ];
     }
 
     private static string GetLapName(int index)

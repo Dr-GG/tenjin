@@ -1721,7 +1721,7 @@ public class ObjectExtensionsTests
         string culture,
         string expectedResult)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteLineWithFormat(value, format, formatProvider, expectedResult);
     }
@@ -1746,7 +1746,7 @@ public class ObjectExtensionsTests
         string culture,
         string expectedResult)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteLineWithFormat(value, format, formatProvider, expectedResult);
     }
@@ -1771,7 +1771,7 @@ public class ObjectExtensionsTests
         string culture,
         string expectedResult)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteLineWithFormat(value, format, formatProvider, expectedResult);
     }
@@ -1796,7 +1796,7 @@ public class ObjectExtensionsTests
         string culture,
         string expectedResult)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteLineWithFormat(value, format, formatProvider, expectedResult);
     }
@@ -1821,7 +1821,7 @@ public class ObjectExtensionsTests
         string culture,
         string expectedResult)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteLineWithFormat(value, format, formatProvider, expectedResult);
     }
@@ -1846,7 +1846,7 @@ public class ObjectExtensionsTests
         string culture,
         string expectedResult)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteLineWithFormat(value, format, formatProvider, expectedResult);
     }
@@ -1861,7 +1861,7 @@ public class ObjectExtensionsTests
         string culture,
         string expectedResult)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteLineWithFormat(value, format, formatProvider, expectedResult);
     }
@@ -1876,7 +1876,7 @@ public class ObjectExtensionsTests
         string culture,
         string expectedResult)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteLineWithFormat(value, format, formatProvider, expectedResult);
     }
@@ -1903,7 +1903,7 @@ public class ObjectExtensionsTests
         string expectedResult,
         int numberOfLineAppends)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteLineWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult);
@@ -1931,7 +1931,7 @@ public class ObjectExtensionsTests
         string expectedResult,
         int numberOfLineAppends)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteLineWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult);
@@ -1959,7 +1959,7 @@ public class ObjectExtensionsTests
         string expectedResult,
         int numberOfLineAppends)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteLineWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult);
@@ -1987,7 +1987,7 @@ public class ObjectExtensionsTests
         string expectedResult,
         int numberOfLineAppends)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteLineWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult);
@@ -2015,7 +2015,7 @@ public class ObjectExtensionsTests
         string expectedResult,
         int numberOfLineAppends)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteLineWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult);
@@ -2043,7 +2043,7 @@ public class ObjectExtensionsTests
         string expectedResult,
         int numberOfLineAppends)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteLineWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult);
@@ -2060,7 +2060,7 @@ public class ObjectExtensionsTests
         string expectedResult,
         int numberOfLineAppends)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteLineWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult);
@@ -2077,7 +2077,7 @@ public class ObjectExtensionsTests
         string expectedResult,
         int numberOfLineAppends)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteLineWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult);
@@ -2123,7 +2123,7 @@ public class ObjectExtensionsTests
         string expectedResult,
         string? headingUnderline)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
     }
@@ -2168,7 +2168,7 @@ public class ObjectExtensionsTests
         string expectedResult,
         string? headingUnderline)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
     }
@@ -2213,7 +2213,7 @@ public class ObjectExtensionsTests
         string expectedResult,
         string? headingUnderline)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
     }
@@ -2258,7 +2258,7 @@ public class ObjectExtensionsTests
         string expectedResult,
         string? headingUnderline)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
     }
@@ -2303,7 +2303,7 @@ public class ObjectExtensionsTests
         string expectedResult,
         string? headingUnderline)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
     }
@@ -2348,7 +2348,7 @@ public class ObjectExtensionsTests
         string expectedResult,
         string? headingUnderline)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
     }
@@ -2376,7 +2376,7 @@ public class ObjectExtensionsTests
         string expectedResult,
         string? headingUnderline)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
     }
@@ -2404,7 +2404,7 @@ public class ObjectExtensionsTests
         string expectedResult,
         string? headingUnderline)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteHeadingWithFormat(value, format, formatProvider, expectedResult, headingUnderline);
     }
@@ -2452,7 +2452,7 @@ public class ObjectExtensionsTests
         int numberOfLineAppends,
         string? headingUnderline)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteHeadingWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult, headingUnderline);
@@ -2501,7 +2501,7 @@ public class ObjectExtensionsTests
         int numberOfLineAppends,
         string? headingUnderline)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteHeadingWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult, headingUnderline);
@@ -2550,7 +2550,7 @@ public class ObjectExtensionsTests
         int numberOfLineAppends,
         string? headingUnderline)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteHeadingWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult, headingUnderline);
@@ -2599,7 +2599,7 @@ public class ObjectExtensionsTests
         int numberOfLineAppends,
         string? headingUnderline)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteHeadingWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult, headingUnderline);
@@ -2648,7 +2648,7 @@ public class ObjectExtensionsTests
         int numberOfLineAppends,
         string? headingUnderline)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteHeadingWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult, headingUnderline);
@@ -2697,7 +2697,7 @@ public class ObjectExtensionsTests
         int numberOfLineAppends,
         string? headingUnderline)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteHeadingWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult, headingUnderline);
@@ -2727,7 +2727,7 @@ public class ObjectExtensionsTests
         int numberOfLineAppends,
         string? headingUnderline)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteHeadingWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult, headingUnderline);
@@ -2757,7 +2757,7 @@ public class ObjectExtensionsTests
         int numberOfLineAppends,
         string? headingUnderline)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteHeadingWithFormatWithLineAppends(
             value, numberOfLineAppends, format, formatProvider, expectedResult, headingUnderline);
@@ -2783,7 +2783,7 @@ public class ObjectExtensionsTests
         string culture,
         string expectedResult)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteWithFormat(value, format, formatProvider, expectedResult);
     }
@@ -2808,7 +2808,7 @@ public class ObjectExtensionsTests
         string culture,
         string expectedResult)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteWithFormat(value, format, formatProvider, expectedResult);
     }
@@ -2833,7 +2833,7 @@ public class ObjectExtensionsTests
         string culture,
         string expectedResult)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteWithFormat(value, format, formatProvider, expectedResult);
     }
@@ -2858,7 +2858,7 @@ public class ObjectExtensionsTests
         string culture,
         string expectedResult)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteWithFormat(value, format, formatProvider, expectedResult);
     }
@@ -2883,7 +2883,7 @@ public class ObjectExtensionsTests
         string culture,
         string expectedResult)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteWithFormat(value, format, formatProvider, expectedResult);
     }
@@ -2908,7 +2908,7 @@ public class ObjectExtensionsTests
         string culture,
         string expectedResult)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteWithFormat(value, format, formatProvider, expectedResult);
     }
@@ -2923,7 +2923,7 @@ public class ObjectExtensionsTests
         string culture,
         string expectedResult)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteWithFormat(value, format, formatProvider, expectedResult);
     }
@@ -2938,7 +2938,7 @@ public class ObjectExtensionsTests
         string culture,
         string expectedResult)
     {
-        var formatProvider = CultureInfo.GetCultureInfo(culture, true);
+        var formatProvider = new CultureInfo(culture, false);
 
         AssertConsoleWriteWithFormat(value, format, formatProvider, expectedResult);
     }
@@ -2979,7 +2979,7 @@ public class ObjectExtensionsTests
                     checkDigit++;
 
                     ThreadingUtilities.IncreaseThreadIdDictionary(threadIds);
-                    Thread.Sleep(250);
+                    Task.Delay(250).Wait();
                 }
 
                 return Task.CompletedTask;

@@ -18,9 +18,8 @@ public static class Program
 
         var importer = new JsonImporter();
         var data = importer.Import(JsonFilenameConstants.JsonInputFilename);
-        var writer = new UtilitiesCodeBuilder();
 
-        writer.Build(data).GetAwaiter().GetResult();
+        UtilitiesCodeBuilder.Build(data).GetAwaiter().GetResult();
 
         Console.WriteLine("DONE!");
         Console.WriteLine();

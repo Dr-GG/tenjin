@@ -82,7 +82,7 @@ public class PublisherTests
     {
         var publisher = GetPublisher(threadMode);
         var mockSubscribers = GetMockSubscribers(NumberOfTestSubscribers).ToArray();
-        var publisherLocks = (await publisher.Subscribe(mockSubscribers.Select(m => m.Object).ToArray())).ToList();
+        var publisherLocks = (await publisher.Subscribe([.. mockSubscribers.Select(m => m.Object)])).ToList();
 
         GetDefaultPublishData(out var testData1, out var testData2, out var testData3);
 
@@ -207,7 +207,7 @@ public class PublisherTests
         var publisher = GetPublisher(threadMode);
         var mockSubscribers = GetMockSubscribers(NumberOfTestSubscribers).ToList();
 
-        await publisher.Subscribe(mockSubscribers.Select(m => m.Object).ToArray());
+        await publisher.Subscribe([.. mockSubscribers.Select(m => m.Object)]);
 
         if (disposeAsync)
         {
@@ -267,7 +267,7 @@ public class PublisherTests
         var publisher = GetPublisher(threadMode);
         var mockSubscribers = GetMockSubscribers(NumberOfTestSubscribers).ToList();
 
-        await publisher.Subscribe(mockSubscribers.Select(m => m.Object).ToArray());
+        await publisher.Subscribe([.. mockSubscribers.Select(m => m.Object)]);
 
         for (var i = 0; i < NumberOfTestRepetitionMethodCalls; i++)
         {

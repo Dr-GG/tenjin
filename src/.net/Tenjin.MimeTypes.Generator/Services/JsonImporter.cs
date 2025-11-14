@@ -22,7 +22,7 @@ public class JsonImporter
     private static IEnumerable<MimeTypeRecord> GetMimeTypeToFileExtensions(
         IEnumerable<MimeTypeRecord> fileExtensionToMimeTypes)
     {
-        return fileExtensionToMimeTypes
+        return [.. fileExtensionToMimeTypes
             .GroupBy(m => m.MimeType)
             .Select(g => new
             {
@@ -41,7 +41,7 @@ public class JsonImporter
                     .OrderBy(f => d.PriorityReference?.FileExtension.Equals(f) ?? false
                         ? 0 : 1)
                     .ThenBy(f => f)
-            }).ToList();
+            })];
     }
 
     private static JsonDocument GetMimeTypeJsonDocument(string filename)
@@ -74,6 +74,6 @@ public class JsonImporter
             result.Add(item);
         }
 
-        return result.OrderBy(m => m.MimeType).ToList();
+        return [.. result.OrderBy(m => m.MimeType)];
     }
 }

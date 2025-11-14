@@ -35,7 +35,7 @@ public static class EnumerableExtensions
             return list;
         }
 
-        return collection.ToList();
+        return [.. collection];
     }
 
     /// <summary>
@@ -61,7 +61,7 @@ public static class EnumerableExtensions
             return list;
         }
 
-        return collection.ToList();
+        return [.. collection];
     }
 
     /// <summary>
@@ -74,7 +74,7 @@ public static class EnumerableExtensions
             return array;
         }
 
-        return collection.ToArray();
+        return [.. collection];
     }
 
     /// <summary>
@@ -113,7 +113,7 @@ public static class EnumerableExtensions
     {
         if (collection == null)
         {
-            return Enumerable.Empty<IEnumerable<T>>();
+            return [];
         }
 
         switch (numberOfBatches)
@@ -122,14 +122,14 @@ public static class EnumerableExtensions
                 throw new ArgumentOutOfRangeException(
                     nameof(numberOfBatches), "Argument cannot be zero or less.");
             case 1:
-                return new[] { collection };
+                return [collection];
         }
 
         var list = (List<T>)collection.EnumerateToList();
 
         if (list.Count == 0)
         {
-            return Enumerable.Empty<IEnumerable<T>>();
+            return [];
         }
 
         var finalNumberOfBatches = Math.Min(numberOfBatches, list.Count);

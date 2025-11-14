@@ -105,7 +105,7 @@ public class ProgressPublisherTests
         await publisher.Initialise(TestInitialPublishTotal);
 
         tickEvents.Should().HaveCount(1);
-        AssertTicks(TestInitialPublishTotal, new[] { 0 }, tickEvents);
+        AssertTicks(TestInitialPublishTotal, [0], tickEvents);
     }
 
     [Test]
