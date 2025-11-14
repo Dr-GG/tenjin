@@ -10,17 +10,17 @@ namespace Tenjin.Tests.ExtensionsTests;
 [TestFixture, Parallelizable(ParallelScope.Children)]
 public class ListExtensionsTests
 {
-    private static readonly IEnumerable<int> BinaryInsertInt32List = new[]
-    {
+    private static readonly IEnumerable<int> BinaryInsertInt32List =
+    [
         1,
         2,
         5,
         6,
         9
-    };
+    ];
 
-    private static readonly IEnumerable<string> BinaryInsertStringList = new[]
-    {
+    private static readonly IEnumerable<string> BinaryInsertStringList =
+    [
         "a",
         "c",
         "e",
@@ -29,7 +29,7 @@ public class ListExtensionsTests
         "k",
         "m",
         "o"
-    };
+    ];
 
     [TestCase(1, false)]
     [TestCase(2, false)]
@@ -296,11 +296,11 @@ public class ListExtensionsTests
     public void InsertRange_WhenRootCollectionIsNotNullAndNewCollectionIsNotNull_ReturnsTheInputCollection()
     {
         IList<int> collection = new List<int> { 1, 5, 8 };
-        IList<int> expected = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        IList<int> expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-        collection.InsertRange(1, new[] { 2, 3, 4 });
-        collection.InsertRange(5, new[] { 6, 7 });
-        collection.InsertRange(8, new[] { 9, 10 });
+        collection.InsertRange(1, [2, 3, 4]);
+        collection.InsertRange(5, [6, 7]);
+        collection.InsertRange(8, [9, 10]);
 
         collection.Should().BeEquivalentTo(expected);
     }

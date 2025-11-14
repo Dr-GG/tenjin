@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Tenjin.Enums.Messaging;
 using Tenjin.Extensions;
@@ -18,7 +19,7 @@ public class Publisher<TData> : IPublisher<TData>
 {
     private PublisherConfiguration _configuration = new();
 
-    private readonly object _root = new();
+    private readonly Lock _root = new();
     private readonly IDictionary<string, ISubscriber<TData>> _subscribers = new Dictionary<string, ISubscriber<TData>>();
 
     /// <inheritdoc />
@@ -37,7 +38,7 @@ public class Publisher<TData> : IPublisher<TData>
     {
         if (subscribers.IsEmpty())
         {
-            return Enumerable.Empty<IPublisherLock>();
+            return [];
         }
 
         var result = new List<IPublisherLock>(subscribers.Length);

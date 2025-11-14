@@ -1,6 +1,6 @@
 variables:
-  version: '3.2.0'
-  dotNetCoreVersion: "8.x"
+  version: '4.0.0'
+  dotNetCoreVersion: "10.x"
   buildConfiguration: 'Release'
   ngBuildConfiguration: '--prod'
   solutionPath: 'src/.net/Tenjin.sln'

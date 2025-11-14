@@ -3,9 +3,8 @@
   <!-- The package icon for Tenjin was made by https://www.flaticon.com/authors/darius-dan from https://www.flaticon.com -->
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <LangVersion>12.0</LangVersion>
     <PackageId>Tenjin</PackageId>
     <Authors>Gerard Gouws</Authors>
     <Company>Tenjin Libraries</Company>
@@ -34,8 +33,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0" />
   </ItemGroup>
 
 </Project>

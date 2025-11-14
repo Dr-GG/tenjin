@@ -29,7 +29,7 @@ public class CollectionExtensionsTests
     {
         ICollection<int> collection = new List<int> { 1, 2, 3, 4, 5 };
         ICollection<int> input = new List<int> { 6, 7, 8, 9, 10 };
-        ICollection<int> expected = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        ICollection<int> expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
         collection.AddRange(input);
 

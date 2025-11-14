@@ -57,22 +57,22 @@ public static class ReflectionUtilitiesTests
             new GenericTypeDefinitionImplementation
             {
                 Implementation = typeof(ComplexIntegerUnaryMapper),
-                Interfaces = new[] { typeof(IUnaryMapper<short, int>), typeof(IUnaryMapper<long, int>) }
+                Interfaces = [typeof(IUnaryMapper<short, int>), typeof(IUnaryMapper<long, int>)]
             },
             new GenericTypeDefinitionImplementation
             {
                 Implementation = typeof(ComplexStringUnaryMapper),
-                Interfaces = new[] { typeof(IUnaryMapper<string, int>), typeof(IUnaryMapper<string, double>), typeof(IUnaryMapper<string, bool>) }
+                Interfaces = [typeof(IUnaryMapper<string, int>), typeof(IUnaryMapper<string, double>), typeof(IUnaryMapper<string, bool>)]
             },
             new GenericTypeDefinitionImplementation
             {
                 Implementation = typeof(LeftToRightMapper),
-                Interfaces = new[] { typeof(IUnaryMapper<LeftModel, RightModel>) }
+                Interfaces = [typeof(IUnaryMapper<LeftModel, RightModel>)]
             },
             new GenericTypeDefinitionImplementation
             {
                 Implementation = typeof(RightToLeftMapper),
-                Interfaces = new[] { typeof(IUnaryMapper<RightModel, LeftModel>) }
+                Interfaces = [typeof(IUnaryMapper<RightModel, LeftModel>)]
             }
         };
 
@@ -90,12 +90,12 @@ public static class ReflectionUtilitiesTests
             new GenericTypeDefinitionImplementation
             {
                 Implementation = typeof(BinaryLeftRightMapper),
-                Interfaces = new[] { typeof(IBinaryMapper<LeftModel, RightModel>) }
+                Interfaces = [typeof(IBinaryMapper<LeftModel, RightModel>)]
             },
             new GenericTypeDefinitionImplementation
             {
                 Implementation = typeof(ComplexStringBinaryMapper),
-                Interfaces = new[] { typeof(IBinaryMapper<string, int>), typeof(IBinaryMapper<string, double>), typeof(IBinaryMapper<string, bool>) }
+                Interfaces = [typeof(IBinaryMapper<string, int>), typeof(IBinaryMapper<string, double>), typeof(IBinaryMapper<string, bool>)]
             }
         };
 

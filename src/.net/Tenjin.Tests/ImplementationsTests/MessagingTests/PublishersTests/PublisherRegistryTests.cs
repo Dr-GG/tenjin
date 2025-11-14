@@ -21,94 +21,94 @@ public class PublisherRegistryTests
 
     private static readonly TestPublisherRegistryData<string> StringDiscoverablePublishersData = new()
     {
-        PublisherIds = new[]
-        {
+        PublisherIds =
+        [
             "key-1",
             "key-2",
             "key-3",
             "key-4",
             "key-5"
-        },
+        ],
 
-        TestExistingPublisherIds = new[]
-        {
+        TestExistingPublisherIds =
+        [
             "key-2",
             "key-1",
             "key-5",
             "key-4",
             "key-3"
-        },
+        ],
 
-        NonExistingPublisherIds = new[]
-        {
+        NonExistingPublisherIds =
+        [
             "key--2",
             "key-",
             "keY-5",
             "kEY-4",
             "KEY-3",
             "bogus-key"
-        }
+        ]
     };
 
     private static readonly TestPublisherRegistryData<int> Int32DiscoverablePublishersData = new()
     {
-        PublisherIds = new[]
-        {
+        PublisherIds =
+        [
             1,
             2,
             3,
             4,
             5
-        },
+        ],
 
-        TestExistingPublisherIds = new[]
-        {
+        TestExistingPublisherIds =
+        [
             2,
             1,
             5,
             4,
             3
-        },
+        ],
 
-        NonExistingPublisherIds = new[]
-        {
+        NonExistingPublisherIds =
+        [
             11,
             222,
             3333,
             44444,
             555555,
             -1
-        }
+        ]
     };
 
     private static readonly TestPublisherRegistryData<TestPublisherType> EnumDiscoverablePublishersData = new()
     {
-        PublisherIds = new[]
-        {
+        PublisherIds =
+        [
             TestPublisherType.One,
             TestPublisherType.Two,
             TestPublisherType.Three,
             TestPublisherType.Four,
             TestPublisherType.Five
-        },
+        ],
 
-        TestExistingPublisherIds = new[]
-        {
+        TestExistingPublisherIds =
+        [
             TestPublisherType.Two,
             TestPublisherType.One,
             TestPublisherType.Five,
             TestPublisherType.Four,
             TestPublisherType.Three
-        },
+        ],
 
-        NonExistingPublisherIds = new[]
-        {
+        NonExistingPublisherIds =
+        [
             (TestPublisherType)0,
             (TestPublisherType)25,
             (TestPublisherType)50,
             (TestPublisherType)75,
             (TestPublisherType)100
-        }
+        ]
     };
 
     [Test]

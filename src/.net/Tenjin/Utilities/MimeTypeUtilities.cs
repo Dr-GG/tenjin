@@ -1,4 +1,4 @@
-﻿// ReSharper disable StringLiteralTypo
+﻿#pragma warning disable S1192 // String literals should not be duplicated
 
 using System.Collections.Generic;
 using System.Linq;
@@ -62,14 +62,14 @@ public static class MimeTypeUtilities
     {
         if (mimeType.IsNullOrEmpty())
         {
-            return Enumerable.Empty<string>();
+            return [];
         }
 
         var key = mimeType.ToLower();
 
         return MimeTypeToFileExtensionsMap.TryGetValue(key, out var fileExtensions)
             ? fileExtensions
-            : Enumerable.Empty<string>();
+            : [];
     }
 
     #region File Extensions To Mime Types Map
@@ -904,7 +904,6 @@ public static class MimeTypeUtilities
 
     private static IDictionary<string, IEnumerable<string>> PopulateMimeTypeToFileExtensionsMap()
     {
-#pragma warning disable CA1861 // Avoid constant arrays as arguments
         return new Dictionary<string, IEnumerable<string>>
         {
             { "application/andrew-inset", new[] { ".ez" } },
@@ -1531,8 +1530,9 @@ public static class MimeTypeUtilities
             { "video/x-sgi-movie", new[] { ".movie" } },
             { "x-conference/x-cooltalk", new[] { ".ice" } }
         };
-#pragma warning restore CA1861 // Avoid constant arrays as arguments
     }
 
     #endregion
 }
+
+#pragma warning restore S1192 // String literals should not be duplicated

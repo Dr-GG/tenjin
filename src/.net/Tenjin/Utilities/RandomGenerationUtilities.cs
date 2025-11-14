@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 using System.Text;
 using Tenjin.Exceptions.Random;
 using Tenjin.Extensions;
@@ -99,6 +100,8 @@ public static class RandomGenerationUtilities
                                                      "Fatal error! Scenario not supported in generating random length.");
     }
 
+#pragma warning disable S2245 // Make sure that using this pseudorandom number generator is safe here.
+
     private static Random GetRandom(RandomGenerationParameters parameters)
     {
         if (parameters.Random != null)
@@ -106,10 +109,24 @@ public static class RandomGenerationUtilities
             return parameters.Random;
         }
 
-        var seed = parameters.Seed ?? (int)(parameters.GetHashCode() ^ DateTime.Now.Ticks);
+        if (parameters.Seed.HasValue)
+        {
+            return new Random(parameters.Seed.Value);
+        }
+
+        var seedBytes = new byte[16];
+
+        using (var rng = RandomNumberGenerator.Create())
+        {
+            rng.GetBytes(seedBytes);
+        }
+
+        var seed = BitConverter.ToInt32(seedBytes, 0);
 
         return new Random(seed);
     }
+
+#pragma warning restore S2245 // Make sure that using this pseudorandom number generator is safe here.
 
     private static void AssertRandomDoubleGenerationParameters(RandomGenerationParameters parameters)
     {

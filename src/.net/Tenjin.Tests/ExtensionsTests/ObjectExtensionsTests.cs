@@ -2979,7 +2979,7 @@ public class ObjectExtensionsTests
                     checkDigit++;
 
                     ThreadingUtilities.IncreaseThreadIdDictionary(threadIds);
-                    Thread.Sleep(250);
+                    Task.Delay(250).Wait();
                 }
 
                 return Task.CompletedTask;
